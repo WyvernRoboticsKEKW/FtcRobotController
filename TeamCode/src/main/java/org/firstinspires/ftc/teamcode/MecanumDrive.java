@@ -22,6 +22,8 @@ public class MecanumDrive extends LinearOpMode {
 
     Robot robot = new Robot();
     double theta = Math.PI / 4;
+    double trans_factor = 1.0;
+    double turn_factor = 1.0;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -32,10 +34,10 @@ public class MecanumDrive extends LinearOpMode {
             double x = Math.cos(theta) * gamepad1.left_stick_x;
             double y = Math.sin(theta) * (-gamepad1.left_stick_y);
 
-            double x_output = (x * Math.cos(theta)) + (y * Math.sin(theta));
-            double y_output = (x * (-Math.sin(theta))) + (y * Math.cos(theta));
+            double x_output = trans_factor * ((x * Math.cos(theta)) + (y * Math.sin(theta)));
+            double y_output = trans_factor * ((x * (-Math.sin(theta))) + (y * Math.cos(theta)));
 
-            double turn = gamepad1.right_stick_x;
+            double turn = turn_factor * gamepad1.right_stick_x;
 
             robot.frontLeft.setPower(y_output + turn);
             robot.backLeft.setPower(x_output + turn);
