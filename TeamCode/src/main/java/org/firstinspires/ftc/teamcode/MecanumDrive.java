@@ -20,10 +20,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name="Mecanum Drive")
 public class MecanumDrive extends LinearOpMode {
 
-    Robot robot = new Robot();
-    double theta = Math.PI / 4;
-    double trans_factor = 1.0;
-    double turn_factor = 1.0;
+    private Robot robot = new Robot();
+    private double theta = Math.PI / 4;
+    private double trans_factor = 1.0;
+    private double turn_factor = 1.0;
 
     @Override
     public void runOpMode() throws InterruptedException {
