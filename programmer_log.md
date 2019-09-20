@@ -24,3 +24,10 @@ Mecanum drive.
 My concept involves an axis rotation in order to convert the axis from an x-y axis
 to the diagonal axis required by mechanum wheels.
 --Sam
+#### Friday 2019.09.20
+Today we went over the code we wrote yesterday with the rest of the team, and
+we taught Josh some basic JS, including variables and for loops. Afterwards, to test his knowledge, we had him try and create a program that prints out a multiplication table.
+--Jared
+Today I talked to Matthew on the Dragons about the code I made yesterday.
+He seemed to think it was good, although we would need to test it once we received the Mecanum wheels.
+--Sam
