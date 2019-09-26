@@ -4,12 +4,12 @@
 
 ### Week 1
 #### Monday 2019.09.16
-Today we finalized the positions of everyone on the team.
+We finalized the positions of everyone on the team.
 We got a new programmer, Josh.
 So today we went over basic programming and Java concepts with him.
 --Sam
 #### Tuesday 2019.09.17
-Today James and I reviewed with Josh what he learned the previous day.
+James and I reviewed with Josh what he learned the previous day.
 After I was satisfied, I worked on setting setting up Git on the laptop we had.
 While James was giving Josh example code segments and having him do practice exercises,
 I was cloning the code repository I had set up on [GitHub](https://github.com/samheiden/SkyStone-Wyverns12889/).
@@ -18,16 +18,26 @@ and updated the SDK to version 5.2.
 After I had done this, showed some of last year's code to Josh and James.
 --Sam
 #### Thursday 2019.09.19
-Today I explained my concept for driving with Mecanum wheels to Thomas, and 
+I explained my concept for driving with Mecanum wheels to Thomas, and 
 coding and commiting a basic configuration file and my concept for 
 Mecanum drive.
 My concept involves an axis rotation in order to convert the axis from an x-y axis
 to the diagonal axis required by mechanum wheels.
 --Sam
 #### Friday 2019.09.20
-Today we went over the code we wrote yesterday with the rest of the team, and
+We went over the code we wrote yesterday with the rest of the team, and
 we taught Josh some basic JS, including variables and for loops. Afterwards, to test his knowledge, we had him try and create a program that prints out a multiplication table.
---Jared
-Today I talked to Matthew on the Dragons about the code I made yesterday.
+--Thomas
+
+I talked to Foushee on the Dragons about the code I made yesterday.
 He seemed to think it was good, although we would need to test it once we received the Mecanum wheels.
 --Sam
+
+### Week 2
+#### Monday 2019.09.23
+We created a series of functions in JS in order to get Josh used to using prebuilt functions.
+I had Josh move and tranform a box on the screen.
+--James 
+#### Thursday 2019.09.26
+
+#### Friday 2019.09.27
