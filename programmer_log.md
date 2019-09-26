@@ -36,7 +36,7 @@ He seemed to think it was good, although we would need to test it once we receiv
 ### Week 2
 #### Monday 2019.09.23
 We created a series of functions in JS in order to get Josh used to using prebuilt functions.
-I had Josh move and tranform a box on the screen.
+I had Josh move and transform a box on the screen.
 --James 
 #### Thursday 2019.09.26
 
