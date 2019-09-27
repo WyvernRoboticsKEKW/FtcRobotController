@@ -2,14 +2,14 @@
 
 ## The Logge
 
-## Week 1
-## Monday 2019.09.09
+### Week 1
+#### Monday 2019.09.09
 
-## Tuesday 2019.09.10
+#### Tuesday 2019.09.10
 
-## Thursday 2019.09.12
+#### Thursday 2019.09.12
 
-## Friday 2019.09.13
+#### Friday 2019.09.13
 
 ### Week 2
 #### Monday 2019.09.16
