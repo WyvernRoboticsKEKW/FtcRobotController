@@ -44,5 +44,14 @@ We created a series of functions in JS in order to get Josh used to using prebui
 I had Josh move and transform a box on the screen.
 --James 
 #### Thursday 2019.09.26
-
+We spent the day downloading a virtual robot simulator and its dependencies to test and improve our program while the robot is being constructed. We weren’t able to test if it functioned well because we spent too much time searching for the dependencies.  
+--Josh
 #### Friday 2019.09.27
+After returning to the computer, we continued to try and get the robot virtualizer to work. While Sam was working on this, James was teaching me some Calculus concepts and testing me on my knowledge of computer hardware. After about an hour and a half, Sam had finally got the robot virtualizer working, and we were able to test out the mecanum drive code. The code seemed to be working, but we had a few ideas to improve on it and we noticed some small issues with the code.
+--Thomas
+
+### Week 4
+#### Monday 2019.09.30
+ We changed our mecanum drive code to account for more scenarios and then we began installing arch linux onto the computer we would be using. 
+--James
+#### Tuesday 2019.10.01
