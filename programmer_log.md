@@ -3,6 +3,11 @@
 ## The Logge
 
 ### Week 1
+#### Monday 2019.09.09
+
+#### Tuesday 2019.09.10
+
+### Week 2
 #### Monday 2019.09.16
 We finalized the positions of everyone on the team.
 We got a new programmer, Josh.
@@ -33,7 +38,7 @@ I talked to Foushee on the Dragons about the code I made yesterday.
 He seemed to think it was good, although we would need to test it once we received the Mecanum wheels.
 --Sam
 
-### Week 2
+### Week 3
 #### Monday 2019.09.23
 We created a series of functions in JS in order to get Josh used to using prebuilt functions.
 I had Josh move and transform a box on the screen.
