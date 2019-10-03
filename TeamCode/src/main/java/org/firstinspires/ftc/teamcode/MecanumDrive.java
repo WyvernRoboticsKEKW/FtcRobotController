@@ -20,7 +20,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name="Mecanum Drive")
 public class MecanumDrive extends LinearOpMode {
 
-    // Defining Robot and Constants
+    // define robot and constants (won't be constants in the future)
     private Robot robot = new Robot();
     private final double theta = Math.PI / 4;
     private final double trans_factor = 1.0;
@@ -31,14 +31,14 @@ public class MecanumDrive extends LinearOpMode {
         robot.init(hardwareMap);
         waitForStart();
         while(opModeIsActive()){
-            // Axis Rotation
+            // rotate axes
             double x = Math.abs(Math.cos(theta)) * gamepad1.left_stick_x;
             double y = Math.abs(Math.sin(theta)) * (-gamepad1.left_stick_y);
             double x_output = trans_factor * ((x * Math.cos(theta)) + (y * Math.sin(theta)));
             double y_output = trans_factor * ((x * (-Math.sin(theta))) + (y * Math.cos(theta)));
-            // Get Turn Input
+            // get turn input
             double turn = turn_factor * (gamepad1.right_trigger - gamepad1.left_trigger);
-            // Apply Outputs
+            // apply outputs
             robot.frontLeft.setPower(x_output + turn);
             robot.backLeft.setPower(y_output + turn);
             robot.frontRight.setPower(y_output - turn);
