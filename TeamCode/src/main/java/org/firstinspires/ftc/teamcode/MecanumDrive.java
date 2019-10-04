@@ -43,7 +43,6 @@ public class MecanumDrive extends LinearOpMode {
             robot.backLeft.setPower(y_output + turn);
             robot.frontRight.setPower(y_output - turn);
             robot.backRight.setPower(x_output - turn);
-
         }
     }
 }
