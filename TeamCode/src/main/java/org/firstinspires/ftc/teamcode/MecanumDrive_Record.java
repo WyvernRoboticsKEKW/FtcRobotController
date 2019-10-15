@@ -17,9 +17,7 @@ public class MecanumDrive_Record extends LinearOpMode {
     private final double theta = Math.PI / 4;
     private final double trans_factor = 1.0;
     private final double turn_factor = 1.0;
-    private double click_one_time = 0.0;
     private boolean record_mode = false;
-    private byte[] Motor_Array;
 
     private ElapsedTime time = new ElapsedTime();
 
@@ -48,12 +46,16 @@ public class MecanumDrive_Record extends LinearOpMode {
                     try{
                         try {
                             DataOut.writeDouble(robot.frontLeft.getPower());
+                            DataOut.writeChars(" ");
                             DataOut.writeDouble(robot.backLeft.getPower());
+                            DataOut.writeChars(" ");
                             DataOut.writeDouble(robot.frontRight.getPower());
+                            DataOut.writeChars(" ");
                             DataOut.writeDouble(robot.backRight.getPower());
+                            DataOut.writeChars(" ");
                             DataOut.writeDouble(time.milliseconds());
                             DataOut.writeChars("\n");
-                            Thread.sleep(20);
+                            Thread.sleep(33);
                         } catch(IOException notFound) {
 
                         }
