@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @TeleOp(name="Mecanum Drive RAM Record")
 
@@ -17,38 +20,59 @@ public class MecanumDrive_RecordInRAM extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
+
+        boolean recording = false;
+
+
         waitForStart();
 
-        double x_output;
-        double y_output;
-        double turn;
-
-        Gamepad.GamepadCallback callback = new Gamepad.GamepadCallback() {
-            double x;
-            double y;
-
-            @Override
-            public void gamepadChanged(Gamepad gamepad) {
-
-                x = Math.abs(Math.cos(theta)) * gamepad1.left_stick_x;
-                y = Math.abs(Math.sin(theta)) * (-gamepad1.left_stick_y);
-
-            }
-        };
+        List<Float> x    = new ArrayList<>(); // list of x inputs
+        List<Float> y    = new ArrayList<>(); // list of y inputs
+        List<Float> turn = new ArrayList<>(); // list of turn inputs
 
         while(opModeIsActive()){
-            // Axis Rotation
-            double x = callback.x;
-            double y = callback.y;
-            x_output = trans_factor * ((x * Math.cos(theta)) + (y * Math.sin(theta)));
-            y_output = trans_factor * ((x * (-Math.sin(theta))) + (y * Math.cos(theta)));
-            // Get Turn Input
-            turn = turn_factor * (gamepad1.right_trigger - gamepad1.left_trigger);
-            // Apply Outputs
-            robot.frontLeft.setPower(x_output + turn);
-            robot.backLeft.setPower(y_output + turn);
-            robot.frontRight.setPower(y_output - turn);
-            robot.backRight.setPower(x_output - turn);
+            boolean prevBack = false;
+            while(!recording) {
+                runOperations(gamepad1.left_stick_x,
+                             -gamepad1.left_stick_y,
+                              gamepad1.right_trigger - gamepad1.left_trigger);
+
+                if(gamepad1.back && !prevBack){
+                    recording = true;
+                }
+                prevBack = gamepad1.back;
+                sleep(30);
+            }
+            while(recording){
+                runOperations(gamepad1.left_stick_x,
+                             -gamepad1.left_stick_y,
+                              gamepad1.right_trigger - gamepad1.left_trigger);
+                // Record Values in Lists
+                x.add(gamepad1.left_stick_x);
+                y.add(gamepad1.left_stick_y);
+                turn.add(gamepad1.right_trigger - gamepad1.left_trigger);
+                if(gamepad1.back && !prevBack){
+                    recording = false;
+                }
+                sleep(27);
+            }
         }
     }
+
+    private void runOperations(double x, double y, double turn){
+        // Scaling x and y
+        x *= Math.cos(theta);
+        y *= Math.sin(theta);
+        // Axis Rotation
+        double x_output = trans_factor * ((x * Math.cos(theta)) + (y * Math.sin(theta)));
+        double y_output = trans_factor * ((x * (-Math.sin(theta))) + (y * Math.cos(theta)));
+        // Get Turn Input
+        turn *= turn_factor;
+        // Apply Outputs
+        robot.frontLeft.setPower(x_output + turn);
+        robot.backLeft.setPower(y_output + turn);
+        robot.frontRight.setPower(y_output - turn);
+        robot.backRight.setPower(x_output - turn);
+    }
 }
+
