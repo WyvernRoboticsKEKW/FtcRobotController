@@ -4,7 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -57,8 +63,25 @@ public class MecanumDrive_RecordInRAM extends LinearOpMode {
                 sleep(27);
             }
         }
+        Date date = new Date( );
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yy.MM.dd.hh.mm.ss.SSS");
+        try{
+            createFile("Recording." + dateFormat.format(date),x,y,turn);
+        } catch(IOException e){
+            e.printStackTrace();
+        }
     }
-
+    private void createFile(String fileName, List<Float> x, List<Float> y, List<Float> turn) throws IOException {
+        OutputStream out = new FileOutputStream("/storage/emulator/0/"+fileName);
+        DataOutputStream dataOut = new DataOutputStream(out);
+        for(int i = 0; i < x.size(); i++) {
+            dataOut.writeInt(i);
+            dataOut.writeFloat(x.get(i));
+            dataOut.writeFloat(y.get(i));
+            dataOut.writeFloat(turn.get(i));
+            dataOut.writeChar(32);
+        }
+    }
     private void runOperations(double x, double y, double turn){
         // Scaling x and y
         x *= Math.cos(theta);
