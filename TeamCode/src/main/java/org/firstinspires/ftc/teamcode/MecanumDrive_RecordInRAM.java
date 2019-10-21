@@ -45,8 +45,8 @@ public class MecanumDrive_RecordInRAM extends LinearOpMode {
 
                 if(gamepad1.back && !prevBack){
                     recording = true;
+                    prevBack = true;
                 }
-                prevBack = gamepad1.back;
                 sleep(30);
             }
             while(recording){
@@ -57,6 +57,9 @@ public class MecanumDrive_RecordInRAM extends LinearOpMode {
                 x.add(gamepad1.left_stick_x);
                 y.add(gamepad1.left_stick_y);
                 turn.add(gamepad1.right_trigger - gamepad1.left_trigger);
+                if(!gamepad1.back){
+                    prevBack = false;
+                }
                 if(gamepad1.back && !prevBack){
                     recording = false;
                 }
