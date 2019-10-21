@@ -82,7 +82,6 @@ public class MecanumDrive_RecordInRAM extends LinearOpMode {
             dataOut.writeFloat(x.get(i));
             dataOut.writeFloat(y.get(i));
             dataOut.writeFloat(turn.get(i));
-            dataOut.writeChar(32);
         }
     }
     private void runOperations(double x, double y, double turn){
