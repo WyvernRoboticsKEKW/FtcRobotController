@@ -78,7 +78,6 @@ public class MecanumDrive_RecordInRAM extends LinearOpMode {
         OutputStream out = new FileOutputStream("/storage/emulator/0/"+fileName);
         DataOutputStream dataOut = new DataOutputStream(out);
         for(int i = 0; i < x.size(); i++) {
-            dataOut.writeInt(i);
             dataOut.writeFloat(x.get(i));
             dataOut.writeFloat(y.get(i));
             dataOut.writeFloat(turn.get(i));
