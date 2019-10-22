@@ -75,7 +75,7 @@ public class MecanumDrive_RecordInRAM extends LinearOpMode {
         }
     }
     private void createFile(String fileName, List<Float> x, List<Float> y, List<Float> turn) throws IOException {
-        OutputStream out = new FileOutputStream("/storage/emulator/0/"+fileName);
+        OutputStream out = new FileOutputStream("/storage/emulated/0/"+fileName);
         DataOutputStream dataOut = new DataOutputStream(out);
         for(int i = 0; i < x.size(); i++) {
             dataOut.writeFloat(x.get(i));
