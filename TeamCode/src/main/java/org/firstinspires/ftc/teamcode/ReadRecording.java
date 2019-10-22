@@ -13,94 +13,58 @@ import java.util.Scanner;
 public class ReadRecording extends LinearOpMode {
 
     private Robot robot = new Robot();
+
     private final double theta = Math.PI / 4;
     private final double trans_factor = 1.0;
     private final double turn_factor = 1.0;
+
+    private List<Float> x    = new ArrayList<>(); // list of x inputs
+    private List<Float> y    = new ArrayList<>(); // list of y inputs
+    private List<Float> turn = new ArrayList<>(); // list of turn inputs
 
     @Override
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
 
-        List<Float> x    = new ArrayList<>(); // list of x inputs
-        List<Float> y    = new ArrayList<>(); // list of y inputs
-        List<Float> turn = new ArrayList<>(); // list of turn inputs
-
         // TODO Detect for Red or Blue Corner
         boolean isRedAndNotBlue = true;
-        try {
-            if (isRedAndNotBlue) {
-                Scanner scannerStart = new Scanner(new File("/storage/emulator/0/AutonomousStartRed.dat"));
-                while (scannerStart.hasNext()) {
-                    x.add(scannerStart.nextFloat());
-                    y.add(scannerStart.nextFloat());
-                    turn.add(scannerStart.nextFloat());
-                }
-                scannerStart.close();
-                int variation = detectSkyStones();
-                if (variation == 0) {
-                    Scanner scannerRed1 = new Scanner(new File("/storage/emulator/0/AutonomousRed1.dat"));
-                    while (scannerRed1.hasNext()) {
-                        x.add(scannerRed1.nextFloat());
-                        y.add(scannerRed1.nextFloat());
-                        turn.add(scannerRed1.nextFloat());
-                    }
-                    scannerRed1.close();
-                } else if (variation == 1) {
-                    Scanner scannerRed2 = new Scanner(new File("/storage/emulator/0/AutonomousRed2.dat"));
-                    while (scannerRed2.hasNext()) {
-                        x.add(scannerRed2.nextFloat());
-                        y.add(scannerRed2.nextFloat());
-                        turn.add(scannerRed2.nextFloat());
-                    }
-                    scannerRed2.close();
-                } else if (variation == 2) {
-                    Scanner scannerRed3 = new Scanner(new File("/storage/emulator/0/AutonomousRed3.dat"));
-                    while (scannerRed3.hasNext()) {
-                        x.add(scannerRed3.nextFloat());
-                        y.add(scannerRed3.nextFloat());
-                        turn.add(scannerRed3.nextFloat());
-                    }
-                    scannerRed3.close();
-                }
-            } else if (!isRedAndNotBlue) {
-                Scanner scannerStart = new Scanner(new File("/storage/emulator/0/AutonomousStartBlue.dat"));
-                while (scannerStart.hasNext()) {
-                    x.add(scannerStart.nextFloat());
-                    y.add(scannerStart.nextFloat());
-                    turn.add(scannerStart.nextFloat());
-                }
-                scannerStart.close();
-                int variation = detectSkyStones();
-                if (variation == 0) {
-                    Scanner scannerBlue1 = new Scanner(new File("/storage/emulator/0/AutonomousBlue1.dat"));
-                    while (scannerBlue1.hasNext()) {
-                        x.add(scannerBlue1.nextFloat());
-                        y.add(scannerBlue1.nextFloat());
-                        turn.add(scannerBlue1.nextFloat());
-                    }
-                    scannerBlue1.close();
-                } else if (variation == 1) {
-                    Scanner scannerBlue2 = new Scanner(new File("/storage/emulator/0/AutonomousBlue2.dat"));
-                    while (scannerBlue2.hasNext()) {
-                        x.add(scannerBlue2.nextFloat());
-                        y.add(scannerBlue2.nextFloat());
-                        turn.add(scannerBlue2.nextFloat());
-                    }
-                    scannerBlue2.close();
-                } else if (variation == 2) {
-                    Scanner scannerBlue3 = new Scanner(new File("/storage/emulator/0/AutonomousBlue3.dat"));
-                    while (scannerBlue3.hasNext()) {
-                        x.add(scannerBlue3.nextFloat());
-                        y.add(scannerBlue3.nextFloat());
-                        turn.add(scannerBlue3.nextFloat());
-                    }
-                    scannerBlue3.close();
-                }
-            }
-        }catch(FileNotFoundException e){
-            e.printStackTrace();
-        }
+
+        // This Next Section Detects the Variation of the Game and Creates the Autonomous Program
+        // Commented For Debugging Purposes
+//        if (isRedAndNotBlue) {
+//            createListPart("/storage/emulated/0/AutonomousStartRed.dat");
+//        } else if (!isRedAndNotBlue) {
+//            createListPart("/storage/emulated/0/AutonomousStartBlue.dat");
+//        }
         int i = 0;
+//        while(opModeIsActive()){
+//            runOperations(x.get(i), y.get(i), turn.get(i));
+//            i++;
+//            sleep(30);
+//        }
+//        if (isRedAndNotBlue) {
+//            int variation = detectSkyStones();
+//            if (variation == 0) {
+//                createListPart("/storage/emulated/0/AutonomousRed1.dat");
+//            } else if (variation == 1) {
+//                createListPart("/storage/emulated/0/AutonomousRed2.dat");
+//            } else if (variation == 2) {
+//                createListPart("/storage/emulated/0/AutonomousRed3.dat");
+//            }
+//        } else if (!isRedAndNotBlue) {
+//            int variation = detectSkyStones();
+//            if (variation == 0) {
+//                createListPart("/storage/emulated/0/AutonomousBlue1.dat");
+//            } else if (variation == 1) {
+//                createListPart("/storage/emulated/0/AutonomousBlue2.dat");
+//            } else if (variation == 2) {
+//                createListPart("/storage/emulated/0/AutonomousBlue3.dat");
+//            }
+//        }
+        // For Debugging Purposes
+        createListPart("/storage/emulated/0/test.dat");
+
+        // This Run the Autonomous Program
         while(opModeIsActive()){
             runOperations(x.get(i), y.get(i), turn.get(i));
             i++;
@@ -123,8 +87,21 @@ public class ReadRecording extends LinearOpMode {
         robot.backRight.setPower(x_output - turn);
     }
     private int detectSkyStones(){
-        int variation = (int)(Math.random()*3);
+        int variation = (int)Math.floor(Math.random()*3);
         // TODO Detect Which SkyStone Variation It Is
         return variation;
+    }
+    private void createListPart(String file){
+        try {
+            Scanner scanner = new Scanner(new File(file));
+            while (scanner.hasNext()) {
+                x.add(scanner.nextFloat());
+                y.add(scanner.nextFloat());
+                turn.add(scanner.nextFloat());
+            }
+            scanner.close();
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
     }
 }
