@@ -12,7 +12,7 @@ import java.util.Scanner;
 @Autonomous(name = "Read Recoding")
 public class ReadRecording extends LinearOpMode {
 
-    private Robot robot = new Robot();
+    private Argorok argorok = new Argorok();
 
     private final double theta = Math.PI / 4;
     private final double trans_factor = 1.0;
@@ -24,7 +24,7 @@ public class ReadRecording extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap);
+        argorok.init(hardwareMap);
 
         // TODO Detect for Red or Blue Corner
         boolean isRedAndNotBlue = true;
@@ -81,10 +81,10 @@ public class ReadRecording extends LinearOpMode {
         // Get Turn Input
         turn *= turn_factor;
         // Apply Outputs
-        robot.frontLeft.setPower(x_output + turn);
-        robot.backLeft.setPower(y_output + turn);
-        robot.frontRight.setPower(y_output - turn);
-        robot.backRight.setPower(x_output - turn);
+        argorok.frontLeft.setPower(x_output + turn);
+        argorok.backLeft.setPower(y_output + turn);
+        argorok.frontRight.setPower(y_output - turn);
+        argorok.backRight.setPower(x_output - turn);
     }
     private int detectSkyStones(){
         int variation = (int)Math.floor(Math.random()*3);

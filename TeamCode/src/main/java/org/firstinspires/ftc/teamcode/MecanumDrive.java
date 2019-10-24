@@ -21,16 +21,24 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class MecanumDrive extends LinearOpMode {
 
     // define robot and constants (won't be constants in the future)
-    private Robot robot = new Robot();
+    private Argorok argorok = new Argorok();
+
     private final double theta = Math.PI / 4;
     private final double trans_factor = 1.0;
     private final double turn_factor = 1.0;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap);
+        final double LEFTCLAWOPEN    = 0;
+        final double LEFTCLAWCLOSED  = 1;
+
+        final double RIGHTCLAWOPEN   = 0;
+        final double RIGHTCLAWCLOSED = 1;
+
+        argorok.init(hardwareMap);
         waitForStart();
         while(opModeIsActive()){
+
             // rotate axes
             double x = Math.abs(Math.cos(theta)) * gamepad1.left_stick_x;
             double y = Math.abs(Math.sin(theta)) * (-gamepad1.left_stick_y);
@@ -39,10 +47,17 @@ public class MecanumDrive extends LinearOpMode {
             // get turn input
             double turn = turn_factor * (gamepad1.right_trigger - gamepad1.left_trigger);
             // apply outputs
-            robot.frontLeft.setPower(x_output + turn);
-            robot.backLeft.setPower(y_output + turn);
-            robot.frontRight.setPower(y_output - turn);
-            robot.backRight.setPower(x_output - turn);
+            argorok.frontLeft.setPower(x_output + turn);
+            argorok.backLeft.setPower(y_output + turn);
+            argorok.frontRight.setPower(y_output - turn);
+            argorok.backRight.setPower(x_output - turn);
+            if(gamepad1.right_bumper){
+                argorok.rightClaw.setPosition(RIGHTCLAWOPEN);
+                argorok.leftClaw.setPosition(LEFTCLAWOPEN);
+            } else if(gamepad1.left_bumper){
+                argorok.rightClaw.setPosition(RIGHTCLAWCLOSED);
+                argorok.leftClaw.setPosition(LEFTCLAWCLOSED);
+            }
         }
     }
 }

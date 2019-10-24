@@ -18,14 +18,14 @@ import java.util.List;
 
 public class MecanumDrive_RecordInRAM extends LinearOpMode {
 
-    private Robot robot = new Robot();
+    private Argorok argorok = new Argorok();
     private final double theta = Math.PI / 4;
     private final double trans_factor = 1.0;
     private final double turn_factor = 1.0;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap);
+        argorok.init(hardwareMap);
 
         boolean recording = false;
 
@@ -93,10 +93,10 @@ public class MecanumDrive_RecordInRAM extends LinearOpMode {
         // Get Turn Input
         turn *= turn_factor;
         // Apply Outputs
-        robot.frontLeft.setPower(x_output + turn);
-        robot.backLeft.setPower(y_output + turn);
-        robot.frontRight.setPower(y_output - turn);
-        robot.backRight.setPower(x_output - turn);
+        argorok.frontLeft.setPower(x_output + turn);
+        argorok.backLeft.setPower(y_output + turn);
+        argorok.frontRight.setPower(y_output - turn);
+        argorok.backRight.setPower(x_output - turn);
     }
 }
 
