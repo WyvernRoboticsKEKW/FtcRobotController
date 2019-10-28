@@ -72,9 +72,6 @@ public class ReadRecording extends LinearOpMode {
         }
     }
     private void runOperations(double x, double y, double turn){
-        // Scaling x and y
-        x *= Math.cos(theta);
-        y *= Math.sin(theta);
         // Axis Rotation
         double x_output = trans_factor * ((x * Math.cos(theta)) + (y * Math.sin(theta)));
         double y_output = trans_factor * ((x * (-Math.sin(theta))) + (y * Math.cos(theta)));

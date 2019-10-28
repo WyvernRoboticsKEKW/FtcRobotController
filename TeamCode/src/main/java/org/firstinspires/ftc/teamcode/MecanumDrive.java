@@ -40,10 +40,8 @@ public class MecanumDrive extends LinearOpMode {
         while(opModeIsActive()){
 
             // rotate axes
-            double x = Math.abs(Math.cos(theta)) * gamepad1.left_stick_x;
-            double y = Math.abs(Math.sin(theta)) * (-gamepad1.left_stick_y);
-            double x_output = trans_factor * ((x * Math.cos(theta)) + (y * Math.sin(theta)));
-            double y_output = trans_factor * ((x * (-Math.sin(theta))) + (y * Math.cos(theta)));
+            double x_output = trans_factor * ((gamepad1.left_stick_x * Math.cos(theta)) + (-gamepad1.left_stick_y * Math.sin(theta)));
+            double y_output = trans_factor * ((gamepad1.left_stick_x * (-Math.sin(theta))) + (-gamepad1.left_stick_y * Math.cos(theta)));
             // get turn input
             double turn = turn_factor * (gamepad1.right_trigger - gamepad1.left_trigger);
             // apply outputs
