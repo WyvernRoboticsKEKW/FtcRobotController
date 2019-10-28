@@ -20,8 +20,8 @@ public class MecanumDrive_RecordInRAM extends LinearOpMode {
 
     private Argorok argorok = new Argorok();
     private final double theta = Math.PI / 4;
-    private final double trans_factor = 1.0;
-    private final double turn_factor = 1.0;
+    private final double trans_factor = 0.5;
+    private final double turn_factor = 0.5;
 
     @Override
     public void runOpMode() throws InterruptedException {

@@ -24,8 +24,8 @@ public class MecanumDrive extends LinearOpMode {
     private Argorok argorok = new Argorok();
 
     private final double theta = Math.PI / 4;
-    private final double trans_factor = 1.0;
-    private final double turn_factor = 1.0;
+    private final double trans_factor = 0.5;
+    private final double turn_factor = 0.5;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -38,7 +38,6 @@ public class MecanumDrive extends LinearOpMode {
         argorok.init(hardwareMap);
         waitForStart();
         while(opModeIsActive()){
-
             // rotate axes
             double x_output = trans_factor * ((gamepad1.left_stick_x * Math.cos(theta)) + (-gamepad1.left_stick_y * Math.sin(theta)));
             double y_output = trans_factor * ((gamepad1.left_stick_x * (-Math.sin(theta))) + (-gamepad1.left_stick_y * Math.cos(theta)));

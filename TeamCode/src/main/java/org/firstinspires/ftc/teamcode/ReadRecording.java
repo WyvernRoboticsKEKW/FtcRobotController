@@ -15,8 +15,8 @@ public class ReadRecording extends LinearOpMode {
     private Argorok argorok = new Argorok();
 
     private final double theta = Math.PI / 4;
-    private final double trans_factor = 1.0;
-    private final double turn_factor = 1.0;
+    private final double trans_factor = 0.5;
+    private final double turn_factor = 0.5;
 
     private List<Float> x    = new ArrayList<>(); // list of x inputs
     private List<Float> y    = new ArrayList<>(); // list of y inputs
