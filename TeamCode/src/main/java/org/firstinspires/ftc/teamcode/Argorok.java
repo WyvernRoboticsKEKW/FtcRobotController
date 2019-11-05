@@ -23,6 +23,11 @@ public class Argorok {
 
         hwmap = hwm;
 
+        frontRight = hwmap.get(DcMotor.class, "frontRight");
+        frontLeft = hwmap.get(DcMotor.class, "frontLeft");
+        backRight = hwmap.get(DcMotor.class, "backRight");
+        backLeft = hwmap.get(DcMotor.class, "backLeft");
+
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.FORWARD);
 

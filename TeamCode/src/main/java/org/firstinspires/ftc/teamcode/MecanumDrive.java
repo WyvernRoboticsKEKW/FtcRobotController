@@ -44,10 +44,10 @@ public class MecanumDrive extends LinearOpMode {
             // get turn input
             double turn = turn_factor * (gamepad1.right_trigger - gamepad1.left_trigger);
             // apply outputs
-            argorok.frontLeft.setPower(x_output + turn);
-            argorok.backLeft.setPower(y_output + turn);
-            argorok.frontRight.setPower(y_output - turn);
-            argorok.backRight.setPower(x_output - turn);
+            argorok.frontLeft.setPower(((x_output + turn)  < 0.05) ? 0 : x_output + turn);
+            argorok.backLeft.setPower(((y_output + turn)   < 0.05) ? 0 : y_output + turn);
+            argorok.frontRight.setPower(((y_output - turn) < 0.05) ? 0 : y_output - turn);
+            argorok.backRight.setPower(((x_output - turn)  < 0.05) ? 0 : x_output - turn);
             if(gamepad1.right_bumper){
                 argorok.rightClaw.setPosition(RIGHTCLAWOPEN);
                 argorok.leftClaw.setPosition(LEFTCLAWOPEN);
