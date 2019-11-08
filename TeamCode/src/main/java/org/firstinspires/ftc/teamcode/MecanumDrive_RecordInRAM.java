@@ -19,9 +19,9 @@ import java.util.List;
 public class MecanumDrive_RecordInRAM extends LinearOpMode {
 
     private Argorok argorok = new Argorok();
-    private final double theta = Math.PI / 4;
-    private final double trans_factor = 0.5;
-    private final double turn_factor = 0.5;
+    private final double theta = -Math.PI / 4;
+    private final double trans_factor = 1;
+    private final double turn_factor = 1;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -38,7 +38,7 @@ public class MecanumDrive_RecordInRAM extends LinearOpMode {
 
         while(opModeIsActive()){
             boolean prevBack = false;
-            while(!recording) {
+            while(!recording && opModeIsActive()) {
                 runOperations(gamepad1.left_stick_x,
                              -gamepad1.left_stick_y,
                               gamepad1.right_trigger - gamepad1.left_trigger);
@@ -49,39 +49,43 @@ public class MecanumDrive_RecordInRAM extends LinearOpMode {
                 }
                 sleep(30);
             }
-            while(recording){
+            while(recording && opModeIsActive()){
                 runOperations(gamepad1.left_stick_x,
                              -gamepad1.left_stick_y,
                               gamepad1.right_trigger - gamepad1.left_trigger);
                 // Record Values in Lists
                 x.add(gamepad1.left_stick_x);
-                y.add(gamepad1.left_stick_y);
+                y.add(-gamepad1.left_stick_y);
                 turn.add(gamepad1.right_trigger - gamepad1.left_trigger);
                 if(!gamepad1.back){
                     prevBack = false;
                 }
                 if(gamepad1.back && !prevBack){
                     recording = false;
+                    prevBack = true;
                 }
                 sleep(27);
             }
         }
-        Date date = new Date( );
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yy.MM.dd.hh.mm.ss.SSS");
+        //Date date = new Date( );
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("yy.MM.dd.hh.mm.ss.SSS");
         try{
-            createFile("Recording." + dateFormat.format(date),x,y,turn);
+            //createFile("Recording." + dateFormat.format(date),x,y,turn);
+            createFile("test.dat",x,y,turn);
         } catch(IOException e){
             e.printStackTrace();
         }
     }
     private void createFile(String fileName, List<Float> x, List<Float> y, List<Float> turn) throws IOException {
-        OutputStream out = new FileOutputStream("/storage/emulated/0/"+fileName);
+        OutputStream out = new FileOutputStream("/storage/emulated/0/" + fileName);
         DataOutputStream dataOut = new DataOutputStream(out);
         for(int i = 0; i < x.size(); i++) {
             dataOut.writeFloat(x.get(i));
             dataOut.writeFloat(y.get(i));
             dataOut.writeFloat(turn.get(i));
         }
+        dataOut.close();
+        out.close();
     }
     private void runOperations(double x, double y, double turn){
         // Axis Rotation
@@ -90,10 +94,10 @@ public class MecanumDrive_RecordInRAM extends LinearOpMode {
         // Get Turn Input
         turn *= turn_factor;
         // Apply Outputs
-        argorok.frontLeft.setPower(x_output + turn);
-        argorok.backLeft.setPower(y_output + turn);
-        argorok.frontRight.setPower(y_output - turn);
-        argorok.backRight.setPower(x_output - turn);
+        argorok.frontLeft.setPower(y_output + turn);
+        argorok.backLeft.setPower(x_output + turn);
+        argorok.frontRight.setPower(x_output - turn);
+        argorok.backRight.setPower(y_output - turn);
     }
 }
 

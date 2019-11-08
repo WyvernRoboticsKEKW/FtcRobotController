@@ -3,6 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+
 /*
  * This program is taking advantage of the fact that the
  * mecanum wheels can be translated into vectors angled
@@ -23,8 +27,8 @@ public class MecanumDrive extends LinearOpMode {
     // define robot and constants (won't be constants in the future)
     private Argorok argorok = new Argorok();
 
-    private final double theta = Math.PI / 4;
-    private final double trans_factor = 0.5;
+    private double theta = -Math.PI / 4;
+    private final double trans_factor = 1;
     private final double turn_factor = 0.5;
 
     @Override
@@ -36,25 +40,31 @@ public class MecanumDrive extends LinearOpMode {
         final double RIGHTCLAWCLOSED = 1;
 
         argorok.init(hardwareMap);
+
+        theta = argorok.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle - (Math.PI / 4);
+
         waitForStart();
         while(opModeIsActive()){
+
+            theta = argorok.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle - (Math.PI / 4);
+
             // rotate axes
             double x_output = trans_factor * ((gamepad1.left_stick_x * Math.cos(theta)) + (-gamepad1.left_stick_y * Math.sin(theta)));
             double y_output = trans_factor * ((gamepad1.left_stick_x * (-Math.sin(theta))) + (-gamepad1.left_stick_y * Math.cos(theta)));
             // get turn input
             double turn = turn_factor * (gamepad1.right_trigger - gamepad1.left_trigger);
             // apply outputs
-            argorok.frontLeft.setPower(((x_output + turn)  < 0.05) ? 0 : x_output + turn);
-            argorok.backLeft.setPower(((y_output + turn)   < 0.05) ? 0 : y_output + turn);
-            argorok.frontRight.setPower(((y_output - turn) < 0.05) ? 0 : y_output - turn);
-            argorok.backRight.setPower(((x_output - turn)  < 0.05) ? 0 : x_output - turn);
-            if(gamepad1.right_bumper){
-                argorok.rightClaw.setPosition(RIGHTCLAWOPEN);
-                argorok.leftClaw.setPosition(LEFTCLAWOPEN);
-            } else if(gamepad1.left_bumper){
-                argorok.rightClaw.setPosition(RIGHTCLAWCLOSED);
-                argorok.leftClaw.setPosition(LEFTCLAWCLOSED);
-            }
+            argorok.frontLeft.setPower(y_output + turn);
+            argorok.backLeft.setPower(x_output + turn);
+            argorok.frontRight.setPower(x_output - turn);
+            argorok.backRight.setPower(y_output - turn);
+            //if(gamepad1.right_bumper){
+            //    argorok.rightClaw.setPosition(RIGHTCLAWOPEN);
+            //    argorok.leftClaw.setPosition(LEFTCLAWOPEN);
+            //} else if(gamepad1.left_bumper){
+            //    argorok.rightClaw.setPosition(RIGHTCLAWCLOSED);
+            //    argorok.leftClaw.setPosition(LEFTCLAWCLOSED);
+            //}
         }
     }
 }

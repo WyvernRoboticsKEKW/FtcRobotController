@@ -3,20 +3,20 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-@Autonomous(name = "Read Recoding")
+@Autonomous(name = "Read Recording")
 public class ReadRecording extends LinearOpMode {
 
     private Argorok argorok = new Argorok();
 
-    private final double theta = Math.PI / 4;
-    private final double trans_factor = 0.5;
-    private final double turn_factor = 0.5;
+    private final double theta = -Math.PI / 4;
+    private final double trans_factor = 1;
+    private final double turn_factor = 1;
 
     private List<Float> x    = new ArrayList<>(); // list of x inputs
     private List<Float> y    = new ArrayList<>(); // list of y inputs
@@ -25,9 +25,8 @@ public class ReadRecording extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         argorok.init(hardwareMap);
+        waitForStart();
 
-        // TODO Detect for Red or Blue Corner
-        boolean isRedAndNotBlue = true;
 
         // This Next Section Detects the Variation of the Game and Creates the Autonomous Program
         // Commented For Debugging Purposes
@@ -65,7 +64,7 @@ public class ReadRecording extends LinearOpMode {
         createListPart("/storage/emulated/0/test.dat");
 
         // This Run the Autonomous Program
-        while(opModeIsActive()){
+        while(opModeIsActive() && i < x.size()){
             runOperations(x.get(i), y.get(i), turn.get(i));
             i++;
             sleep(30);
@@ -78,10 +77,10 @@ public class ReadRecording extends LinearOpMode {
         // Get Turn Input
         turn *= turn_factor;
         // Apply Outputs
-        argorok.frontLeft.setPower(x_output + turn);
-        argorok.backLeft.setPower(y_output + turn);
-        argorok.frontRight.setPower(y_output - turn);
-        argorok.backRight.setPower(x_output - turn);
+        argorok.frontLeft.setPower(y_output + turn);
+        argorok.backLeft.setPower(x_output + turn);
+        argorok.frontRight.setPower(x_output - turn);
+        argorok.backRight.setPower(y_output - turn);
     }
     private int detectSkyStones(){
         int variation = (int)Math.floor(Math.random()*3);
@@ -90,14 +89,14 @@ public class ReadRecording extends LinearOpMode {
     }
     private void createListPart(String file){
         try {
-            Scanner scanner = new Scanner(new File(file));
-            while (scanner.hasNext()) {
-                x.add(scanner.nextFloat());
-                y.add(scanner.nextFloat());
-                turn.add(scanner.nextFloat());
+            DataInputStream dis = new DataInputStream(new FileInputStream(file));
+            while (dis.available()>0) {
+                x.add(dis.readFloat());
+                y.add(dis.readFloat());
+                turn.add(dis.readFloat());
             }
-            scanner.close();
-        }catch(FileNotFoundException e){
+            dis.close();
+        }catch(IOException e){
             e.printStackTrace();
         }
     }
