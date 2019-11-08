@@ -61,7 +61,7 @@ public class ReadRecording extends LinearOpMode {
 //            }
 //        }
         // For Debugging Purposes
-        createListPart("/storage/emulated/0/test.dat");
+        try{createListPart("/storage/emulated/0/test.dat");}catch(IOException e){e.printStackTrace();}
 
         // This Run the Autonomous Program
         while(opModeIsActive() && i < x.size()){
@@ -87,17 +87,13 @@ public class ReadRecording extends LinearOpMode {
         // TODO Detect Which SkyStone Variation It Is
         return variation;
     }
-    private void createListPart(String file){
-        try {
-            DataInputStream dis = new DataInputStream(new FileInputStream(file));
-            while (dis.available()>0) {
-                x.add(dis.readFloat());
-                y.add(dis.readFloat());
-                turn.add(dis.readFloat());
-            }
-            dis.close();
-        }catch(IOException e){
-            e.printStackTrace();
+    private void createListPart(String file) throws IOException {
+        DataInputStream dis = new DataInputStream(new FileInputStream(file));
+        while (dis.available()>0) {
+            x.add(dis.readFloat());
+            y.add(dis.readFloat());
+            turn.add(dis.readFloat());
         }
+        dis.close();
     }
 }
