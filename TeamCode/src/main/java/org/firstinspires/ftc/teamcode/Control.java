@@ -12,8 +12,8 @@ public class Control {
     private Argorok argorok;
 
     private double theta = -Math.PI / 4;
-    private double trans_factor = 1;
-    private double turn_factor = 0.5;
+    public double trans_factor = 1;
+    public double turn_factor = 0.5;
 
     Control(Argorok argorok){
         this.argorok = argorok;
