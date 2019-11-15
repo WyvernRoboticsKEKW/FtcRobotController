@@ -15,6 +15,12 @@ public class Control {
     public double trans_factor = 1;
     public double turn_factor = 0.5;
 
+    private final double LEFTCLAWOPEN    = 0;
+    private final double LEFTCLAWCLOSED  = 1;
+
+    private final double RIGHTCLAWOPEN   = 0;
+    private final double RIGHTCLAWCLOSED = 1;
+
     Control(Argorok argorok){
         this.argorok = argorok;
     }
@@ -42,5 +48,17 @@ public class Control {
         argorok.backLeft.setPower(x_output + turn);
         argorok.frontRight.setPower(x_output - turn);
         argorok.backRight.setPower(y_output - turn);
+    }
+    public void runClamp(boolean clamped){
+        if(!clamped){
+            argorok.rightClaw.setPosition(RIGHTCLAWOPEN);
+            argorok.leftClaw.setPosition(LEFTCLAWOPEN);
+        } else {
+            argorok.rightClaw.setPosition(RIGHTCLAWCLOSED);
+            argorok.leftClaw.setPosition(LEFTCLAWCLOSED);
+        }
+    }
+    public void liftPower(double power){
+        argorok.lift.setPower(power);
     }
 }

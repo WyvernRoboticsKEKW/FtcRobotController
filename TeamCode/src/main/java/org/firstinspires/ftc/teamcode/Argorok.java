@@ -14,14 +14,16 @@ public class Argorok {
     DcMotor frontRight = null;
     DcMotor backRight = null;
 
-    //DcMotor lift = null;
+    BNO055IMU imu = null;
 
-    //Servo leftClaw = null;
-    //Servo rightClaw = null;
+    DcMotor lift = null;
+
+    Servo leftClaw = null;
+    Servo rightClaw = null;
 
     HardwareMap hwmap = null;
 
-    BNO055IMU imu = null;
+
 
     public void init(HardwareMap hwm){
 
@@ -49,10 +51,17 @@ public class Argorok {
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        //lift.setDirection(DcMotor.Direction.FORWARD);
+        lift = hwmap.get(DcMotor.class, "lift");
 
-        //leftClaw.setDirection();
-        //rightClaw.setDirection();
+        lift.setDirection(DcMotor.Direction.FORWARD);
+
+        leftClaw = hwmap.get(Servo.class, "leftClaw");
+        rightClaw = hwmap.get(Servo.class, "rightClaw");
+
+        leftClaw.setDirection(Servo.Direction.FORWARD);
+        rightClaw.setDirection(Servo.Direction.REVERSE);
+        leftClaw.setPosition(0);
+        rightClaw.setPosition(0);
     }
 
 }

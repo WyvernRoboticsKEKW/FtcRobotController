@@ -19,9 +19,11 @@ public class Macro {
 
     private int index = 0;
 
-    private List<Float> x = new ArrayList<>();    // list of x inputs
-    private List<Float> y = new ArrayList<>();    // list of y inputs
-    private List<Float> turn = new ArrayList<>(); // list of turn inputs
+    private List<Float> x      = new ArrayList<>();
+    private List<Float> y      = new ArrayList<>();
+    private List<Float> turn   = new ArrayList<>();
+    private List<Float> lift   = new ArrayList<>();
+    private List<Boolean> claw = new ArrayList<>();
 
     Macro (Control control,String name) {
         this.control = control;
@@ -37,6 +39,8 @@ public class Macro {
                 x.add(inputStream.readFloat());
                 y.add(inputStream.readFloat());
                 turn.add(inputStream.readFloat());
+                lift.add(inputStream.readFloat());
+                claw.add(inputStream.readBoolean());
             }
             inputStream.close();
         }
@@ -59,6 +63,8 @@ public class Macro {
 
     public void execute () {
         control.runMecanum(x.get(index),y.get(index),turn.get(index),mode);
+        control.runClamp(claw.get(index));
+        control.liftPower(lift.get(index));
         index++;
     }
 
@@ -66,17 +72,19 @@ public class Macro {
         while(index < x.size()){
             execute();
             try {
-                Thread.sleep(30);
+                Thread.sleep(27);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void record(float x, float y, float turn) {
+    public void record(float x, float y, float turn, float lift, boolean claw) {
         this.x.add(x);
         this.y.add(y);
         this.turn.add(turn);
+        this.lift.add(lift);
+        this.claw.add(claw);
     }
 
     public void save(String path) {
@@ -87,6 +95,8 @@ public class Macro {
                 dataOut.writeFloat(x.get(i));
                 dataOut.writeFloat(y.get(i));
                 dataOut.writeFloat(turn.get(i));
+                dataOut.writeFloat(lift.get(i));
+                dataOut.writeBoolean(claw.get(i));
             }
             dataOut.close();
             out.close();

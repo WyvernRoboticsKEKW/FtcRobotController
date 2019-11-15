@@ -44,18 +44,38 @@ public class MacroManager {
                 e.printStackTrace();
             }
         }
+        boolean claw = false;
         while(opmode.opModeIsActive() && !opmode.gamepad1.back){
             float x = opmode.gamepad1.left_stick_x;
             float y = -opmode.gamepad1.left_stick_y;
             float turn = opmode.gamepad1.right_trigger - opmode.gamepad1.left_trigger;
+            float lift = opmode.gamepad1.a ? (opmode.gamepad1.b ? 0f : 0.25f) : (opmode.gamepad1.b ? -0.25f : 0f);
+            claw = !(opmode.gamepad1.left_bumper && opmode.gamepad1.right_bumper) ?
+                    opmode.gamepad1.right_bumper : claw;
             control.runMecanum(x,y,turn,macro.getMode());
-            macro.record(x,y,turn);
+            control.liftPower(lift);
+            control.runClamp(claw);
+            macro.record(x,y,turn,lift,claw);
             opmode.sleep(27);
         }
     }
 
-    public void saveMacro(String path){
-
+    public void saveMacro(String name, String path){
+        Macro macro = null;
+        for(Macro m : macros){
+            if(m.getName() == name){
+                macro = m;
+            }
+        }
+        if(macro == null){
+            try {
+                throw new Exception();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        macro.save(path);
     }
 
 }
