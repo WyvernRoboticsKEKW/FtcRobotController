@@ -12,14 +12,15 @@ public class Control {
     private Argorok argorok;
 
     private double theta = -Math.PI / 4;
+    private double theta_adjustment = 0;
     public double trans_factor = 1;
     public double turn_factor = 0.5;
 
-    private final double LEFTCLAWOPEN    = 0;
-    private final double LEFTCLAWCLOSED  = 1;
+    private final double LEFTCLAWOPEN    = 0.53;
+    private final double LEFTCLAWCLOSED  = 0;
 
-    private final double RIGHTCLAWOPEN   = 0;
-    private final double RIGHTCLAWCLOSED = 1;
+    private final double RIGHTCLAWOPEN   = 0.53;
+    private final double RIGHTCLAWCLOSED = 0;
 
     Control(Argorok argorok){
         this.argorok = argorok;
@@ -36,7 +37,7 @@ public class Control {
         double theta = mode == "field" ? this.theta +
                 argorok.imu.getAngularOrientation(AxesReference.INTRINSIC,
                         AxesOrder.ZYX,
-                        AngleUnit.RADIANS).firstAngle
+                        AngleUnit.RADIANS).firstAngle + theta_adjustment
                 : this.theta;
 
         double x_output = trans_factor * ((x * Math.cos(theta)) + (y * Math.sin(theta)));
@@ -60,5 +61,11 @@ public class Control {
     }
     public void liftPower(double power){
         argorok.lift.setPower(power);
+    }
+    public void resetHeading() {
+        theta_adjustment = -argorok.imu.getAngularOrientation(
+                                    AxesReference.INTRINSIC,
+                                    AxesOrder.ZYX,
+                                    AngleUnit.RADIANS).firstAngle;
     }
 }

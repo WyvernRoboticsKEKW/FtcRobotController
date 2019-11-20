@@ -61,6 +61,10 @@ public class Macro {
         this.mode = mode;
     }
 
+    public void reset () {
+        index = 0;
+    }
+
     public void execute () {
         control.runMecanum(x.get(index),y.get(index),turn.get(index),mode);
         control.runClamp(claw.get(index));
@@ -68,9 +72,33 @@ public class Macro {
         index++;
     }
 
+    public void executeReverse () {
+        int length = x.size();
+        index--;
+        control.runMecanum(-x.get(length - index),-y.get(length - index),-turn.get(length - index),mode);
+        control.runClamp(claw.get(length - index));
+        control.liftPower(-lift.get(length - index));
+        index+=2;
+    }
+
+    public boolean isFinished () {
+        return index >= x.size();
+    }
+
     public void executeLoop () {
         while(index < x.size()){
             execute();
+            try {
+                Thread.sleep(27);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void executeReverseLoop() {
+        while(index < x.size()){
+            executeReverse();
             try {
                 Thread.sleep(27);
             } catch (InterruptedException e) {

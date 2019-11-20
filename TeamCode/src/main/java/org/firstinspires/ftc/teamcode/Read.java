@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Test Read")
-public class TestRead extends LinearOpMode {
+@Autonomous(name="Read")
+public class Read extends LinearOpMode {
 
 
     Argorok argorok = new Argorok();

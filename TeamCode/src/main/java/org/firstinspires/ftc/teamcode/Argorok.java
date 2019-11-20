@@ -53,15 +53,18 @@ public class Argorok {
 
         lift = hwmap.get(DcMotor.class, "lift");
 
-        lift.setDirection(DcMotor.Direction.FORWARD);
+        lift.setDirection(DcMotor.Direction.REVERSE);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         leftClaw = hwmap.get(Servo.class, "leftClaw");
         rightClaw = hwmap.get(Servo.class, "rightClaw");
 
-        leftClaw.setDirection(Servo.Direction.FORWARD);
-        rightClaw.setDirection(Servo.Direction.REVERSE);
-        leftClaw.setPosition(0);
-        rightClaw.setPosition(0);
+        leftClaw.setDirection(Servo.Direction.REVERSE);
+        rightClaw.setDirection(Servo.Direction.FORWARD);
+        leftClaw.setPosition(0.53);
+        rightClaw.setPosition(0.53);
+
+
     }
 
 }
