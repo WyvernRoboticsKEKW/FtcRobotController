@@ -17,7 +17,7 @@ public class Control {
     private double theta = -Math.PI / 4;
     private double theta_adjustment = 0;
     public double trans_factor = 1;
-    public double turn_factor = 0.5;
+    public double turn_factor = 1;
 
     private final double LEFTCLAWOPEN    = 0.53;
     private final double LEFTCLAWCLOSED  = 0;
@@ -35,6 +35,11 @@ public class Control {
 
     public void init(HardwareMap hwmap) {
         argorok.init(hwmap);
+
+    }
+
+    public void vuforiaInit(){
+        argorok.vuforiaInit();
         targetsSkyStone = argorok.vuforia.loadTrackablesFromAsset("Skystone");
         stoneTarget = targetsSkyStone.get(0);
     }
@@ -42,13 +47,20 @@ public class Control {
 
 
     public void runMecanum(double x, double y, double turn, String mode) {
-
-        double theta = mode == "field" ? this.theta +
-                argorok.imu.getAngularOrientation(AxesReference.INTRINSIC,
-                        AxesOrder.ZYX,
-                        AngleUnit.RADIANS).firstAngle + theta_adjustment
-                : this.theta;
-
+        double imuTheta = argorok.imu.getAngularOrientation(AxesReference.INTRINSIC,
+                AxesOrder.ZYX,
+                AngleUnit.RADIANS).firstAngle + theta_adjustment;
+        double theta;
+        switch (mode){
+            case "auto":
+                theta = this.theta + imuTheta + Math.PI;
+                break;
+            case "field":
+                theta = this.theta + imuTheta;
+                break;
+            default:
+                theta = this.theta + theta_adjustment;
+        }
         double x_output = trans_factor * ((x * Math.cos(theta)) + (y * Math.sin(theta)));
         double y_output = trans_factor * ((x * (-Math.sin(theta))) + (y * Math.cos(theta)));
         // Get Turn Input

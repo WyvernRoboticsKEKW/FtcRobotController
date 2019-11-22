@@ -36,34 +36,34 @@ public class Drive extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             if (!(recordingMacro||runningMacro||runningReverse)) {
-                if(gamepad1.dpad_left){
+                if(gamepad1.dpad_left||gamepad2.dpad_left){
                     recordingMacro = true;
                 }
-                if (gamepad1.left_bumper) {
+                if (gamepad1.left_bumper||gamepad2.left_bumper) {
                     currentMacro = "Macro1";
-                } else if (gamepad1.right_bumper) {
+                } else if (gamepad1.right_bumper||gamepad2.right_bumper) {
                     currentMacro = "Macro2";
                 }
 
-                if(gamepad1.dpad_up){
+                if(gamepad1.dpad_up||gamepad2.dpad_up){
                     runningMacro = true;
                 }
 
                 if (driveMode) {
-                    control.runMecanum(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_trigger - gamepad1.left_trigger, "field");
+                    control.runMecanum(gamepad1.left_stick_x + gamepad2.left_stick_x, -(gamepad1.left_stick_y + gamepad2.left_stick_y), (gamepad1.right_trigger + gamepad2.right_trigger) - (gamepad1.left_trigger + gamepad2.left_trigger), "field");
                 } else {
-                    control.runMecanum(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_trigger - gamepad1.left_trigger, "robot");
+                    control.runMecanum(gamepad1.left_stick_x + gamepad2.left_stick_x, -(gamepad1.left_stick_y + gamepad2.left_stick_y), (gamepad1.right_trigger + gamepad2.right_trigger) - (gamepad1.left_trigger + gamepad2.left_trigger), "robot");
                 }
 
-                driveMode = (gamepad1.back && !prevBack) != driveMode;
-                prevBack = gamepad1.back;
-                if (gamepad1.start) {
+                driveMode = ((gamepad1.back||gamepad2.back)&& !prevBack) != driveMode;
+                prevBack = (gamepad1.back||gamepad2.back);
+                if (gamepad1.start||gamepad2.start) {
                     control.resetHeading();
                 }
                 if (liftMode) {
-                    if (gamepad1.a) {
+                    if (gamepad1.a||gamepad2.a) {
                         control.liftPower(-0.5);
-                    } else if (gamepad1.b) {
+                    } else if (gamepad1.b||gamepad2.b) {
                         control.liftPower(0.9);
                     } else {
                         control.liftPower(0);
@@ -72,12 +72,12 @@ public class Drive extends LinearOpMode {
                     liftMode = true;
                     // TODO static lift mode
                 }
-                clamp = (gamepad1.x && !prevx) != clamp;
-                prevx = gamepad1.x;
+                clamp = ((gamepad1.x||gamepad2.x) && !prevx) != clamp;
+                prevx = (gamepad1.x||gamepad2.x);
                 control.runClamp(clamp);
 
-                liftMode = (gamepad1.y && !prevy) != liftMode;
-                prevy = gamepad1.y;
+                liftMode = ((gamepad1.y||gamepad2.y) && !prevy) != liftMode;
+                prevy = (gamepad1.y||gamepad2.y);
 
                 telemetry.addLine("not recording");
                 telemetry.update();
