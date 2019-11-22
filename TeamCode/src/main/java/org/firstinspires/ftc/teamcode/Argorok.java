@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+
 public class Argorok {
 
     DcMotor frontLeft = null;
@@ -23,7 +26,10 @@ public class Argorok {
 
     HardwareMap hwmap = null;
 
+    int cameraMonitorViewId = 0;
+    VuforiaLocalizer.Parameters vuforiaParameters = null;
 
+    VuforiaLocalizer vuforia = null;
 
     public void init(HardwareMap hwm){
 
@@ -64,6 +70,12 @@ public class Argorok {
         leftClaw.setPosition(0.53);
         rightClaw.setPosition(0.53);
 
+        cameraMonitorViewId = hwmap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwmap.appContext.getPackageName());
+        vuforiaParameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+
+        vuforiaParameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        vuforiaParameters.vuforiaLicenseKey = "AS0Qfpn/////AAABmdFAn2iov0QImOtp/XgRhFxAvPqzhw/GpmCGnRZekfTfhkIpoyTT1NbJ2he6/39JxvL24yjivPORVedIEIKNr0q31Z5OtRpyJa38Y44wJg7RMlcQ0DcfJM3IHu032uYWae4B9domr2u1LAO2bgBh3y+eCzcDda0Q7K1PUMlRgXKnH2aFALTTy4nbjPHtY0PFIRAm/TCZTqDgONIJeBnkUiVGwIUXYMKKbUQMu+8ZnxIt1eFwScmiMh3oI0M6zpoXfiX1ud7XZUFHoq0QLplViaYn7JGA4SYP0r5QKeOi+4F5GI0mgqzrrOPv6FLVUQwJkjgGshRuf/uqcm3wBbu28grz+RZH0FVL7v1mni4+S7Oz";
+        vuforia = ClassFactory.getInstance().createVuforia(vuforiaParameters);
 
     }
 

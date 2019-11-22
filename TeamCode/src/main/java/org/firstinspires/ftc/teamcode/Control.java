@@ -6,6 +6,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 public class Control {
 
@@ -22,12 +25,18 @@ public class Control {
     private final double RIGHTCLAWOPEN   = 0.53;
     private final double RIGHTCLAWCLOSED = 0;
 
+    VuforiaTrackables targetsSkyStone = null;
+
+    VuforiaTrackable stoneTarget = null;
+
     Control(Argorok argorok){
         this.argorok = argorok;
     }
 
     public void init(HardwareMap hwmap) {
         argorok.init(hwmap);
+        targetsSkyStone = argorok.vuforia.loadTrackablesFromAsset("Skystone");
+        stoneTarget = targetsSkyStone.get(0);
     }
 
 
@@ -67,5 +76,8 @@ public class Control {
                                     AxesReference.INTRINSIC,
                                     AxesOrder.ZYX,
                                     AngleUnit.RADIANS).firstAngle;
+    }
+    public boolean isStoneVisible() {
+        return ((VuforiaTrackableDefaultListener)stoneTarget.getListener()).isVisible();
     }
 }

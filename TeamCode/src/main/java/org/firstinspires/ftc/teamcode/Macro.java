@@ -15,7 +15,7 @@ public class Macro {
 
     private String name;
 
-    private String mode = "robot";
+    private String mode = "field";
 
     private int index = 0;
 
@@ -83,6 +83,58 @@ public class Macro {
 
     public boolean isFinished () {
         return index >= x.size();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Float> getX() {
+        return x;
+    }
+
+    public void setX(List<Float> x) {
+        this.x = x;
+    }
+
+    public List<Float> getY() {
+        return y;
+    }
+
+    public void setY(List<Float> y) {
+        this.y = y;
+    }
+
+    public List<Float> getTurn() {
+        return turn;
+    }
+
+    public void setTurn(List<Float> turn) {
+        this.turn = turn;
+    }
+
+    public List<Float> getLift() {
+        return lift;
+    }
+
+    public void setLift(List<Float> lift) {
+        this.lift = lift;
+    }
+
+    public List<Boolean> getClaw() {
+        return claw;
+    }
+
+    public void setClaw(List<Boolean> claw) {
+        this.claw = claw;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public void executeLoop () {

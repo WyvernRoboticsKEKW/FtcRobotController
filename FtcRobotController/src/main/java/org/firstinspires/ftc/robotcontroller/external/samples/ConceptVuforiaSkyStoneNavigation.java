@@ -359,3 +359,4 @@ public class ConceptVuforiaSkyStoneNavigation extends LinearOpMode {
         targetsSkyStone.deactivate();
     }
 }
+

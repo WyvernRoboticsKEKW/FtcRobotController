@@ -54,6 +54,8 @@ public class MacroManager {
         macro.reset();
 
         while(opmode.opModeIsActive() && !opmode.gamepad1.dpad_down){
+            opmode.telemetry.addLine("recording");
+            opmode.telemetry.update();
             float x = opmode.gamepad1.left_stick_x;
             float y = -opmode.gamepad1.left_stick_y;
             float turn = opmode.gamepad1.right_trigger - opmode.gamepad1.left_trigger;
@@ -99,6 +101,34 @@ public class MacroManager {
             }
         }
         macro.save(path);
+    }
+
+    public void executeMacro(String name) {
+        Macro macro = find(name);
+        macro.reset();
+
+        while(macro.getIndex() < macro.getX().size()&&!opmode.gamepad1.dpad_up&&opmode.opModeIsActive()){
+            macro.execute();
+            try {
+                Thread.sleep(27);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void executeReverse(String name) {
+        Macro macro = find(name);
+        macro.reset();
+
+        while(macro.getIndex() < macro.getX().size()&&!opmode.gamepad1.dpad_up&&opmode.opModeIsActive()){
+            macro.executeReverse();
+            try {
+                Thread.sleep(27);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

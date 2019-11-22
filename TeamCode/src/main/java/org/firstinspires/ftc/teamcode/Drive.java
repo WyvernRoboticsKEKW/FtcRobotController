@@ -22,8 +22,8 @@ public class Drive extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        argorok.init(hardwareMap);
         Control control = new Control(argorok);
+        control.init(hardwareMap);
         MacroManager macroManager = new MacroManager(this, control);
 
         String currentMacro = "Macro1";
@@ -35,7 +35,7 @@ public class Drive extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()) {
-            if (!recordingMacro) {
+            if (!(recordingMacro||runningMacro||runningReverse)) {
                 if(gamepad1.dpad_left){
                     recordingMacro = true;
                 }
@@ -44,36 +44,17 @@ public class Drive extends LinearOpMode {
                 } else if (gamepad1.right_bumper) {
                     currentMacro = "Macro2";
                 }
-                if (gamepad1.dpad_up && !runningMacro) {
+
+                if(gamepad1.dpad_up){
                     runningMacro = true;
-                } else if (runningMacro && macroManager.find(currentMacro).isFinished()) {
-                    runningMacro = false;
-                    macroManager.find(currentMacro).reset();
-                } else if (runningMacro && gamepad1.dpad_up) {
-                    runningMacro = false;
-                    macroManager.find(currentMacro).reset();
-                } else if (gamepad1.dpad_right && !runningReverse) {
-                    runningReverse = true;
-                } else if (runningReverse && macroManager.find(currentMacro).isFinished()) {
-                    runningReverse = false;
-                    macroManager.find(currentMacro).reset();
-                } else if (runningReverse && gamepad1.dpad_right) {
-                    runningReverse = false;
-                    macroManager.find(currentMacro).reset();
                 }
-                if (runningMacro && !macroManager.find(currentMacro).isFinished()) {
-                    macroManager.find(currentMacro).execute();
+
+                if (driveMode) {
+                    control.runMecanum(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_trigger - gamepad1.left_trigger, "field");
+                } else {
+                    control.runMecanum(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_trigger - gamepad1.left_trigger, "robot");
                 }
-                if(runningReverse && !macroManager.find(currentMacro).isFinished()) {
-                    macroManager.find(currentMacro).executeReverse();
-                }
-                if (!(runningMacro || runningReverse)) {
-                    if (driveMode) {
-                        control.runMecanum(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_trigger - gamepad1.left_trigger, "field");
-                    } else {
-                        control.runMecanum(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_trigger - gamepad1.left_trigger, "robot");
-                    }
-                }
+
                 driveMode = (gamepad1.back && !prevBack) != driveMode;
                 prevBack = gamepad1.back;
                 if (gamepad1.start) {
@@ -85,9 +66,10 @@ public class Drive extends LinearOpMode {
                     } else if (gamepad1.b) {
                         control.liftPower(0.9);
                     } else {
-                        control.liftPower((runningMacro||runningReverse) ? argorok.lift.getPower() : 0);
+                        control.liftPower(0);
                     }
                 } else {
+                    liftMode = true;
                     // TODO static lift mode
                 }
                 clamp = (gamepad1.x && !prevx) != clamp;
@@ -97,9 +79,18 @@ public class Drive extends LinearOpMode {
                 liftMode = (gamepad1.y && !prevy) != liftMode;
                 prevy = gamepad1.y;
 
-            } else {
+                telemetry.addLine("not recording");
+                telemetry.update();
+
+            } else if (recordingMacro) {
                 macroManager.recordMacro(currentMacro);
+                recordingMacro = false;
+            } else if (runningMacro) {
+                macroManager.executeMacro(currentMacro);
                 runningMacro = false;
+            } else if (runningReverse) {
+                macroManager.executeReverse(currentMacro);
+                runningReverse = false;
             }
         }
     }
