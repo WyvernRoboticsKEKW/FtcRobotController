@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +60,14 @@ public class MacroManager {
             float x = opmode.gamepad1.left_stick_x + opmode.gamepad2.left_stick_x;
             float y = -(opmode.gamepad1.left_stick_y + opmode.gamepad2.left_stick_y);
             float turn = (opmode.gamepad1.right_trigger + opmode.gamepad2.right_trigger) - (opmode.gamepad1.left_trigger + opmode.gamepad2.left_trigger);
+            if (!(opmode.gamepad1.left_stick_button || opmode.gamepad2.left_stick_button)) {
+                x *= 0.4;
+                y *= 0.4;
+                turn *=0.4;
+            }
             float lift;
             if(opmode.liftMode){
+                opmode.argorok.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 if (opmode.gamepad1.a||opmode.gamepad2.a) {
                     lift = -0.5f;
                 } else if (opmode.gamepad1.b||opmode.gamepad2.b) {
@@ -69,8 +76,23 @@ public class MacroManager {
                     lift = 0f;
                 }
             } else {
-                //TODO static mode
-                lift = 0f;
+                opmode.argorok.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                if((opmode.gamepad1.a||opmode.gamepad2.a)&&!opmode.preva) {
+                    opmode.liftHeight = (opmode.liftHeight + 4) % 5;
+                } else if ((opmode.gamepad1.b||opmode.gamepad2.b)&&!opmode.prevb){
+                    opmode.liftHeight = (opmode.liftHeight + 1) % 5;
+                }
+                opmode.preva = (opmode.gamepad1.a||opmode.gamepad2.a);
+                opmode.prevb = (opmode.gamepad1.b||opmode.gamepad2.b);
+                opmode.argorok.lift.setTargetPosition(200*opmode.liftHeight);
+                control.liftPower(0.9);
+                if(opmode.argorok.lift.isBusy()){
+                    lift = Math.signum(opmode.argorok.lift.getTargetPosition() - opmode.argorok.lift.getCurrentPosition())*0.9f;
+                } else {
+                    lift = 0f;
+                }
+                opmode.telemetry.addLine("Current Position: "+opmode.argorok.lift.getCurrentPosition());
             }
             opmode.clamp = ((opmode.gamepad1.x||opmode.gamepad2.x) && !opmode.prevx) != opmode.clamp;
             opmode.prevx = opmode.gamepad1.x||opmode.gamepad2.x;
