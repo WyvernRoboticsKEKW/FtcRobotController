@@ -60,7 +60,7 @@ public class MacroManager {
             float x = opmode.gamepad1.left_stick_x + opmode.gamepad2.left_stick_x;
             float y = -(opmode.gamepad1.left_stick_y + opmode.gamepad2.left_stick_y);
             float turn = (opmode.gamepad1.right_trigger + opmode.gamepad2.right_trigger) - (opmode.gamepad1.left_trigger + opmode.gamepad2.left_trigger);
-            if (!(opmode.gamepad1.left_stick_button || opmode.gamepad2.left_stick_button)) {
+            if (opmode.gamepad1.left_stick_button || opmode.gamepad2.left_stick_button) {
                 x *= 0.4;
                 y *= 0.4;
                 turn *=0.4;
