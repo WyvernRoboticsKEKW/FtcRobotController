@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Read")
-public class Read extends LinearOpMode {
+@Autonomous(name="ReadInverse")
+public class ReadInverse extends LinearOpMode {
 
     Argorok argorok = new Argorok();
 
@@ -17,6 +17,6 @@ public class Read extends LinearOpMode {
         macro.setMode("auto");
 
         waitForStart();
-        macro.executeLoop();
+        macro.executeInverseLoop();
     }
 }

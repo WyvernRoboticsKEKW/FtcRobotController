@@ -74,13 +74,17 @@ public class Macro {
 
     public void executeReverse () {
         int length = x.size();
-        index--;
-        control.runMecanum(-x.get(length - index),-y.get(length - index),-turn.get(length - index),mode);
-        control.runClamp(claw.get(length - index));
-        control.liftPower(-lift.get(length - index));
-        index+=2;
+        control.runMecanum(-x.get(length - (index+1)),-y.get(length - (index+1)),-turn.get(length - (index+1)),mode);
+        control.runClamp(claw.get(length - (index+1)));
+        control.liftPower(lift.get(length - (index+1))==0.9f ? -0.5f : lift.get(length - (index+1))==0.0f ? 0.0f : 0.9);
+        index++;
     }
-
+    public void executeInverse () {
+        control.runMecanum(-x.get(index),y.get(index),-turn.get(index),mode);
+        control.runClamp(claw.get(index));
+        control.liftPower(lift.get(index));
+        index++;
+    }
     public boolean isFinished () {
         return index >= x.size();
     }
@@ -141,7 +145,7 @@ public class Macro {
         while(index < x.size()){
             execute();
             try {
-                Thread.sleep(27);
+                Thread.sleep(17);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -152,13 +156,23 @@ public class Macro {
         while(index < x.size()){
             executeReverse();
             try {
-                Thread.sleep(27);
+                Thread.sleep(17);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    public void executeInverseLoop() {
+        while(index < x.size()){
+            executeInverse();
+            try {
+                Thread.sleep(17);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public void record(float x, float y, float turn, float lift, boolean claw) {
         this.x.add(x);
         this.y.add(y);

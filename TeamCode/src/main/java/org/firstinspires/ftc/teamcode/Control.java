@@ -14,7 +14,6 @@ public class Control {
 
     private Argorok argorok;
 
-    private double theta = -Math.PI / 4;
     private double theta_adjustment = 0;
     public double trans_factor = 1;
     public double turn_factor = 1;
@@ -53,13 +52,13 @@ public class Control {
         double theta;
         switch (mode){
             case "auto":
-                theta = this.theta + imuTheta + Math.PI;
+                theta = imuTheta + (3*Math.PI/4);
                 break;
             case "field":
-                theta = this.theta + imuTheta;
+                theta = imuTheta - (Math.PI/4);
                 break;
             default:
-                theta = this.theta + theta_adjustment;
+                theta = -Math.PI/4;
         }
         double x_output = trans_factor * ((x * Math.cos(theta)) + (y * Math.sin(theta)));
         double y_output = trans_factor * ((x * (-Math.sin(theta))) + (y * Math.cos(theta)));

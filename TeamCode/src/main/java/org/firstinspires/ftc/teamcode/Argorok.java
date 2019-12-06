@@ -58,7 +58,7 @@ public class Argorok {
         backLeft.setDirection(DcMotor.Direction.REVERSE);
 
         lift = hwmap.get(DcMotor.class, "lift");
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         lift.setDirection(DcMotor.Direction.REVERSE);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

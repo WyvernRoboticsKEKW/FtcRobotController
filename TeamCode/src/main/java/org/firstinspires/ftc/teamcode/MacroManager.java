@@ -53,6 +53,9 @@ public class MacroManager {
         Macro macro = find(name);
 
         macro.reset();
+        //String mode = macro.getMode();
+        //macro = new Macro(control,name);
+        //macro.setMode(mode);
 
         while(opmode.opModeIsActive() && !(opmode.gamepad1.dpad_down||opmode.gamepad2.dpad_down)){
             opmode.telemetry.addLine("recording");
@@ -60,14 +63,14 @@ public class MacroManager {
             float x = opmode.gamepad1.left_stick_x + opmode.gamepad2.left_stick_x;
             float y = -(opmode.gamepad1.left_stick_y + opmode.gamepad2.left_stick_y);
             float turn = (opmode.gamepad1.right_trigger + opmode.gamepad2.right_trigger) - (opmode.gamepad1.left_trigger + opmode.gamepad2.left_trigger);
-            if (opmode.gamepad1.left_stick_button || opmode.gamepad2.left_stick_button) {
+            if (opmode.slow) {
                 x *= 0.4;
                 y *= 0.4;
                 turn *=0.4;
             }
             float lift;
-            if(opmode.liftMode){
-                opmode.argorok.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            //if(opmode.liftMode){
+                //opmode.argorok.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 if (opmode.gamepad1.a||opmode.gamepad2.a) {
                     lift = -0.5f;
                 } else if (opmode.gamepad1.b||opmode.gamepad2.b) {
@@ -75,34 +78,35 @@ public class MacroManager {
                 } else {
                     lift = 0f;
                 }
-            } else {
-                opmode.argorok.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                if((opmode.gamepad1.a||opmode.gamepad2.a)&&!opmode.preva) {
-                    opmode.liftHeight = (opmode.liftHeight + 4) % 5;
-                } else if ((opmode.gamepad1.b||opmode.gamepad2.b)&&!opmode.prevb){
-                    opmode.liftHeight = (opmode.liftHeight + 1) % 5;
-                }
-                opmode.preva = (opmode.gamepad1.a||opmode.gamepad2.a);
-                opmode.prevb = (opmode.gamepad1.b||opmode.gamepad2.b);
-                opmode.argorok.lift.setTargetPosition(200*opmode.liftHeight);
-                control.liftPower(0.9);
-                if(opmode.argorok.lift.isBusy()){
-                    lift = Math.signum(opmode.argorok.lift.getTargetPosition() - opmode.argorok.lift.getCurrentPosition())*0.9f;
-                } else {
-                    lift = 0f;
-                }
-                opmode.telemetry.addLine("Current Position: "+opmode.argorok.lift.getCurrentPosition());
-            }
+            //}
+//            else {
+//
+//                if((opmode.gamepad1.a||opmode.gamepad2.a)&&!opmode.preva) {
+//                    opmode.liftHeight = (opmode.liftHeight + 4) % 5;
+//                } else if ((opmode.gamepad1.b||opmode.gamepad2.b)&&!opmode.prevb){
+//                    opmode.liftHeight = (opmode.liftHeight + 1) % 5;
+//                }
+//                opmode.preva = (opmode.gamepad1.a||opmode.gamepad2.a);
+//                opmode.prevb = (opmode.gamepad1.b||opmode.gamepad2.b);
+//                opmode.argorok.lift.setTargetPosition(200*opmode.liftHeight);
+//                control.liftPower(0.9);
+//                if(opmode.argorok.lift.isBusy()){
+//                    lift = Math.signum(opmode.argorok.lift.getTargetPosition() - opmode.argorok.lift.getCurrentPosition())*0.9f;
+//                } else {
+//                    lift = 0f;
+//                }
+//                opmode.telemetry.addLine("Current Position: "+opmode.argorok.lift.getCurrentPosition());
+//                opmode.argorok.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            }
             opmode.clamp = ((opmode.gamepad1.x||opmode.gamepad2.x) && !opmode.prevx) != opmode.clamp;
             opmode.prevx = opmode.gamepad1.x||opmode.gamepad2.x;
-            opmode.liftMode = ((opmode.gamepad1.y||opmode.gamepad2.y) && !opmode.prevy) != opmode.liftMode;
+            opmode.slow = ((opmode.gamepad1.y||opmode.gamepad2.y) && !opmode.prevy) != opmode.slow;
             opmode.prevy = opmode.gamepad1.y||opmode.gamepad2.y;
             control.runMecanum(x,y,turn,macro.getMode());
             control.liftPower(lift);
             control.runClamp(opmode.clamp);
             macro.record(x,y,turn,lift,opmode.clamp);
-            opmode.sleep(27);
+            opmode.sleep(17);
         }
     }
 
@@ -130,8 +134,10 @@ public class MacroManager {
 
         while(macro.getIndex() < macro.getX().size()&&!(opmode.gamepad1.dpad_up||opmode.gamepad2.dpad_up)&&opmode.opModeIsActive()){
             macro.execute();
+            opmode.telemetry.addLine("running macro");
+            opmode.telemetry.update();
             try {
-                Thread.sleep(27);
+                Thread.sleep(17);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -144,8 +150,10 @@ public class MacroManager {
 
         while(macro.getIndex() < macro.getX().size()&&!(opmode.gamepad1.dpad_up||opmode.gamepad2.dpad_up)&&opmode.opModeIsActive()){
             macro.executeReverse();
+            opmode.telemetry.addLine("running reverse");
+            opmode.telemetry.update();
             try {
-                Thread.sleep(27);
+                Thread.sleep(17);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
