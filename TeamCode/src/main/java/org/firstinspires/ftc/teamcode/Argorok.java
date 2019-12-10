@@ -71,8 +71,6 @@ public class Argorok {
         leftClaw.setPosition(0.53);
         rightClaw.setPosition(0.53);
 
-
-
     }
 
     public void vuforiaInit() {

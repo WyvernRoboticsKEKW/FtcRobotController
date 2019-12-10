@@ -24,10 +24,6 @@ public class Control {
     private final double RIGHTCLAWOPEN   = 0.53;
     private final double RIGHTCLAWCLOSED = 0;
 
-    VuforiaTrackables targetsSkyStone = null;
-
-    VuforiaTrackable stoneTarget = null;
-
     Control(Argorok argorok){
         this.argorok = argorok;
     }
@@ -36,14 +32,6 @@ public class Control {
         argorok.init(hwmap);
 
     }
-
-    public void vuforiaInit(){
-        argorok.vuforiaInit();
-        targetsSkyStone = argorok.vuforia.loadTrackablesFromAsset("Skystone");
-        stoneTarget = targetsSkyStone.get(0);
-    }
-
-
 
     public void runMecanum(double x, double y, double turn, String mode) {
         double imuTheta = argorok.imu.getAngularOrientation(AxesReference.INTRINSIC,
@@ -88,6 +76,19 @@ public class Control {
                                     AxesOrder.ZYX,
                                     AngleUnit.RADIANS).firstAngle;
     }
+
+    // VUFORIA CRAP
+
+    VuforiaTrackables targetsSkyStone = null;
+
+    VuforiaTrackable stoneTarget = null;
+
+    public void vuforiaInit(){
+        argorok.vuforiaInit();
+        targetsSkyStone = argorok.vuforia.loadTrackablesFromAsset("Skystone");
+        stoneTarget = targetsSkyStone.get(0);
+    }
+
     public boolean isStoneVisible() {
         return ((VuforiaTrackableDefaultListener)stoneTarget.getListener()).isVisible();
     }

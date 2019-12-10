@@ -1,202 +1,138 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Macro {
 
-    private Control control;
+    List<Double> frontLeft = new ArrayList<>();
+    List<Double> frontRight = new ArrayList<>();
+    List<Double> backLeft = new ArrayList<>();
+    List<Double> backRight = new ArrayList<>();
 
-    private String name;
+    List<Integer> frontLeftPosition = new ArrayList<>();
+    List<Integer> frontRightPosition = new ArrayList<>();
+    List<Integer> backLeftPosition = new ArrayList<>();
+    List<Integer> backRightPosition = new ArrayList<>();
 
-    private String mode = "field";
+    List<Double> lift = new ArrayList<>();
+    List<Integer> liftPosition = new ArrayList<>();
 
-    private int index = 0;
+    List<Double> leftClaw = new ArrayList<>();
+    List<Double> rightClaw = new ArrayList<>();
 
-    private List<Float> x      = new ArrayList<>();
-    private List<Float> y      = new ArrayList<>();
-    private List<Float> turn   = new ArrayList<>();
-    private List<Float> lift   = new ArrayList<>();
-    private List<Boolean> claw = new ArrayList<>();
+    int index = 0;
 
-    Macro (Control control,String name) {
-        this.control = control;
-        this.name = name;
+    public Macro read(String path){
+        Macro macro = new Macro();
+        try {
+            FileInputStream fileInputStream = new FileInputStream("/storage/emulated/0/" + path);
+            DataInputStream dataInputStream = new DataInputStream(fileInputStream);
+            while(dataInputStream.available() > 0){
+                macro.frontLeft.add(dataInputStream.readDouble());
+                macro.frontLeftPosition.add(dataInputStream.readInt());
+                macro.frontRight.add(dataInputStream.readDouble());
+                macro.frontRightPosition.add(dataInputStream.readInt());
+                macro.backLeft.add(dataInputStream.readDouble());
+                macro.backLeftPosition.add(dataInputStream.readInt());
+                macro.backRight.add(dataInputStream.readDouble());
+                macro.backRightPosition.add(dataInputStream.readInt());
+                macro.lift.add(dataInputStream.readDouble());
+                macro.liftPosition.add(dataInputStream.readInt());
+                macro.leftClaw.add(dataInputStream.readDouble());
+                macro.rightClaw.add(dataInputStream.readDouble());
+            }
+            dataInputStream.close();
+            fileInputStream.close();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+        return macro;
     }
 
-    Macro (Control control, String path,String name){
-        this.control = control;
-        this.name = name;
-        try {
-            DataInputStream inputStream = new DataInputStream(new FileInputStream("/storage/emulated/0/" + path));
-            while (inputStream.available() > 0) {
-                x.add(inputStream.readFloat());
-                y.add(inputStream.readFloat());
-                turn.add(inputStream.readFloat());
-                lift.add(inputStream.readFloat());
-                claw.add(inputStream.readBoolean());
+    public void write(Macro macro, String path){
+        try{
+            FileOutputStream fileOutputStream = new FileOutputStream("/storage/emulated/0/"+path);
+            DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
+            for(int i = 0; i < frontLeft.size(); i++){
+                dataOutputStream.writeDouble(macro.frontLeft.get(i));
+                dataOutputStream.writeInt(macro.frontLeftPosition.get(i));
+                dataOutputStream.writeDouble(macro.frontRight.get(i));
+                dataOutputStream.writeInt(macro.frontRightPosition.get(i));
+                dataOutputStream.writeDouble(macro.backLeft.get(i));
+                dataOutputStream.writeInt(macro.backLeftPosition.get(i));
+                dataOutputStream.writeDouble(macro.backRight.get(i));
+                dataOutputStream.writeInt(macro.backRightPosition.get(i));
+                dataOutputStream.writeDouble(macro.lift.get(i));
+                dataOutputStream.writeInt(macro.liftPosition.get(i));
+                dataOutputStream.writeDouble(macro.leftClaw.get(i));
+                dataOutputStream.writeDouble(macro.rightClaw.get(i));
             }
-            inputStream.close();
-        }
-        catch (IOException e){
+            dataOutputStream.close();
+            fileOutputStream.close();
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public String getMode() {
-        return mode;
+    public void init(Argorok argorok){
+        argorok.frontRight.setTargetPosition(frontLeftPosition.get(0));
+        argorok.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        argorok.frontLeft.setTargetPosition(frontLeftPosition.get(0));
+        argorok.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        argorok.backRight.setTargetPosition(frontLeftPosition.get(0));
+        argorok.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        argorok.backLeft.setTargetPosition(frontLeftPosition.get(0));
+        argorok.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        argorok.lift.setTargetPosition(frontLeftPosition.get(0));
+        argorok.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    public String getName() {
-        return name;
+    public void execute(Argorok argorok,int delay){
+        argorok.frontRight.setTargetPosition(frontRightPosition.get(index));
+        argorok.frontRight.setPower(frontRight.get(index));
+        argorok.frontLeft.setTargetPosition(frontLeftPosition.get(index));
+        argorok.frontLeft.setPower(frontLeft.get(index));
+        argorok.backRight.setTargetPosition(backRightPosition.get(index));
+        argorok.backRight.setPower(backRight.get(index));
+        argorok.backLeft.setTargetPosition(backLeftPosition.get(index));
+        argorok.backLeft.setPower(backLeft.get(index));
+        argorok.leftClaw.setPosition(leftClaw.get(index));
+        argorok.rightClaw.setPosition(rightClaw.get(index));
+        try{
+            Thread.sleep(delay);
+        } catch(InterruptedException e){
+            e.printStackTrace();
+        }
     }
 
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
-
-    public void reset () {
+    public void executeLoop(Argorok argorok, int delay){
+        while(index<frontRight.size()){
+            execute(argorok,delay);
+            index++;
+        }
         index = 0;
     }
 
-    public void execute () {
-        control.runMecanum(x.get(index),y.get(index),turn.get(index),mode);
-        control.runClamp(claw.get(index));
-        control.liftPower(lift.get(index));
-        index++;
+    public void record(Argorok argorok){
+        frontLeft.add(argorok.frontLeft.getPower());
+        frontLeftPosition.add(argorok.frontLeft.getCurrentPosition());
+        frontRight.add(argorok.frontRight.getPower());
+        frontRightPosition.add(argorok.frontRight.getCurrentPosition());
+        backLeft.add(argorok.backLeft.getPower());
+        backLeftPosition.add(argorok.backLeft.getCurrentPosition());
+        backRight.add(argorok.backRight.getPower());
+        backRightPosition.add(argorok.backRight.getCurrentPosition());
+        lift.add(argorok.lift.getPower());
+        liftPosition.add(argorok.lift.getCurrentPosition());
+        leftClaw.add(argorok.leftClaw.getPosition());
+        rightClaw.add(argorok.rightClaw.getPosition());
     }
-
-    public void executeReverse () {
-        int length = x.size();
-        control.runMecanum(-x.get(length - (index+1)),-y.get(length - (index+1)),-turn.get(length - (index+1)),mode);
-        control.runClamp(claw.get(length - (index+1)));
-        control.liftPower(lift.get(length - (index+1))==0.9f ? -0.5f : lift.get(length - (index+1))==0.0f ? 0.0f : 0.9);
-        index++;
-    }
-    public void executeInverse () {
-        control.runMecanum(-x.get(index),y.get(index),-turn.get(index),mode);
-        control.runClamp(claw.get(index));
-        control.liftPower(lift.get(index));
-        index++;
-    }
-    public boolean isFinished () {
-        return index >= x.size();
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Float> getX() {
-        return x;
-    }
-
-    public void setX(List<Float> x) {
-        this.x = x;
-    }
-
-    public List<Float> getY() {
-        return y;
-    }
-
-    public void setY(List<Float> y) {
-        this.y = y;
-    }
-
-    public List<Float> getTurn() {
-        return turn;
-    }
-
-    public void setTurn(List<Float> turn) {
-        this.turn = turn;
-    }
-
-    public List<Float> getLift() {
-        return lift;
-    }
-
-    public void setLift(List<Float> lift) {
-        this.lift = lift;
-    }
-
-    public List<Boolean> getClaw() {
-        return claw;
-    }
-
-    public void setClaw(List<Boolean> claw) {
-        this.claw = claw;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
-    public void executeLoop () {
-        while(index < x.size()){
-            execute();
-            try {
-                Thread.sleep(17);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void executeReverseLoop() {
-        while(index < x.size()){
-            executeReverse();
-            try {
-                Thread.sleep(17);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void executeInverseLoop() {
-        while(index < x.size()){
-            executeInverse();
-            try {
-                Thread.sleep(17);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    public void record(float x, float y, float turn, float lift, boolean claw) {
-        this.x.add(x);
-        this.y.add(y);
-        this.turn.add(turn);
-        this.lift.add(lift);
-        this.claw.add(claw);
-    }
-
-    public void save(String path) {
-        try {
-            OutputStream out = new FileOutputStream("/storage/emulated/0/" + path);
-            DataOutputStream dataOut = new DataOutputStream(out);
-            for (int i = 0; i < x.size(); i++) {
-                dataOut.writeFloat(x.get(i));
-                dataOut.writeFloat(y.get(i));
-                dataOut.writeFloat(turn.get(i));
-                dataOut.writeFloat(lift.get(i));
-                dataOut.writeBoolean(claw.get(i));
-            }
-            dataOut.close();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
