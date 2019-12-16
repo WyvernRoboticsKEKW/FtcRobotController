@@ -13,10 +13,10 @@ public class Read extends LinearOpMode {
         argorok.init(hardwareMap);
 
         Control control = new Control(argorok);
-        Macro macro = new Macro(control, "autonomous.dat", "autonomous");
-        macro.setMode("auto");
-
+        Macro macro = new Macro();
+        macro.read("autonomous.dat");
+        macro.init(argorok);
         waitForStart();
-        macro.executeLoop();
+        macro.executeLoop(argorok,17);
     }
 }

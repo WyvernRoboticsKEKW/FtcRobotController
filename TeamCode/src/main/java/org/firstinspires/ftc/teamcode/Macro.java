@@ -30,7 +30,7 @@ public class Macro {
 
     int index = 0;
 
-    public Macro read(String path){
+    public static Macro readMacro(String path){
         Macro macro = new Macro();
         try {
             FileInputStream fileInputStream = new FileInputStream("/storage/emulated/0/" + path);
@@ -55,6 +55,31 @@ public class Macro {
             e.printStackTrace();
         }
         return macro;
+    }
+
+    public void read(String path){
+        try {
+            FileInputStream fileInputStream = new FileInputStream("/storage/emulated/0/" + path);
+            DataInputStream dataInputStream = new DataInputStream(fileInputStream);
+            while(dataInputStream.available() > 0){
+                frontLeft.add(dataInputStream.readDouble());
+                frontLeftPosition.add(dataInputStream.readInt());
+                frontRight.add(dataInputStream.readDouble());
+                frontRightPosition.add(dataInputStream.readInt());
+                backLeft.add(dataInputStream.readDouble());
+                backLeftPosition.add(dataInputStream.readInt());
+                backRight.add(dataInputStream.readDouble());
+                backRightPosition.add(dataInputStream.readInt());
+                lift.add(dataInputStream.readDouble());
+                liftPosition.add(dataInputStream.readInt());
+                leftClaw.add(dataInputStream.readDouble());
+                rightClaw.add(dataInputStream.readDouble());
+            }
+            dataInputStream.close();
+            fileInputStream.close();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void write(Macro macro, String path){
@@ -96,14 +121,15 @@ public class Macro {
     }
 
     public void execute(Argorok argorok,int delay){
-        argorok.frontRight.setTargetPosition(frontRightPosition.get(index));
-        argorok.frontRight.setPower(frontRight.get(index));
-        argorok.frontLeft.setTargetPosition(frontLeftPosition.get(index));
-        argorok.frontLeft.setPower(frontLeft.get(index));
-        argorok.backRight.setTargetPosition(backRightPosition.get(index));
-        argorok.backRight.setPower(backRight.get(index));
-        argorok.backLeft.setTargetPosition(backLeftPosition.get(index));
-        argorok.backLeft.setPower(backLeft.get(index));
+        int size = frontLeft.size();
+        argorok.frontRight.setTargetPosition(frontRightPosition.get((index+1)%size));
+        argorok.frontRight.setPower(Math.abs(frontRight.get(index)));
+        argorok.frontLeft.setTargetPosition(frontLeftPosition.get((index+1)%size));
+        argorok.frontLeft.setPower(Math.abs(frontLeft.get(index)));
+        argorok.backRight.setTargetPosition(backRightPosition.get((index+1)%size));
+        argorok.backRight.setPower(Math.abs(backRight.get(index)));
+        argorok.backLeft.setTargetPosition(backLeftPosition.get((index+1)%size));
+        argorok.backLeft.setPower(Math.abs(backLeft.get(index)));
         argorok.leftClaw.setPosition(leftClaw.get(index));
         argorok.rightClaw.setPosition(rightClaw.get(index));
         try{
@@ -119,6 +145,16 @@ public class Macro {
             index++;
         }
         index = 0;
+        argorok.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        argorok.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        argorok.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        argorok.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        argorok.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        argorok.frontRight.setPower(0);
+        argorok.frontLeft.setPower(0);
+        argorok.backRight.setPower(0);
+        argorok.backLeft.setPower(0);
+        argorok.lift.setPower(0);
     }
 
     public void record(Argorok argorok){

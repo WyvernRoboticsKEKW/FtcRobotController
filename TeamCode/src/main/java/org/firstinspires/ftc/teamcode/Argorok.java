@@ -47,9 +47,14 @@ public class Argorok {
         imu.initialize(parameters);
 
         frontRight = hwmap.get(DcMotor.class, "frontRight");
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft = hwmap.get(DcMotor.class, "frontLeft");
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight = hwmap.get(DcMotor.class, "backRight");
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeft = hwmap.get(DcMotor.class, "backLeft");
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.FORWARD);
@@ -58,10 +63,21 @@ public class Argorok {
         backLeft.setDirection(DcMotor.Direction.REVERSE);
 
         lift = hwmap.get(DcMotor.class, "lift");
-        //lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setDirection(DcMotor.Direction.REVERSE);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        try {
+            Thread.sleep(17);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         leftClaw = hwmap.get(Servo.class, "leftClaw");
         rightClaw = hwmap.get(Servo.class, "rightClaw");
