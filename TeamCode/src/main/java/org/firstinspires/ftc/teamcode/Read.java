@@ -15,8 +15,8 @@ public class Read extends LinearOpMode {
         Control control = new Control(argorok);
         Macro macro = new Macro();
         macro.read("autonomous.dat");
-        macro.init(argorok);
         waitForStart();
-        macro.executeLoop(argorok,17);
+        int[] delay = {39,39,39,40};
+        macro.executeLoop(argorok,delay);
     }
 }

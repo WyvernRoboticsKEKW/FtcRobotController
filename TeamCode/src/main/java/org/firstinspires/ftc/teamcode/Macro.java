@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
@@ -17,13 +15,7 @@ public class Macro {
     List<Double> backLeft = new ArrayList<>();
     List<Double> backRight = new ArrayList<>();
 
-    List<Integer> frontLeftPosition = new ArrayList<>();
-    List<Integer> frontRightPosition = new ArrayList<>();
-    List<Integer> backLeftPosition = new ArrayList<>();
-    List<Integer> backRightPosition = new ArrayList<>();
-
     List<Double> lift = new ArrayList<>();
-    List<Integer> liftPosition = new ArrayList<>();
 
     List<Double> leftClaw = new ArrayList<>();
     List<Double> rightClaw = new ArrayList<>();
@@ -37,15 +29,10 @@ public class Macro {
             DataInputStream dataInputStream = new DataInputStream(fileInputStream);
             while(dataInputStream.available() > 0){
                 macro.frontLeft.add(dataInputStream.readDouble());
-                macro.frontLeftPosition.add(dataInputStream.readInt());
                 macro.frontRight.add(dataInputStream.readDouble());
-                macro.frontRightPosition.add(dataInputStream.readInt());
                 macro.backLeft.add(dataInputStream.readDouble());
-                macro.backLeftPosition.add(dataInputStream.readInt());
                 macro.backRight.add(dataInputStream.readDouble());
-                macro.backRightPosition.add(dataInputStream.readInt());
                 macro.lift.add(dataInputStream.readDouble());
-                macro.liftPosition.add(dataInputStream.readInt());
                 macro.leftClaw.add(dataInputStream.readDouble());
                 macro.rightClaw.add(dataInputStream.readDouble());
             }
@@ -63,15 +50,10 @@ public class Macro {
             DataInputStream dataInputStream = new DataInputStream(fileInputStream);
             while(dataInputStream.available() > 0){
                 frontLeft.add(dataInputStream.readDouble());
-                frontLeftPosition.add(dataInputStream.readInt());
                 frontRight.add(dataInputStream.readDouble());
-                frontRightPosition.add(dataInputStream.readInt());
                 backLeft.add(dataInputStream.readDouble());
-                backLeftPosition.add(dataInputStream.readInt());
                 backRight.add(dataInputStream.readDouble());
-                backRightPosition.add(dataInputStream.readInt());
                 lift.add(dataInputStream.readDouble());
-                liftPosition.add(dataInputStream.readInt());
                 leftClaw.add(dataInputStream.readDouble());
                 rightClaw.add(dataInputStream.readDouble());
             }
@@ -88,15 +70,10 @@ public class Macro {
             DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
             for(int i = 0; i < frontLeft.size(); i++){
                 dataOutputStream.writeDouble(macro.frontLeft.get(i));
-                dataOutputStream.writeInt(macro.frontLeftPosition.get(i));
                 dataOutputStream.writeDouble(macro.frontRight.get(i));
-                dataOutputStream.writeInt(macro.frontRightPosition.get(i));
                 dataOutputStream.writeDouble(macro.backLeft.get(i));
-                dataOutputStream.writeInt(macro.backLeftPosition.get(i));
                 dataOutputStream.writeDouble(macro.backRight.get(i));
-                dataOutputStream.writeInt(macro.backRightPosition.get(i));
                 dataOutputStream.writeDouble(macro.lift.get(i));
-                dataOutputStream.writeInt(macro.liftPosition.get(i));
                 dataOutputStream.writeDouble(macro.leftClaw.get(i));
                 dataOutputStream.writeDouble(macro.rightClaw.get(i));
             }
@@ -107,29 +84,13 @@ public class Macro {
         }
     }
 
-    public void init(Argorok argorok){
-        argorok.frontRight.setTargetPosition(frontLeftPosition.get(0));
-        argorok.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        argorok.frontLeft.setTargetPosition(frontLeftPosition.get(0));
-        argorok.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        argorok.backRight.setTargetPosition(frontLeftPosition.get(0));
-        argorok.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        argorok.backLeft.setTargetPosition(frontLeftPosition.get(0));
-        argorok.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        argorok.lift.setTargetPosition(frontLeftPosition.get(0));
-        argorok.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }
-
     public void execute(Argorok argorok,int delay){
         int size = frontLeft.size();
-        argorok.frontRight.setTargetPosition(frontRightPosition.get((index+1)%size));
-        argorok.frontRight.setPower(Math.abs(frontRight.get(index)));
-        argorok.frontLeft.setTargetPosition(frontLeftPosition.get((index+1)%size));
-        argorok.frontLeft.setPower(Math.abs(frontLeft.get(index)));
-        argorok.backRight.setTargetPosition(backRightPosition.get((index+1)%size));
-        argorok.backRight.setPower(Math.abs(backRight.get(index)));
-        argorok.backLeft.setTargetPosition(backLeftPosition.get((index+1)%size));
-        argorok.backLeft.setPower(Math.abs(backLeft.get(index)));
+        argorok.frontRight.setPower(frontRight.get(index));
+        argorok.frontLeft.setPower(frontLeft.get(index));
+        argorok.backRight.setPower(backRight.get(index));
+        argorok.backLeft.setPower(backLeft.get(index));
+        argorok.lift.setPower(lift.get(index));
         argorok.leftClaw.setPosition(leftClaw.get(index));
         argorok.rightClaw.setPosition(rightClaw.get(index));
         try{
@@ -139,17 +100,12 @@ public class Macro {
         }
     }
 
-    public void executeLoop(Argorok argorok, int delay){
+    public void executeLoop(Argorok argorok, int[] delays){
         while(index<frontRight.size()){
-            execute(argorok,delay);
+            execute(argorok,delays[index % delays.length]);
             index++;
         }
         index = 0;
-        argorok.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        argorok.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        argorok.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        argorok.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        argorok.lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         argorok.frontRight.setPower(0);
         argorok.frontLeft.setPower(0);
         argorok.backRight.setPower(0);
@@ -159,15 +115,10 @@ public class Macro {
 
     public void record(Argorok argorok){
         frontLeft.add(argorok.frontLeft.getPower());
-        frontLeftPosition.add(argorok.frontLeft.getCurrentPosition());
         frontRight.add(argorok.frontRight.getPower());
-        frontRightPosition.add(argorok.frontRight.getCurrentPosition());
         backLeft.add(argorok.backLeft.getPower());
-        backLeftPosition.add(argorok.backLeft.getCurrentPosition());
         backRight.add(argorok.backRight.getPower());
-        backRightPosition.add(argorok.backRight.getCurrentPosition());
         lift.add(argorok.lift.getPower());
-        liftPosition.add(argorok.lift.getCurrentPosition());
         leftClaw.add(argorok.leftClaw.getPosition());
         rightClaw.add(argorok.rightClaw.getPosition());
     }

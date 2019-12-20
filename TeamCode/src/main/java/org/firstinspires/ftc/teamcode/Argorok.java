@@ -24,6 +24,8 @@ public class Argorok {
     Servo leftClaw = null;
     Servo rightClaw = null;
 
+    //Servo womp = null;
+
     HardwareMap hwmap = null;
 
     int cameraMonitorViewId = 0;
@@ -47,23 +49,21 @@ public class Argorok {
         imu.initialize(parameters);
 
         frontRight = hwmap.get(DcMotor.class, "frontRight");
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft = hwmap.get(DcMotor.class, "frontLeft");
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight = hwmap.get(DcMotor.class, "backRight");
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeft = hwmap.get(DcMotor.class, "backLeft");
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.FORWARD);
-
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         lift = hwmap.get(DcMotor.class, "lift");
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setDirection(DcMotor.Direction.REVERSE);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -73,12 +73,6 @@ public class Argorok {
             e.printStackTrace();
         }
 
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         leftClaw = hwmap.get(Servo.class, "leftClaw");
         rightClaw = hwmap.get(Servo.class, "rightClaw");
 
@@ -86,6 +80,9 @@ public class Argorok {
         rightClaw.setDirection(Servo.Direction.FORWARD);
         leftClaw.setPosition(0.53);
         rightClaw.setPosition(0.53);
+
+        //womp = hwmap.get(Servo.class, "womp");
+        //womp.setPosition(0);
 
     }
 
@@ -98,5 +95,7 @@ public class Argorok {
         vuforia = ClassFactory.getInstance().createVuforia(vuforiaParameters);
 
     }
-
+    public void vuforiaKill() {
+    }
 }
+/* Califonia's famous landmark, the Golden Gate Bridge, is known just about all over the world. It is located on a peninsula between Marin C */

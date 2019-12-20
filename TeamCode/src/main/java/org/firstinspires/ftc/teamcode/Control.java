@@ -67,6 +67,11 @@ public class Control {
             argorok.leftClaw.setPosition(LEFTCLAWCLOSED);
         }
     }
+    public void runVWOMP(boolean vwomped){
+        if(vwomped){
+            //argorok.
+        }
+    }
     public void liftPower(double power){
         argorok.lift.setPower(power);
     }
@@ -86,10 +91,16 @@ public class Control {
     public void vuforiaInit(){
         argorok.vuforiaInit();
         targetsSkyStone = argorok.vuforia.loadTrackablesFromAsset("Skystone");
+        targetsSkyStone.activate();
         stoneTarget = targetsSkyStone.get(0);
     }
 
     public boolean isStoneVisible() {
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return ((VuforiaTrackableDefaultListener)stoneTarget.getListener()).isVisible();
     }
 }

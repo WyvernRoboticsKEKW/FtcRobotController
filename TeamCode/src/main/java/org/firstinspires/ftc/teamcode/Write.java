@@ -26,7 +26,7 @@ public class Write extends LinearOpMode {
             if(recording){
                 telemetry.addLine("recording");
                 macro.record(argorok);
-                sleep(17);
+                sleep(29);
             }
             if (driveMode) {
                 if(!slow){
