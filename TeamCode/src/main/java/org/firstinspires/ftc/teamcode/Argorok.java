@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -24,7 +25,7 @@ public class Argorok {
     Servo leftClaw = null;
     Servo rightClaw = null;
 
-    //Servo womp = null;
+    DcMotor womp = null;
 
     HardwareMap hwmap = null;
 
@@ -81,8 +82,12 @@ public class Argorok {
         leftClaw.setPosition(0.53);
         rightClaw.setPosition(0.53);
 
-        //womp = hwmap.get(Servo.class, "womp");
-        //womp.setPosition(0);
+        womp = hwmap.get(DcMotor.class, "womp");
+        womp.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        womp.setDirection(DcMotor.Direction.FORWARD);
+        womp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
 
     }
 

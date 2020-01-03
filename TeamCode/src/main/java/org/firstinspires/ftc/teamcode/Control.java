@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -24,13 +25,18 @@ public class Control {
     private final double RIGHTCLAWOPEN   = 0.53;
     private final double RIGHTCLAWCLOSED = 0;
 
+    private final int RETRACTEDPOSITION = -9;
+    private final int EXTENDEDPOSITION = -136;
+
     Control(Argorok argorok){
         this.argorok = argorok;
     }
 
     public void init(HardwareMap hwmap) {
         argorok.init(hwmap);
-
+        argorok.womp.setTargetPosition(RETRACTEDPOSITION);
+        argorok.womp.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        argorok.womp.setPower(0.7);
     }
 
     public void runMecanum(double x, double y, double turn, String mode) {
@@ -68,9 +74,7 @@ public class Control {
         }
     }
     public void runVWOMP(boolean vwomped){
-        if(vwomped){
-            //argorok.
-        }
+        argorok.womp.setTargetPosition(vwomped?EXTENDEDPOSITION:RETRACTEDPOSITION);
     }
     public void liftPower(double power){
         argorok.lift.setPower(power);

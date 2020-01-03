@@ -8,8 +8,11 @@ public class Drive extends LinearOpMode {
     public boolean clamp = false;
     public boolean prevx = false;
     public boolean prevBack = false;
+    public boolean prevLeft = false;
+    public boolean prevRight = false;
     public boolean prevy = false;
     public boolean slow = false;
+    public boolean vwomped = false;
     @Override
     public void runOpMode() {
         Control control = new Control(argorok);
@@ -48,6 +51,9 @@ public class Drive extends LinearOpMode {
             control.runClamp(clamp);
             slow = ((gamepad1.y||gamepad2.y) && !prevy) != slow;
             prevy = (gamepad1.y||gamepad2.y);
+            vwomped = ((gamepad1.left_bumper||gamepad2.left_bumper) && !prevLeft) != vwomped;
+            prevLeft = (gamepad1.left_bumper||gamepad2.left_bumper);
+            control.runVWOMP(vwomped);
             telemetry.update();
         }
     }
