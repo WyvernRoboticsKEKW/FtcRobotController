@@ -86,9 +86,6 @@ public class Argorok {
         womp.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         womp.setDirection(DcMotor.Direction.FORWARD);
         womp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
-
     }
 
     public void vuforiaInit() {

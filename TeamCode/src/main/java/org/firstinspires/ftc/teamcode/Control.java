@@ -107,4 +107,24 @@ public class Control {
         }
         return ((VuforiaTrackableDefaultListener)stoneTarget.getListener()).isVisible();
     }
+    public void autoRunMecanum(double x, double y, double turn, int delay) throws InterruptedException{
+        runMecanum(x,y,turn,"auto");
+        Thread.sleep(delay);
+        argorok.frontLeft.setPower(0);
+        argorok.backLeft.setPower(0);
+        argorok.frontRight.setPower(0);
+        argorok.backRight.setPower(0);
+    }
+
+    public void autoLift(double power,int delay) throws InterruptedException{
+        argorok.lift.setPower(power);
+        Thread.sleep(delay);
+        argorok.lift.setPower(0);
+    }
+    public void autoCloseClamp(){
+        runClamp(true);
+    }
+    public void autoOpenClamp(){
+        runClamp(false);
+    }
 }
