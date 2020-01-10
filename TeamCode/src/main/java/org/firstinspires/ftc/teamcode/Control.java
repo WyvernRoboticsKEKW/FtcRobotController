@@ -27,6 +27,7 @@ public class Control {
 
     private final int RETRACTEDPOSITION = -9;
     private final int EXTENDEDPOSITION = -136;
+    private boolean vwomped = false;
 
     Control(Argorok argorok){
         this.argorok = argorok;
@@ -74,18 +75,9 @@ public class Control {
             argorok.leftClaw.setPosition(LEFTCLAWCLOSED);
         }
     }
-    public void runVWOMP(boolean vwomped){
-        if(vwomped){
-            if(argorok.womp.getCurrentPosition()==EXTENDEDPOSITION){
-                return;
-            }
-            argorok.womp.setTargetPosition(EXTENDEDPOSITION);
-        }else{
-            if(argorok.womp.getCurrentPosition()==RETRACTEDPOSITION){
-                return;
-            }
-            argorok.womp.setTargetPosition(RETRACTEDPOSITION);
-        }
+    public void runVWOMP(){
+        vwomped = !vwomped;
+        if(vwomped)
     }
     public void liftPower(double power){
         argorok.lift.setPower(power);
