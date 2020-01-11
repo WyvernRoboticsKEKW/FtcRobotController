@@ -64,6 +64,7 @@ public class Control {
         argorok.frontRight.setPower(x_output - turn);
         argorok.backRight.setPower(y_output - turn);
     }
+
     public void runClamp(boolean clamped){
         if(!clamped){
             argorok.rightClaw.setPosition(RIGHTCLAWOPEN);
@@ -73,12 +74,15 @@ public class Control {
             argorok.leftClaw.setPosition(LEFTCLAWCLOSED);
         }
     }
+
     public void runVWOMP(boolean vwomped){
         argorok.womp.setTargetPosition(vwomped?EXTENDEDPOSITION:RETRACTEDPOSITION);
     }
+
     public void liftPower(double power){
         argorok.lift.setPower(power);
     }
+
     public void resetHeading() {
         theta_adjustment = -argorok.imu.getAngularOrientation(
                                     AxesReference.INTRINSIC,
@@ -86,7 +90,7 @@ public class Control {
                                     AngleUnit.RADIANS).firstAngle;
     }
 
-    // VUFORIA CRAP
+    // VUFORIA CARP
 
     VuforiaTrackables targetsSkyStone = null;
 

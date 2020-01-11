@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 @TeleOp(name="Drive")
 public class Drive extends LinearOpMode {
+
     Argorok argorok = new Argorok();
     public boolean driveMode = true; // true = "field" mode    false = "robot" mode
     public boolean clamp = false;
@@ -13,6 +15,7 @@ public class Drive extends LinearOpMode {
     public boolean prevy = false;
     public boolean slow = false;
     public boolean vwomped = false;
+
     @Override
     public void runOpMode() {
         Control control = new Control(argorok);
@@ -23,7 +26,7 @@ public class Drive extends LinearOpMode {
                 if(!slow){
                     control.runMecanum(gamepad1.left_stick_x + gamepad2.left_stick_x, -(gamepad1.left_stick_y + gamepad2.left_stick_y), (gamepad1.right_trigger + gamepad2.right_trigger) - (gamepad1.left_trigger + gamepad2.left_trigger), "field");
                 }else{
-                    control.runMecanum((gamepad1.left_stick_x + gamepad2.left_stick_x)*0.4, -(gamepad1.left_stick_y + gamepad2.left_stick_y)/2, (gamepad1.right_trigger + gamepad2.right_trigger)*0.4 - (gamepad1.left_trigger + gamepad2.left_trigger)*0.4, "field");
+                    control.runMecanum((gamepad1.left_stick_x + gamepad2.left_stick_x)*0.4, -(gamepad1.left_stick_y + gamepad2.left_stick_y)*0.4, (gamepad1.right_trigger + gamepad2.right_trigger)*0.4 - (gamepad1.left_trigger + gamepad2.left_trigger)*0.4, "field");
                 }
                 telemetry.addLine("field mode");
             } else {
