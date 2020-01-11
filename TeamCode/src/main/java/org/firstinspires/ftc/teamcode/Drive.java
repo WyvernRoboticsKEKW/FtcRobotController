@@ -54,6 +54,11 @@ public class Drive extends LinearOpMode {
             control.runClamp(clamp);
             slow = ((gamepad1.y||gamepad2.y) && !prevy) != slow;
             prevy = (gamepad1.y||gamepad2.y);
+            if(argorok.womp.isBusy()) {
+                argorok.womp.setPower(.7);
+            } else {
+                argorok.womp.setPower(0);
+            }
             vwomped = ((gamepad1.left_bumper||gamepad2.left_bumper) && !prevLeft) != vwomped;
             prevLeft = (gamepad1.left_bumper||gamepad2.left_bumper);
             control.runVWOMP(vwomped);
