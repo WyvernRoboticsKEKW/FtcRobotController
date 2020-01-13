@@ -59,9 +59,9 @@ public class Drive extends LinearOpMode {
             } else {
                 argorok.womp.setPower(0);
             }
-            vwomped = ((gamepad1.left_bumper||gamepad2.left_bumper) && !prevLeft) != vwomped;
-            prevLeft = (gamepad1.left_bumper||gamepad2.left_bumper);
-            control.runVWOMP(vwomped);
+            boolean left = gamepad1.left_bumper||gamepad2.left_bumper;
+            boolean right = gamepad1.right_bumper||gamepad2.right_bumper;
+            control.runVWOMP(left?0.7:(right?(-0.7):0));
             telemetry.update();
         }
     }

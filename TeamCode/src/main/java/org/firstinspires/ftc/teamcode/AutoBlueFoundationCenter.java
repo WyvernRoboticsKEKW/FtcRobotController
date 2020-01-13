@@ -14,7 +14,7 @@ public class AutoBlueFoundationCenter extends LinearOpMode {
         waitForStart();
 
         control.autoRunMecanum(0,0.5,0,250);
-        control.autoRunMecanum(0,0,1,753);
+        control.autoRunMecanum(0,0,-1,765);
         control.autoLift(1,250);
         control.autoCloseClamp();
         control.autoRunMecanum(-0.25,0.55,0,2000);

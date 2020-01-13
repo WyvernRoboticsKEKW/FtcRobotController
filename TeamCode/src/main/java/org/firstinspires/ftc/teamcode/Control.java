@@ -35,7 +35,6 @@ public class Control {
 
     public void init(HardwareMap hwmap) {
         argorok.init(hwmap);
-        argorok.womp.setTargetPosition(RETRACTEDPOSITION);
         argorok.womp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         argorok.womp.setPower(0);
         argorok.womp.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -76,15 +75,9 @@ public class Control {
             argorok.leftClaw.setPosition(LEFTCLAWCLOSED);
         }
     }
-<<<<<<< HEAD
 
-    public void runVWOMP(boolean vwomped){
-        argorok.womp.setTargetPosition(vwomped?EXTENDEDPOSITION:RETRACTEDPOSITION);
-=======
-    public void runVWOMP(){
-        vwomped = !vwomped;
-        if(vwomped)
->>>>>>> 424d72e1b1a1382ad9ec71d9ad55106274690094
+    public void runVWOMP(double power){
+        argorok.womp.setPower(power);
     }
 
     public void liftPower(double power){
