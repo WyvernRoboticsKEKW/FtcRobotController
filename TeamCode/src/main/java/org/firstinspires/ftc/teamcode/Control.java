@@ -132,4 +132,14 @@ public class Control {
     public void autoOpenClamp(){
         runClamp(false);
     }
+    public void setAllZero(){
+        argorok.womp.setPower(0);
+        argorok.rightClaw.setPosition(RIGHTCLAWOPEN);
+        argorok.leftClaw.setPosition(LEFTCLAWOPEN);
+        argorok.lift.setPower(0);
+        argorok.frontLeft.setPower(0);
+        argorok.backLeft.setPower(0);
+        argorok.frontRight.setPower(0);
+        argorok.backRight.setPower(0);
+    }
 }

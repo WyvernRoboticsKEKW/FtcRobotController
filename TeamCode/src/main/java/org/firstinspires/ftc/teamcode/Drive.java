@@ -64,5 +64,6 @@ public class Drive extends LinearOpMode {
             control.runVWOMP(left?0.7:(right?(-0.7):0));
             telemetry.update();
         }
+        control.setAllZero();
     }
 }

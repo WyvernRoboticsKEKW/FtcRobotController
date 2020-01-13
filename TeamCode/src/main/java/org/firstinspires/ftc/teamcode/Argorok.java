@@ -100,4 +100,4 @@ public class Argorok {
     public void vuforiaKill() {
     }
 }
-/* Califonia's famous landmark, the Golden Gate Bridge, is known just about all over the world. It is located on a peninsula between Marin C */
+/* Califonia's famous landmark, the Golden Gate Bridge, is known just about all over the world. It is located on a peninsula between Marin County */
