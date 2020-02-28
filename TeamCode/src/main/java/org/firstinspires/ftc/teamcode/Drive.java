@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 @TeleOp(name="Drive")
 public class Drive extends LinearOpMode {
@@ -27,14 +28,18 @@ public class Drive extends LinearOpMode {
                     control.runMecanum(gamepad1.left_stick_x + gamepad2.left_stick_x, -(gamepad1.left_stick_y + gamepad2.left_stick_y), (gamepad1.right_trigger + gamepad2.right_trigger) - (gamepad1.left_trigger + gamepad2.left_trigger), "field");
                 }else{
                     control.runMecanum((gamepad1.left_stick_x + gamepad2.left_stick_x)*0.4, -(gamepad1.left_stick_y + gamepad2.left_stick_y)*0.4, (gamepad1.right_trigger + gamepad2.right_trigger)*0.4 - (gamepad1.left_trigger + gamepad2.left_trigger)*0.4, "field");
+                    telemetry.addLine("slow mode");
                 }
+                telemetry.addLine("turn: "+ (gamepad1.right_trigger + gamepad2.right_trigger - gamepad1.left_trigger - gamepad2.left_trigger));
                 telemetry.addLine("field mode");
             } else {
                 if (!slow){
                     control.runMecanum(gamepad1.left_stick_x + gamepad2.left_stick_x, -(gamepad1.left_stick_y + gamepad2.left_stick_y), (gamepad1.right_trigger + gamepad2.right_trigger) - (gamepad1.left_trigger + gamepad2.left_trigger), "robot");
                 }else{
                     control.runMecanum((gamepad1.left_stick_x + gamepad2.left_stick_x) * 0.4, -(gamepad1.left_stick_y + gamepad2.left_stick_y) * 0.4, (gamepad1.right_trigger + gamepad2.right_trigger) * 0.4 - (gamepad1.left_trigger + gamepad2.left_trigger) * 0.4, "robot");
+                    telemetry.addLine("slow mode");
                 }
+                telemetry.addLine("turn: "+ (gamepad1.right_trigger + gamepad2.right_trigger - gamepad1.left_trigger - gamepad2.left_trigger));
                 telemetry.addLine("robot mode");
             }
             driveMode = ((gamepad1.back||gamepad2.back) && !prevBack) != driveMode;
@@ -43,9 +48,9 @@ public class Drive extends LinearOpMode {
                 control.resetHeading();
             }
             if (gamepad1.a||gamepad2.a) {
-                control.liftPower(-0.5);
-            } else if (gamepad1.b||gamepad2.b) {
                 control.liftPower(1.0);
+            } else if (gamepad1.b||gamepad2.b) {
+                control.liftPower(-1.0);
             } else {
                 control.liftPower(0);
             }
@@ -55,13 +60,22 @@ public class Drive extends LinearOpMode {
             slow = ((gamepad1.y||gamepad2.y) && !prevy) != slow;
             prevy = (gamepad1.y||gamepad2.y);
             if(argorok.womp.isBusy()) {
-                argorok.womp.setPower(.7);
+                argorok.womp.setPower(0.7);
             } else {
                 argorok.womp.setPower(0);
             }
             boolean left = gamepad1.left_bumper||gamepad2.left_bumper;
             boolean right = gamepad1.right_bumper||gamepad2.right_bumper;
             control.runVWOMP(left?0.7:(right?(-0.7):0));
+
+            if(gamepad1.dpad_up || gamepad2.dpad_up){
+                control.runFlüp(true);
+            } else if(gamepad1.dpad_down || gamepad2.dpad_down) {
+                control.runFlüp(false);
+            }
+
+            telemetry.addData("Status: ", argorok.imu.getSystemStatus());
+
             telemetry.update();
         }
         control.setAllZero();
