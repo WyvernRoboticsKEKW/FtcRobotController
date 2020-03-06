@@ -18,7 +18,7 @@ public class Drive extends LinearOpMode {
     public boolean vwomped = false;
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         Control control = new Control(argorok);
         control.init(hardwareMap);
         waitForStart();
@@ -74,7 +74,8 @@ public class Drive extends LinearOpMode {
                 control.runFlüp(false);
             }
 
-            telemetry.addData("Status: ", argorok.imu.getSystemStatus());
+            //telemetry.addData("Acc: ", control.getAcceleration());
+            //telemetry.addData("Bump: ", control.accSpikeY(.8));
 
             telemetry.update();
         }

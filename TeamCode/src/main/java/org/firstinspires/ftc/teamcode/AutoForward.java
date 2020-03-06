@@ -13,6 +13,6 @@ public class AutoForward extends LinearOpMode {
         control.init(hardwareMap);
         waitForStart();
 
-        control.autoRunMecanum(0,1,0,950);
+        control.autoRunMecanumOfTheAncients(0,1,0,950);
     }
 }

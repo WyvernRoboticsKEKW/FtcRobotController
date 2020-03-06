@@ -122,15 +122,15 @@ public class Argorok {
             vs = tempvs;
         }
 
-        imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
+//        imu.startAccelerationIntegration(new Position(), new Velocity(), 5);
     }
     public void vuforiaInit() {
+//        if (hwmap.get("Webcam1").toString() == "")
         cameraMonitorViewId = hwmap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwmap.appContext.getPackageName());
         vuforiaParameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
-        //vuforiaParameters.cameraName = hwmap.get(WebcamName.class, "Webcam 1");
+        vuforiaParameters.cameraName = hwmap.get(WebcamName.class, "Webcam 1");
         vuforiaParameters.vuforiaLicenseKey = "AS0Qfpn/////AAABmdFAn2iov0QImOtp/XgRhFxAvPqzhw/GpmCGnRZekfTfhkIpoyTT1NbJ2he6/39JxvL24yjivPORVedIEIKNr0q31Z5OtRpyJa38Y44wJg7RMlcQ0DcfJM3IHu032uYWae4B9domr2u1LAO2bgBh3y+eCzcDda0Q7K1PUMlRgXKnH2aFALTTy4nbjPHtY0PFIRAm/TCZTqDgONIJeBnkUiVGwIUXYMKKbUQMu+8ZnxIt1eFwScmiMh3oI0M6zpoXfiX1ud7XZUFHoq0QLplViaYn7JGA4SYP0r5QKeOi+4F5GI0mgqzrrOPv6FLVUQwJkjgGshRuf/uqcm3wBbu28grz+RZH0FVL7v1mni4+S7Oz";
         vuforia = ClassFactory.getInstance().createVuforia(vuforiaParameters);
-
     }
     public void TFODInit(){
         vuforiaInit();

@@ -26,10 +26,6 @@ public class Control {
     private final double RIGHTCLAWOPEN   = 0.53;
     private final double RIGHTCLAWCLOSED = 0;
 
-    private final int RETRACTEDPOSITION = -9;
-    private final int EXTENDEDPOSITION = -136;
-    private boolean vwomped = false;
-
     Control(Argorok argorok){
         this.argorok = argorok;
     }
@@ -45,22 +41,18 @@ public class Control {
         double theta;
         switch (mode){
             case "auto":
-                theta = imuTheta + Math.PI/2;
+                theta = imuTheta + Math.PI/2 + theta_adjustment;
                 break;
             case "field":
-                theta = imuTheta - (Math.PI/2);
+                theta = imuTheta - (Math.PI/2) + theta_adjustment;
                 break;
             default:
-//                theta = -Math.PI/2;
-                theta = imuTheta - (Math.PI/2);
+                theta = -Math.PI/2;
         }
         double x_output = ((x * Math.cos(theta)) + (y * Math.sin(theta)));
         double y_output = ((x * (-Math.sin(theta))) + (y * Math.cos(theta)));
         double right_vector = trans_factor * (x_output * 0.928 + y_output * 0.590);
         double left_vector = trans_factor * (x_output * -0.928 + y_output * 0.590);
-
-        //double right_vector = y_output;
-        //double left_vector = x_output;
 
         // Get Turn Input
         turn *= turn_factor;
@@ -69,6 +61,39 @@ public class Control {
         argorok.backLeft.setPower(right_vector + turn);
         argorok.frontRight.setPower(right_vector - turn);
         argorok.backRight.setPower(left_vector - turn);
+    }
+
+    public void runMecanumOfTheAncientGods(double x, double y, double turn, String mode){
+        double imuTheta = argorok.getHeading();
+        double theta;
+        switch (mode){
+            case "auto":
+                theta = imuTheta + (3*Math.PI/4);
+                break;
+            case "field":
+                theta = imuTheta - (Math.PI/4);
+                break;
+            default:
+                theta = -Math.PI/4;
+        }
+        double x_output = trans_factor * ((x * Math.cos(theta)) + (y * Math.sin(theta)));
+        double y_output = trans_factor * ((x * (-Math.sin(theta))) + (y * Math.cos(theta)));
+        // Get Turn Input
+        turn *= turn_factor;
+        // Apply Outputs
+        argorok.frontLeft.setPower(y_output + turn);
+        argorok.backLeft.setPower(x_output + turn);
+        argorok.frontRight.setPower(x_output - turn);
+        argorok.backRight.setPower(y_output - turn);
+    }
+
+    public void autoRunMecanumOfTheAncients(double x, double y, double turn, int delay) throws InterruptedException{
+        runMecanum(x,y,turn,"auto");
+        Thread.sleep(delay);
+        argorok.frontLeft.setPower(0);
+        argorok.backLeft.setPower(0);
+        argorok.frontRight.setPower(0);
+        argorok.backRight.setPower(0);
     }
 
     public void runClamp(boolean clamped){
@@ -114,6 +139,7 @@ public class Control {
         targetsSkyStone = argorok.vuforia.loadTrackablesFromAsset("Skystone");
         targetsSkyStone.activate();
         stoneTarget = targetsSkyStone.get(0);
+
     }
 
     public void tfodInit(){
@@ -121,11 +147,6 @@ public class Control {
         argorok.tfod.activate();
     }
     public boolean isStoneVisible() {
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return ((VuforiaTrackableDefaultListener)stoneTarget.getListener()).isVisible();
     }
     public void autoRunMecanum(double x, double y, double turn, int delay) throws InterruptedException{
@@ -157,6 +178,8 @@ public class Control {
         argorok.backLeft.setPower(0);
         argorok.frontRight.setPower(0);
         argorok.backRight.setPower(0);
+        argorok.rightFlüp.setPosition(1);
+        argorok.leftFlüp.setPosition(0);
     }
     public void turn(double angle, double power) {
         double angleConstant = 0.7;
@@ -189,24 +212,18 @@ public class Control {
         }
     }
     public double getAcceleration(){
-        Acceleration acc = argorok.imu.getGravity();
+        Acceleration acc = argorok.imu.getAcceleration();
         double xacc = acc.xAccel;
         double yacc = acc.yAccel;
-//        double xacc = (double) ((short)((argorok.imu.read())));
-//        double yacc;
-
         return Math.sqrt((xacc * xacc) + (yacc * yacc));
     }
 
-    public boolean accSpike(double threshold){
-        double initialAcc = getAcceleration();
-        try {
-            Thread.sleep(10);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
-        double finalAcc = getAcceleration();
-        return (Math.abs((finalAcc - initialAcc)) >= threshold);
+    public boolean accSpikeY(double threshold) throws InterruptedException{
+            return argorok.imu.getAcceleration().yAccel >= threshold;
+    }
+
+    public boolean accSpikeX(double threshold) throws InterruptedException{
+        return argorok.imu.getAcceleration().xAccel >= threshold;
     }
 
     public void encoder(int x, int y, double turn, double power) throws InterruptedException{
@@ -234,13 +251,14 @@ public class Control {
         double y_outputp = ((x * (-Math.sin(theta))) + (y * Math.cos(theta)));
         double right_vectorp = (x_outputp * 0.928 + y_outputp * 0.590);
         double left_vectorp = (x_outputp * -0.928 + y_outputp * 0.590);
-        argorok.frontLeft.setPower(left_vector);
-        argorok.frontRight.setPower(right_vector);
-        argorok.backLeft.setPower(right_vector);
-        argorok.backRight.setPower(left_vector);
+        argorok.frontLeft.setPower(left_vectorp);
+        argorok.frontRight.setPower(right_vectorp);
+        argorok.backLeft.setPower(right_vectorp);
+        argorok.backRight.setPower(left_vectorp
+        );
 
         while(argorok.backRight.isBusy() || argorok.backLeft.isBusy() || argorok.frontRight.isBusy() || argorok.frontLeft.isBusy()){
-            wait(10);
+            Thread.sleep(10);
         }
 
         argorok.setMotorsMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -248,8 +266,16 @@ public class Control {
 
         turn(turn,power);
     }
-//
-//    public double voltAdjust(int milli, double power){
-//        return adjMilli;
-//    }
+
+    public int voltAdjust(double milliIn, double power) throws InterruptedException{
+        Thread.sleep(50);
+        int milli = (int)(1.25*1000*milliIn/(argorok.vs.getVoltage()/*\*power*/)/2.5)/37;
+//        int milliInt = (int)(milli - (376.5*argorok.vs.getVoltage())+4923.6);
+
+        return milli;
+    }
+
+    public void voltageRunMecanum(double x, double y, double turn, double inch) throws InterruptedException{
+        autoRunMecanum(x,y,turn,voltAdjust(inch,Math.sqrt((x*x)+(y*y))));
+    }
 }
