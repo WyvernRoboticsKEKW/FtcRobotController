@@ -72,8 +72,8 @@ public class Vermithrax {
         motorBR.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // flywheel motors (confirmed)
-        motorFly1.setDirection(DcMotorSimple.Direction.FORWARD);
-        motorFly2.setDirection(DcMotorSimple.Direction.FORWARD);
+        motorFly1.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorFly2.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // arm motors (unconfirmed)
         motorArm.setDirection(DcMotorSimple.Direction.FORWARD);
