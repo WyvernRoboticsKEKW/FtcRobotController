@@ -60,18 +60,20 @@ public class AutoDrive3 extends LinearOpMode {
             control.vermithrax.setIntakePower(0);
             control.vermithrax.setLoaderPower(0);
             control.vermithrax.setFlywheelPower(0);
-            control.driveForTime(0.75, 0.8, 750);
+            //control.driveForTime(0.75, 0.8, 750);
             control.vermithrax.initArm();
             Thread.sleep(1000);
-            control.driveForTime(-0.2, 0.4, 500);
+            //control.driveForTime(-0.4, 0.4, 700);
             // Rotate to face drop zone
+            //Thread.sleep(1000);
+            control.driveForTime(0.75, 0.75, 1550);
             Thread.sleep(1000);
             control.vermithrax.toggleArmLift(); // Drop arm
             Thread.sleep(1000);
             control.vermithrax.toggleGripState(); // Let go of wobble
             Thread.sleep(1000);
             control.vermithrax.toggleArmLift(); // Move arm back up
-            control.driveForTime(0.2, -0.4, 500); // Rotate back to line
+            control.driveForTime(0.4, -0.4, 500); // Rotate back to line
             Thread.sleep(1000);
             control.vermithrax.setArmPosition(0); // De-init arm
             Thread.sleep(1000);

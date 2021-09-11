@@ -33,14 +33,14 @@ public class AutoDrive1 extends LinearOpMode {
         //control.vermithrax.initArm();
         try {
             // Drive forward to prep shot
-            control.driveForTime(0.75, 0.75, 900);
+            control.driveForTime(0.7, 0.95, 900);
             Thread.sleep(1000);
             // Spin up flywheel and then loader
             control.vermithrax.setFlywheelPower(1);
             Thread.sleep(3000);
             control.vermithrax.setLoaderPower(1);
             Thread.sleep(3000);
-            // Turn off loader and turn on intake for second ring
+            // Turn off loader and turn on intake for second ringd
             control.vermithrax.setLoaderPower(0);
             control.vermithrax.setIntakePower(1);
             Thread.sleep(2000);
@@ -55,15 +55,17 @@ public class AutoDrive1 extends LinearOpMode {
             control.driveForTime(0.75, 0.8, 750);
             control.vermithrax.initArm();
             Thread.sleep(1000);
-            control.driveForTime(-0.2, 0.4, 500);
+            control.driveForTime(0.4, -0.4, 900);
             // Rotate to face drop zone
+            Thread.sleep(1000);
+            control.driveForTime(0.75, 0.75, 1400);
             Thread.sleep(1000);
             control.vermithrax.toggleArmLift(); // Drop arm
             Thread.sleep(1000);
             control.vermithrax.toggleGripState(); // Let go of wobble
             Thread.sleep(1000);
             control.vermithrax.toggleArmLift(); // Move arm back up
-            control.driveForTime(0.2, -0.4, 500); // Rotate back to line
+            control.driveForTime(0.4, -0.4, 500); // Rotate back to line
             Thread.sleep(1000);
             control.vermithrax.setArmPosition(0); // De-init arm
             Thread.sleep(1000);
