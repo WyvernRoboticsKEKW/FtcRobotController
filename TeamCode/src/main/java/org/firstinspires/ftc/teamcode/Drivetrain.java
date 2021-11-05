@@ -37,6 +37,7 @@ public abstract class Drivetrain extends LinearOpMode {
 
         while(azure.leftA.isBusy() || azure.leftB.isBusy() || azure.rightA.isBusy() || azure.rightB.isBusy()) {
             sleep(10);
+            // wait until the motors stop moving
         }
 
         setDrivePower(0, 0);

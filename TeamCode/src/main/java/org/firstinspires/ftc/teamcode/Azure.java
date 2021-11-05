@@ -8,6 +8,7 @@ public class Azure {
     DcMotor rightA;
     DcMotor rightB;
     Servo liftyBoi;
+    // Drivetrain
 
     public Azure(HardwareMap hwmap){
         leftA = hwmap.get(DcMotor.class, "leftA");
@@ -16,8 +17,11 @@ public class Azure {
         rightB = hwmap.get(DcMotor.class, "rightB");
 
         liftyBoi = hwmap.get(Servo.class, "lift1");
+        // defining devices from the config
 
         leftA.setDirection(DcMotorSimple.Direction.REVERSE);
         leftB.setDirection(DcMotorSimple.Direction.REVERSE);
+        // Making the motors on the left move forward
+
     }
 }
