@@ -31,10 +31,7 @@ public abstract class Drivetrain extends LinearOpMode {
         azure.rightA.setTargetPosition(rightAStart+ticks);
         azure.rightB.setTargetPosition(rightBStart+ticks);
 
-        azure.leftA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        azure.leftB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        azure.rightA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        azure.rightB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         setDrivePower(.5, .5);
 
@@ -44,10 +41,14 @@ public abstract class Drivetrain extends LinearOpMode {
 
         setDrivePower(0, 0);
 
-        azure.leftA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        azure.leftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        azure.rightA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        azure.rightB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void setMode(DcMotor.RunMode runMode){
+        azure.leftA.setMode(runMode);
+        azure.leftB.setMode(runMode);
+        azure.rightA.setMode(runMode);
+        azure.rightB.setMode(runMode);
     }
 
     public void setLift(boolean liftyBoi){
