@@ -16,6 +16,7 @@ public class Drive extends Drivetrain {
                 // lift go up
             } else if (gamepad2.left_trigger > 0.5) {
                 setLift(false);
+                // lift go down
             }
         }
     }
