@@ -1,6 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.*;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
 
 public class Azure {
     DcMotor leftA;
@@ -9,6 +14,10 @@ public class Azure {
     DcMotor rightB;
     Servo liftyBoi;
     // Drivetrain
+
+    BNO055IMU imu;
+
+    OpenCvCamera camera;
 
     public Azure(HardwareMap hwmap){
         leftA = hwmap.get(DcMotor.class, "leftA");
@@ -22,6 +31,16 @@ public class Azure {
         leftA.setDirection(DcMotorSimple.Direction.REVERSE);
         leftB.setDirection(DcMotorSimple.Direction.REVERSE);
         // Making the motors on the left move forward
+
+        imu = hwmap.get(BNO055IMU.class, "imu");
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.calibrationDataFile = "AdafruitIMUCalibration.json";
+        imu.initialize(parameters);
+
+        WebcamName webcamName = hwmap.get(WebcamName.class, "Webcam 1");
+
+        camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
 
     }
 }

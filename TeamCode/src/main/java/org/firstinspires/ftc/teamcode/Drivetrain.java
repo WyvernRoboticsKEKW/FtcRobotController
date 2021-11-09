@@ -3,6 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+import org.openftc.easyopencv.OpenCvPipeline;
+
 public abstract class Drivetrain extends LinearOpMode {
     Azure azure;
 
@@ -59,4 +63,26 @@ public abstract class Drivetrain extends LinearOpMode {
             azure.liftyBoi.setPosition(0);
         }
     }
+    public void rotateNow(double turnAngle){
+        float firstAngle = azure.imu.getAngularOrientation().firstAngle;
+        turnAngle = ((turnAngle%360)+360)%360;
+        double turnVal = 1;
+
+        if(turnAngle-firstAngle < 0) turnVal = -1;
+        // counter clockwise
+        if(Math.abs(turnAngle-firstAngle)>180) turnVal *= -1;
+
+    }
+
+    /*class ConvertToGreyPipeline extends OpenCvPipeline
+    {
+        Mat grey = new Mat();
+
+        @Override
+        public Mat processFrame(Mat input)
+        {
+            Imgproc.cvtColor(input, grey, Imgproc.COLOR_RGB2GRAY);
+            return grey;
+        }
+    }*/
 }
