@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 public abstract class Drivetrain extends LinearOpMode {
@@ -63,6 +65,7 @@ public abstract class Drivetrain extends LinearOpMode {
             azure.liftyBoi.setPosition(0);
         }
     }
+
     public void rotateNow(double turnAngle){
         float firstAngle = azure.imu.getAngularOrientation().firstAngle;
         turnAngle = ((turnAngle%360)+360)%360;
@@ -70,19 +73,33 @@ public abstract class Drivetrain extends LinearOpMode {
 
         if(turnAngle-firstAngle < 0) turnVal = -1;
         // counter clockwise
-        if(Math.abs(turnAngle-firstAngle)>180) turnVal *= -1;
+
+        double angularDistance = Math.abs(turnAngle-firstAngle);
+        if(angularDistance>180) { // dealing with edge case
+            turnVal *= -1;
+            angularDistance = 360-angularDistance; // calculating shorter angularDistance
+        }
+
+        turnVal = turnVal*angularDistance/12;
+
+        setDrivePower(turnVal, -turnVal); // use turnVal to determine direction
+    }
+    public void autonomousCamera(){
+
+        azure.camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+        {
+            @Override
+            public void onOpened()
+            {
+                azure.camera.startStreaming(320,240, OpenCvCameraRotation.UPRIGHT);
+                azure.camera.setPipeline(azure.pipeline);
+            }
+            @Override
+            public void onError(int errorCode)
+            {
+            }
+        });
+
 
     }
-
-    /*class ConvertToGreyPipeline extends OpenCvPipeline
-    {
-        Mat grey = new Mat();
-
-        @Override
-        public Mat processFrame(Mat input)
-        {
-            Imgproc.cvtColor(input, grey, Imgproc.COLOR_RGB2GRAY);
-            return grey;
-        }
-    }*/
 }
