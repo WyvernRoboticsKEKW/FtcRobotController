@@ -18,11 +18,11 @@ import java.util.List;
 
 public class Pipeline extends OpenCvPipeline
 {
-    Scalar Cyan = new Scalar(150,0 ,0 );
+    Scalar Cyan = new Scalar(, , ); //we are still trying to figure out the color on the scalar
 
-    // Pink, the default color                         Y      Cr     Cb    (Do not change Y)
-    public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 150.0, 120.0);
-    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 255.0, 255.0);
+    //Cyan might be y=120 Cr=64 Cb=192                 Y      Cr     Cb    (Do not change Y)
+    public static Scalar scalarLowerYCrCb = new Scalar(  0.0 ,     ,   );//light
+    public static Scalar scalarUpperYCrCb = new Scalar(255.0 ,     ,   );//Dark
     // These values define the Range of color, for example green is a color "in between" lightgreen and darkgreen.
 
     // Green                                             Y      Cr     Cb
