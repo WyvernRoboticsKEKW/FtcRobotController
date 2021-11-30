@@ -18,12 +18,13 @@ import java.util.List;
 
 public class Pipeline extends OpenCvPipeline
 {
-    Scalar Cyan = new Scalar(, , ); //we are still trying to figure out the color on the scalar
+    Scalar Cyan = new Scalar(0,0 ,0 ); //we are still trying to figure out the color on the scalar
 
     //Cyan might be y=120 Cr=64 Cb=192                 Y      Cr     Cb    (Do not change Y)
-    public static Scalar scalarLowerYCrCb = new Scalar(  0.0 ,     ,   );//light
-    public static Scalar scalarUpperYCrCb = new Scalar(255.0 ,     ,   );//Dark
+    public static Scalar scalarLowerYCrCb = new Scalar(  0.0 ,0     , 0  );//light
+    public static Scalar scalarUpperYCrCb = new Scalar(255.0 , 0    ,0   );//Dark
     // These values define the Range of color, for example green is a color "in between" lightgreen and darkgreen.
+    private double[] colorCenter;
 
     // Green                                             Y      Cr     Cb
     // public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 0.0, 0.0);
@@ -67,6 +68,9 @@ public class Pipeline extends OpenCvPipeline
     public void ConfigureScalarUpper(double Y, double Cr, double Cb) { scalarUpperYCrCb = new Scalar(Y, Cr, Cb); }
     public void ConfigureScalarLower(int Y, int Cr, int Cb) { scalarLowerYCrCb = new Scalar(Y, Cr, Cb); }
     public void ConfigureScalarUpper(int Y, int Cr, int Cb) { scalarUpperYCrCb = new Scalar(Y, Cr, Cb); }
+    public double[] getColorCenter() {
+        return colorCenter;
+    }
 
     @Override
     public Mat processFrame(Mat input)
@@ -75,7 +79,9 @@ public class Pipeline extends OpenCvPipeline
         try
         {
             // Process Image
-            Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2YCrCb);
+            Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2YCrCb); //mat = yCrCb
+
+            colorCenter = mat.get((int)mat.rows()/2, (int)mat.cols()/2);
             Core.inRange(mat, scalarLowerYCrCb, scalarUpperYCrCb, processed);
             // Core.bitwise_and(input, input, output, processed);
 
@@ -139,6 +145,8 @@ public class Pipeline extends OpenCvPipeline
             debug = e;
             error = true;
         }
+
+
 
         return output;
     }

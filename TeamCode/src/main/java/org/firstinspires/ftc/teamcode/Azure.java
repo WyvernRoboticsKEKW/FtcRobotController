@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.*;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvPipeline;
+
 
 public class Azure {
     DcMotor leftA;
@@ -43,6 +43,6 @@ public class Azure {
 
         WebcamName webcamName = hwmap.get(WebcamName.class, "Webcam 1");
 
-        camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
+        //camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
     }
 }
