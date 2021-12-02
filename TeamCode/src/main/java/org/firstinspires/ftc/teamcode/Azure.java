@@ -31,8 +31,8 @@ public class Azure {
         liftyBoi = hwmap.get(Servo.class, "lift1");
         // defining devices from the config
 
-        leftA.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftB.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightA.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightB.setDirection(DcMotorSimple.Direction.REVERSE);
         // Making the motors on the left move forward
 
         imu = hwmap.get(BNO055IMU.class, "imu");
