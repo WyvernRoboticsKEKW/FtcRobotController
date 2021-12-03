@@ -11,6 +11,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 public abstract class Drivetrain extends LinearOpMode {
     Azure azure;
+    Pipeline pipeline;
 
     public void initialization() {
         azure = new Azure(hardwareMap);
@@ -85,6 +86,7 @@ public abstract class Drivetrain extends LinearOpMode {
         setDrivePower(turnVal, -turnVal); // use turnVal to determine direction
     }
     public void autonomousCamera(){
+        pipeline = new Pipeline();
 
         azure.camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
@@ -92,13 +94,12 @@ public abstract class Drivetrain extends LinearOpMode {
             public void onOpened()
             {
                 azure.camera.startStreaming(320,240, OpenCvCameraRotation.UPRIGHT);
-                azure.camera.setPipeline(azure.pipeline);
+                azure.camera.setPipeline(pipeline);
             }
             @Override
             public void onError(int errorCode)
             {
             }
         });
-
     }
 }

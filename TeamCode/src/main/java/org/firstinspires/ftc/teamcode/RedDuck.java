@@ -9,25 +9,16 @@ public class RedDuck extends Drivetrain {
     @Override
     public void runOpMode() throws InterruptedException {
         initialization();
+        autonomousCamera();
         waitForStart();
 
-        setDrivePower(1,1);
-        sleep(1000);
-        setDrivePower(0,0);
+        while(!pipeline.isReady()) sleep(100);
 
-        azure.camera.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
-
-        azure.camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened()
-            {
-            }
-            @Override
-            public void onError(int errorCode) {
-
-            }
-        });
-
-
+        while(opModeIsActive()) {
+            double[] centerColor = pipeline.getColorCenter();
+            telemetry.addData("Center Color", centerColor[0] + ", " + centerColor[1] + ", " + centerColor[2]);
+            telemetry.update();
+            sleep(100);
+        }
     }
 }

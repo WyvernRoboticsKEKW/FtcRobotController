@@ -19,7 +19,6 @@ public class Azure {
     BNO055IMU imu;
 
     OpenCvCamera camera;
-    Pipeline pipeline;
     //camera
 
     public Azure(HardwareMap hwmap){
@@ -43,6 +42,6 @@ public class Azure {
 
         WebcamName webcamName = hwmap.get(WebcamName.class, "Webcam 1");
 
-        //camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
+        camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
     }
 }

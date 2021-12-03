@@ -20,6 +20,7 @@ public class Pipeline extends OpenCvPipeline
 {
     Scalar Cyan = new Scalar(0,0 ,0 ); //we are still trying to figure out the color on the scalar
 
+    private boolean isReady = false;
     //Cyan might be y=120 Cr=64 Cb=192                 Y      Cr     Cb    (Do not change Y)
     public static Scalar scalarLowerYCrCb = new Scalar(  0.0 ,0     , 0  );//light
     public static Scalar scalarUpperYCrCb = new Scalar(255.0 , 0    ,0   );//Dark
@@ -146,7 +147,7 @@ public class Pipeline extends OpenCvPipeline
             error = true;
         }
 
-
+        isReady = true;
 
         return output;
     }
@@ -159,4 +160,8 @@ public class Pipeline extends OpenCvPipeline
     public Point getRectMidpointXY(){ return new Point(getRectMidpointX(), getRectMidpointY());}
     public double getAspectRatio(){ return getRectArea()/(CAMERA_HEIGHT*CAMERA_WIDTH); }
     public double getRectArea(){ return maxRect.area(); }
+
+    public boolean isReady() {
+        return isReady;
+    }
 }
