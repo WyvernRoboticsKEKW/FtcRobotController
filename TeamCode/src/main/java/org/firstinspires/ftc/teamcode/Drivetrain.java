@@ -102,4 +102,9 @@ public abstract class Drivetrain extends LinearOpMode {
             }
         });
     }
+
+    public void stopRecording(){
+        azure.camera.stopRecordingPipeline();
+        azure.camera.closeCameraDevice();
+    }
 }
