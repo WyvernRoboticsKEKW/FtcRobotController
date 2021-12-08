@@ -20,5 +20,8 @@ public class RedDuck extends Drivetrain {
             telemetry.update();
             sleep(100);
         }
+
+        azure.camera.stopRecordingPipeline();
+        azure.camera.stopStreaming();
     }
 }

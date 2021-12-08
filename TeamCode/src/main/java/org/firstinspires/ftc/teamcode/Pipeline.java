@@ -22,8 +22,8 @@ public class Pipeline extends OpenCvPipeline
 
     private boolean isReady = false;
     //Cyan might be y=120 Cr=64 Cb=192                 Y      Cr     Cb    (Do not change Y)
-    public static Scalar scalarLowerYCrCb = new Scalar(  0.0 ,0     , 0  );//light
-    public static Scalar scalarUpperYCrCb = new Scalar(255.0 , 0    ,0   );//Dark
+    public static Scalar scalarLowerYCrCb = new Scalar(150, 95, 120);//light
+    public static Scalar scalarUpperYCrCb = new Scalar(170, 105, 135);//Dark
     // These values define the Range of color, for example green is a color "in between" lightgreen and darkgreen.
     private double[] colorCenter;
 
@@ -150,7 +150,7 @@ public class Pipeline extends OpenCvPipeline
         isReady = true;
 
         return output;
-    }
+    }  
     public int getRectHeight(){return maxRect.height;}
     public int getRectWidth(){ return maxRect.width; }
     public int getRectX(){ return maxRect.x; }
