@@ -14,6 +14,7 @@ public class Azure {
     DcMotor rightA;
     DcMotor rightB;
     Servo liftyBoi;
+    CRServo carousel;
     // Drivetrain
 
     BNO055IMU imu;
@@ -28,6 +29,7 @@ public class Azure {
         rightB = hwmap.get(DcMotor.class, "rightB");
 
         liftyBoi = hwmap.get(Servo.class, "lift1");
+        carousel = hwmap.get(CRServo.class, "carousel");
         // defining devices from the config
 
         rightA.setDirection(DcMotorSimple.Direction.REVERSE);

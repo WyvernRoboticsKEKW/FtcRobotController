@@ -85,6 +85,7 @@ public abstract class Drivetrain extends LinearOpMode {
 
         setDrivePower(turnVal, -turnVal); // use turnVal to determine direction
     }
+
     public void autonomousCamera(){
         pipeline = new Pipeline();
 

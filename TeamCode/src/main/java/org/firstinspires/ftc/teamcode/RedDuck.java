@@ -14,12 +14,22 @@ public class RedDuck extends Drivetrain {
 
         while(!pipeline.isReady()) sleep(100);
 
-        while(opModeIsActive()) {
-            double[] centerColor = pipeline.getColorCenter();
-            telemetry.addData("Center Color", centerColor[0] + ", " + centerColor[1] + ", " + centerColor[2]);
-            telemetry.update();
-            sleep(100);
+        double currentPoint = pipeline.getRectMidpointX();
+
+        driveDistance(6);
+        rotateNow(-90);
+        driveDistance(24);
+        azure.carousel.setPower(-0.5);
+        sleep(2000);
+        azure.carousel.setPower(0);
+        driveDistance(-24);
+        rotateNow(90);
+        driveDistance(-5);
+        driveDistance(24);
+        if(currentPoint < .33){
+
         }
+
         stopRecording();
     }
 }
