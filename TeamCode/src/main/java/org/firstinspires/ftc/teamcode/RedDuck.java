@@ -16,16 +16,17 @@ public class RedDuck extends Drivetrain {
 
         double currentPoint = pipeline.getRectMidpointX();
 
-        driveDistance(6);
-        rotateNow(-90);
-        driveDistance(24);
-        azure.carousel.setPower(-0.5);
-        sleep(2000);
-        azure.carousel.setPower(0);
-        driveDistance(-24);
-        rotateNow(90);
-        driveDistance(-5);
-        driveDistance(24);
+        driveDistance(6); // go forward
+        // make camera recognize which level he duck is on the barcode
+        rotateNow(90); // go right
+        driveDistance(24); // move forward
+        rotateNow(0); // turn left
+        // drop preload box on correct level
+        rotateNow(-90);//turn all the way on the left
+        driveDistance(36); // move to the carousel
+        rotateNow(90); // turn to the direction of the stoage unit
+        driveDistance(24); // move into the storage unit
+
         if(currentPoint < .33){
 
         }
