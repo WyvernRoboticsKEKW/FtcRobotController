@@ -15,6 +15,7 @@ public class Azure {
     DcMotor rightB;
     Servo liftyBoi;
     CRServo carousel;
+    DcMotor arm;
     // Drivetrain
 
     BNO055IMU imu;
@@ -27,6 +28,7 @@ public class Azure {
         leftB = hwmap.get(DcMotor.class, "leftB");
         rightA = hwmap.get(DcMotor.class, "rightA");
         rightB = hwmap.get(DcMotor.class, "rightB");
+        arm = hwmap.get(DcMotor.class, "arm");
 
         liftyBoi = hwmap.get(Servo.class, "lift1");
         carousel = hwmap.get(CRServo.class, "carousel");
@@ -35,6 +37,9 @@ public class Azure {
         rightA.setDirection(DcMotorSimple.Direction.REVERSE);
         rightB.setDirection(DcMotorSimple.Direction.REVERSE);
         // Making the motors on the left move forward
+
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         imu = hwmap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -46,4 +51,5 @@ public class Azure {
 
         camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
     }
+
 }

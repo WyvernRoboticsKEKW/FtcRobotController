@@ -38,7 +38,7 @@ public abstract class Drivetrain extends LinearOpMode {
         azure.rightA.setTargetPosition(rightAStart+ticks);
         azure.rightB.setTargetPosition(rightBStart+ticks);
 
-        setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         setDrivePower(.5, .5);
 
@@ -103,7 +103,21 @@ public abstract class Drivetrain extends LinearOpMode {
             }
         });
     }
-
+    public void intakeArm(int armPosition){
+        switch (armPosition) {
+            case 1:
+                azure.arm.setTargetPosition(630);
+                break;
+            case 2:
+                azure.arm.setTargetPosition(830);
+                break;
+            case 3:
+                azure.arm.setTargetPosition(930);
+                break;
+            default:
+                azure.arm.setTargetPosition(0);
+        }
+    }
     public void stopRecording(){
         azure.camera.stopRecordingPipeline();
         azure.camera.closeCameraDevice();
