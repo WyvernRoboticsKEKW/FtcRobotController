@@ -15,19 +15,6 @@ public class BlueWareHouse extends Drivetrain {
         sleep(1000);
         setDrivePower(0,0);
 
-        azure.camera.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
-
-        azure.camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened() {
-            }
-
-            @Override
-            public void onError(int errorCode) {
-
-            }
-        });
-
-
+        stopRecording(); // turn off the robots camera
+        }
     }
-}

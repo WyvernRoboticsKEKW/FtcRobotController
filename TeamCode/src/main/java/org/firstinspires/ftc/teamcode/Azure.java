@@ -16,6 +16,7 @@ public class Azure {
     Servo liftyBoi;
     CRServo carousel;
     DcMotor arm;
+    DcMotor intake;
     // Drivetrain
 
     BNO055IMU imu;
@@ -29,6 +30,7 @@ public class Azure {
         rightA = hwmap.get(DcMotor.class, "rightA");
         rightB = hwmap.get(DcMotor.class, "rightB");
         arm = hwmap.get(DcMotor.class, "arm");
+        intake = hwmap.get(DcMotor.class,"intake");
 
         liftyBoi = hwmap.get(Servo.class, "lift1");
         carousel = hwmap.get(CRServo.class, "carousel");

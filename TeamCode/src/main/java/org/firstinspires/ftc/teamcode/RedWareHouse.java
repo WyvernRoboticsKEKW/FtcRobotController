@@ -9,26 +9,29 @@ public class RedWareHouse extends Drivetrain {
     @Override
     public void runOpMode() throws InterruptedException {
         initialization();
+        autonomousCamera();
         waitForStart();
 
-        setDrivePower(1,1);
-        sleep(1000);
-        setDrivePower(0,0);
+        while(!pipeline.isReady()) sleep(100);
 
-        azure.camera.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
+        double currentPoint = pipeline.getRectMidpointX();
 
-        azure.camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened() {
-            }
-
-            @Override
-            public void onError(int errorCode) {
-
-            }
-        });
-
-
+        driveDistance(6); // drive forward
+        rotateNow(-90); // turn left
+        driveDistance(24);
+        rotateNow(0);
+        if (currentPoint < .33) {
+            intakeArm(1);
+        } else if (currentPoint < .67) {
+            intakeArm(2);
+        } else {
+            intakeArm(3);
+        }
+        sleep(1000); // hold the arm there for 1 sec
+        azure.intake.setPower(1); // turn the surgical tubes to push out the preloaded box
+        sleep(500); // keep spinning for half a second
+        azure.intake.setPower(0); // stop spinning
+        stopRecording(); // turn off the robots camera
+        }
     }
-}
 
