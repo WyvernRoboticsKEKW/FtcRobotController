@@ -35,6 +35,9 @@ public class RedWareHouse extends Drivetrain {
         driveDistance(48);
         rotateNow(0);
         driveDistance(14);
+        rotateNow(-90);
+        driveDistance(5);
+
         stopRecording(); // turn off the robots camera
         }
     }

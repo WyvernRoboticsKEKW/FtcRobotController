@@ -14,7 +14,7 @@ public class Azure {
     DcMotor rightA;
     DcMotor rightB;
     Servo liftyBoi;
-    CRServo carousel;
+     // CRServo carousel;
     DcMotor arm;
     DcMotor intake;
     // Drivetrain
@@ -33,15 +33,17 @@ public class Azure {
         intake = hwmap.get(DcMotor.class,"intake");
 
         liftyBoi = hwmap.get(Servo.class, "lift1");
-        carousel = hwmap.get(CRServo.class, "carousel");
+       // carousel = hwmap.get(CRServo.class, "carousel");
         // defining devices from the config
 
         rightA.setDirection(DcMotorSimple.Direction.REVERSE);
         rightB.setDirection(DcMotorSimple.Direction.REVERSE);
         // Making the motors on the left move forward
 
-        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         imu = hwmap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();

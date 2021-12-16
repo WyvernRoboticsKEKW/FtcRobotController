@@ -59,20 +59,12 @@ public abstract class Drivetrain extends LinearOpMode {
         azure.rightB.setMode(runMode);
     }
 
-    public void setLift(boolean arm){
-        if (arm){
-            azure.arm.setPower(1);
-        } else {
-            azure.arm.setPower(0);
-        }
+    public void setLift(int power){
+            azure.arm.setPower(power);
     }
 
-    public void setIntake(boolean intake){
-        if (intake) {
-            azure.intake.setPower(1);
-        } else {
-            azure.intake.setPower(0);
-        }
+    public void setIntake(int power){
+        azure.intake.setPower(power);
     }
 
     public void rotateNow(double turnAngle){

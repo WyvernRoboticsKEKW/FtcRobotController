@@ -12,19 +12,22 @@ public class Drive extends Drivetrain {
             setDrivePower(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
 
             if (gamepad2.right_trigger > 0.5) {
-                setLift(true);
+                setLift(1);
                 // lift go up
-            } else if (gamepad2.left_trigger > 0.5) {
-                setLift(false);
+            } else if(gamepad2.left_trigger > 0.5) {
+                setLift(-1);
                 // lift go down
+            } else {
+                setLift(0);
             }
 
-
             if (gamepad2.right_bumper) {
-                setIntake(true);
+                setIntake(1);
                 // lift go up
-            } else if (gamepad2.left_bumper){
-                setIntake(false);
+            } else if (gamepad2.left_bumper) {
+                setIntake(-1);
+            } else {
+                setIntake(0);
             }
         }
     }
