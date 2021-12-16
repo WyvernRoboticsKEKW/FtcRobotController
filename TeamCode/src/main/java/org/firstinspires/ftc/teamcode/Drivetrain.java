@@ -59,11 +59,19 @@ public abstract class Drivetrain extends LinearOpMode {
         azure.rightB.setMode(runMode);
     }
 
-    public void setLift(boolean liftyBoi){
-        if (liftyBoi){
-            azure.liftyBoi.setPosition(1);
+    public void setLift(boolean arm){
+        if (arm){
+            azure.arm.setPower(1);
         } else {
-            azure.liftyBoi.setPosition(0);
+            azure.arm.setPower(0);
+        }
+    }
+
+    public void setIntake(boolean intake){
+        if (intake) {
+            azure.intake.setPower(1);
+        } else {
+            azure.intake.setPower(0);
         }
     }
 

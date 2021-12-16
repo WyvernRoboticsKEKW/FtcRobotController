@@ -31,6 +31,10 @@ public class RedWareHouse extends Drivetrain {
         azure.intake.setPower(1); // turn the surgical tubes to push out the preloaded box
         sleep(500); // keep spinning for half a second
         azure.intake.setPower(0); // stop spinning
+        rotateNow(-90);
+        driveDistance(48);
+        rotateNow(0);
+        driveDistance(14);
         stopRecording(); // turn off the robots camera
         }
     }
