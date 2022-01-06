@@ -59,11 +59,11 @@ public abstract class Drivetrain extends LinearOpMode {
         azure.rightB.setMode(runMode);
     }
 
-    public void setLift(int power){
+    public void setLift(double power){
             azure.arm.setPower(power);
     }
 
-    public void setIntake(int power){
+    public void setIntake(double power){
         azure.intake.setPower(power);
     }
 
@@ -106,17 +106,18 @@ public abstract class Drivetrain extends LinearOpMode {
     public void intakeArm(int armPosition){
         switch (armPosition) {
             case 1:
-                azure.arm.setTargetPosition(630);
+                azure.arm.setTargetPosition(20);
                 break;
             case 2:
-                azure.arm.setTargetPosition(830);
+                azure.arm.setTargetPosition(125);
                 break;
             case 3:
-                azure.arm.setTargetPosition(930);
+                azure.arm.setTargetPosition(200); // changed from 960
                 break;
             default:
                 azure.arm.setTargetPosition(0);
         }
+        azure.arm.setPower(1);
     }
     public void stopRecording(){
         azure.camera.stopRecordingPipeline();
