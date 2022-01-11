@@ -13,8 +13,8 @@ public class Azure {
     DcMotor leftB;
     DcMotor rightA;
     DcMotor rightB;
-    Servo liftyBoi;
-     // CRServo carousel;
+    //Servo liftyBoi;
+    CRServo carousel;
     DcMotor arm;
     DcMotor intake;
     // Drivetrain
@@ -32,8 +32,8 @@ public class Azure {
         arm = hwmap.get(DcMotor.class, "arm");
         intake = hwmap.get(DcMotor.class,"intake");
 
-        liftyBoi = hwmap.get(Servo.class, "lift1");
-       // carousel = hwmap.get(CRServo.class, "carousel");
+        //liftyBoi = hwmap.get(Servo.class, "lift1");
+        carousel = hwmap.get(CRServo.class, "carousel");
         // defining devices from the config
 
         rightA.setDirection(DcMotorSimple.Direction.REVERSE);

@@ -19,7 +19,6 @@ public class RedDuck extends Drivetrain {
         /*driveDistance(6); // move forward
         rotateNow(-90); // turn towards the carousel
         driveDistance(24);*/ // go to he carousel
-        // raise arm to spin carousel
         /*azure.carousel.setPower(-.5); // move the wheel to spin carousel
         sleep(2000); // continue for 2 seconds
         azure.carousel.setPower(0); // stop moving wheel
@@ -33,10 +32,6 @@ public class RedDuck extends Drivetrain {
             intakeArm(1); // highest level
         } else if(currentPoint < .67) {
             intakeArm(2); // middle level
-            driveDistance(5);
-            rotateNow(90);
-            driveDistance(5);
-            rotateNow(-90);
         } else {
             intakeArm(3); // lowest level
         }
@@ -44,6 +39,11 @@ public class RedDuck extends Drivetrain {
         telemetry.addData("currentPoint", currentPoint);
         telemetry.update();
 
+        driveDistance(4);
+        rotateNow(-90);
+        driveDistance(2);
+        rotateNow(90);
+        driveDistance(3);
         sleep(1000); // hold the arm there for 1 sec
         azure.intake.setPower(1); // turn the surgical tubes to push out the preloaded box
         sleep(500); // keep spinning for half a second

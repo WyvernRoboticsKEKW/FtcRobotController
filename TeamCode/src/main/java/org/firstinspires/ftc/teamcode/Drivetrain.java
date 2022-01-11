@@ -58,6 +58,9 @@ public abstract class Drivetrain extends LinearOpMode {
         azure.rightA.setMode(runMode);
         azure.rightB.setMode(runMode);
     }
+    public void setCarousel(double power){
+        azure.carousel.setPower(power/2);
+    }
 
     public void setLift(double power){
             azure.arm.setPower(power);

@@ -16,10 +16,9 @@ public class BlueDuck extends Drivetrain {
 
         double currentPoint = pipeline.getRectMidpointX();
 
-        driveDistance(6); // move forward
-        /*rotateNow(90); // turn towards the carousel
+        /*driveDistance(6); // move forward
+        rotateNow(90); // turn towards the carousel
         driveDistance(24); // go to he carousel
-        // raise arm to spin carousel
         azure.carousel.setPower(.5); // move the wheel to spin carousel
         sleep(2000); // continue for 2 seconds
         azure.carousel.setPower(0); // stop moving wheel

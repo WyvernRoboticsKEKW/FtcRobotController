@@ -21,6 +21,15 @@ public class Drive extends Drivetrain {
             } else {
                 setIntake(0);
             }
+            
+            if (gamepad2.y){
+                setCarousel(1);
+            } else if (gamepad2.a) {
+                setCarousel(-1);
+            } else if (gamepad2.b){
+                setCarousel(0);
+            }
+
         }
     }
 }
