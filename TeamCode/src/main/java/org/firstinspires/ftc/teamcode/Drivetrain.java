@@ -63,7 +63,8 @@ public abstract class Drivetrain extends LinearOpMode {
     }
 
     public void setLift(double power){
-            azure.arm.setPower(power);
+        azure.arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        azure.arm.setPower(power);
     }
 
     public void setIntake(double power){
@@ -71,22 +72,25 @@ public abstract class Drivetrain extends LinearOpMode {
     }
 
     public void rotateNow(double turnAngle){
-        float firstAngle = azure.imu.getAngularOrientation().firstAngle;
-        turnAngle = ((turnAngle%360)+360)%360;
-        double turnVal = 1;
+        double angularDistance = 0;
+        do {
+            float firstAngle = -azure.imu.getAngularOrientation().firstAngle;
+            turnAngle = ((turnAngle % 360) + 360) % 360;
+            double turnVal = 1;
 
-        if(turnAngle-firstAngle < 0) turnVal = -1;
-        // counter clockwise
+            if (turnAngle - firstAngle < 0) turnVal = -1;
+            // counter clockwise
 
-        double angularDistance = Math.abs(turnAngle-firstAngle);
-        if(angularDistance>180) { // dealing with edge case
-            turnVal *= -1;
-            angularDistance = 360-angularDistance; // calculating shorter angularDistance
-        }
+            angularDistance = Math.abs(turnAngle - firstAngle);
+            if (angularDistance > 180) { // dealing with edge case
+                turnVal *= -1;
+                angularDistance = 360 - angularDistance; // calculating shorter angularDistance
+            }
 
-        turnVal = turnVal*angularDistance/12;
+            turnVal = turnVal * angularDistance / 12;
 
-        setDrivePower(turnVal, -turnVal); // use turnVal to determine direction
+            setDrivePower(turnVal, -turnVal); // use turnVal to determine direction
+        } while(opModeIsActive() && angularDistance > 5);
     }
 
     public void autonomousCamera(){
@@ -107,6 +111,7 @@ public abstract class Drivetrain extends LinearOpMode {
         });
     }
     public void intakeArm(int armPosition){
+        azure.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         switch (armPosition) {
             case 1:
                 azure.arm.setTargetPosition(20);

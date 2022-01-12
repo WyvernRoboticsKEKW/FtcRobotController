@@ -10,10 +10,9 @@ public class DDRTesting extends Drivetrain {
         initialization();
         waitForStart();
         setCarousel(-1);
-        sleep(2000);
-        setCarousel(1);
-        sleep(1000);
+        sleep(7000);
         setCarousel(0);
+        sleep(1000);
 
 
 

@@ -16,7 +16,7 @@ public class RedWareHouse extends Drivetrain {
 
         double currentPoint = pipeline.getRectMidpointX();
 
-        driveDistance(6); // drive forward
+        /*driveDistance(6); // drive forward
         rotateNow(-90); // turn left
         driveDistance(24);
         rotateNow(0);
@@ -27,16 +27,16 @@ public class RedWareHouse extends Drivetrain {
         } else {
             intakeArm(3);
         }
-        sleep(1000); // hold the arm there for 1 sec
+        sleep(1000); // hold the arm there for 1 sec*/
         azure.intake.setPower(1); // turn the surgical tubes to push out the preloaded box
         sleep(500); // keep spinning for half a second
         azure.intake.setPower(0); // stop spinning
-        rotateNow(-90);
+        /*rotateNow(-90);
         driveDistance(48);
         rotateNow(0);
         driveDistance(14);
         rotateNow(-90);
-        driveDistance(5);
+        driveDistance(5);*/
 
         stopRecording(); // turn off the robots camera
         }
