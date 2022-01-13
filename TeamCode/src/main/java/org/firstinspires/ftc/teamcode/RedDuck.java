@@ -39,15 +39,15 @@ public class RedDuck extends Drivetrain {
         telemetry.addData("currentPoint", currentPoint);
         telemetry.update();
 
-        driveDistance(4);
-        rotateNow(-90);
-        driveDistance(2);
-        rotateNow(90);
         driveDistance(3);
-        sleep(1000); // hold the arm there for 1 sec
-        azure.intake.setPower(1); // turn the surgical tubes to push out the preloaded box
-        sleep(500); // keep spinning for half a second
-        azure.intake.setPower(0); // stop spinning
+        //rotateNow(-90);
+        //driveDistance(2);
+        //rotateNow(90);
+        //driveDistance(3);
+       // sleep(1000); // hold the arm there for 1 sec
+        //azure.intake.setPower(1); // turn the surgical tubes to push out the preloaded box
+       // sleep(500); // keep spinning for half a second
+       // azure.intake.setPower(0); // stop spinning
         /*rotateNow(-90);//turn all the way on the left
         driveDistance(36); // move to the carousel
         rotateNow(90); // turn to the direction of the storage unit
