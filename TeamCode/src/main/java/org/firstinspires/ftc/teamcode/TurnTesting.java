@@ -18,6 +18,6 @@ public class TurnTesting extends Drivetrain {
             telemetry.addData("Second", orientation.secondAngle);
             telemetry.addData("Third", orientation.thirdAngle);
             telemetry.update();*/
-        rotateNow(-130);
+        rotateNow(-90);
     }
 }

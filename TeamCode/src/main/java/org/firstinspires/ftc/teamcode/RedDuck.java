@@ -16,19 +16,20 @@ public class RedDuck extends Drivetrain {
 
         double currentPoint = pipeline.getRectMidpointY()/240;
 
-        /*driveDistance(6); // move forward
-        rotateNow(-90); // turn towards the carousel
-        driveDistance(24);*/ // go to he carousel
+        driveDistance(2); // move forward
+        //rotateNow(90); // turn towards the carousel
+        //driveDistance(-20); // go to he carousel
+        //rotateNow(-15);
         /*azure.carousel.setPower(-.5); // move the wheel to spin carousel
         sleep(2000); // continue for 2 seconds
         azure.carousel.setPower(0); // stop moving wheel
-        rotateNow(90); // go right
+        /*rotateNow(90); // go right
         driveDistance(48); // move forward
         rotateNow(0); // turn left*/
         /*rotateNow(90); // turn to the right
         driveDistance(14); // drive in front of the shipping hub
-        rotateNow(0);*/ // turn to face the shipping hub
-        if(currentPoint < .33){ // put arm in correct position
+        rotateNow(0);*/ // turn to face the shipping hub*/
+        /*if(currentPoint < .33){ // put arm in correct position
             intakeArm(1); // highest level
         } else if(currentPoint < .67) {
             intakeArm(2); // middle level
@@ -39,7 +40,7 @@ public class RedDuck extends Drivetrain {
         telemetry.addData("currentPoint", currentPoint);
         telemetry.update();
 
-        driveDistance(3);
+        //driveDistance(3);
         //rotateNow(-90);
         //driveDistance(2);
         //rotateNow(90);

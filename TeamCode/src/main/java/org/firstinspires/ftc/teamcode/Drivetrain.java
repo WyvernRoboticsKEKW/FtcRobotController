@@ -28,22 +28,22 @@ public abstract class Drivetrain extends LinearOpMode {
         // 1.48 motor rotations per wheel rotation
         int ticks = (int)(distance*1120*1.48*(4+(2/7)*Math.PI));
 
-        int leftAStart = azure.leftA.getCurrentPosition();
-        int leftBStart = azure.leftB.getCurrentPosition();
-        int rightAStart = azure.rightA.getCurrentPosition();
-        int rightBStart = azure.rightB.getCurrentPosition();
+        setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        azure.leftA.setTargetPosition(leftAStart+ticks);
-        azure.leftB.setTargetPosition(leftBStart+ticks);
-        azure.rightA.setTargetPosition(rightAStart+ticks);
-        azure.rightB.setTargetPosition(rightBStart+ticks);
+        azure.leftA.setTargetPosition(ticks);
+        azure.leftB.setTargetPosition(ticks);
+        azure.rightA.setTargetPosition(ticks);
+        azure.rightB.setTargetPosition(ticks);
 
         setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         setDrivePower(.5, .5);
 
-        while(azure.leftA.isBusy() || azure.leftB.isBusy() || azure.rightA.isBusy() || azure.rightB.isBusy()) {
+        while(opModeIsActive() && (azure.leftA.isBusy() || azure.leftB.isBusy() || azure.rightA.isBusy() || azure.rightB.isBusy())) {
             sleep(10);
+            telemetry.addData();
+            telemetry.update();
             // wait until the motors stop moving
         }
 
@@ -58,6 +58,7 @@ public abstract class Drivetrain extends LinearOpMode {
         azure.rightA.setMode(runMode);
         azure.rightB.setMode(runMode);
     }
+
     public void setCarousel(double power){
         azure.carousel.setPower(power/2);
     }
