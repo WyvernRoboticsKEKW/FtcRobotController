@@ -42,7 +42,8 @@ public abstract class Drivetrain extends LinearOpMode {
 
         while(opModeIsActive() && (azure.leftA.isBusy() || azure.leftB.isBusy() || azure.rightA.isBusy() || azure.rightB.isBusy())) {
             sleep(10);
-            telemetry.addData();
+            telemetry.addData("Current position", azure.leftA.getCurrentPosition());
+            telemetry.addData("Target position", ticks);
             telemetry.update();
             // wait until the motors stop moving
         }
