@@ -45,8 +45,8 @@ public class Azure {
         arm.setDirection(DcMotorSimple.Direction.REVERSE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         intake.setDirection(DcMotorSimple.Direction.REVERSE);
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         imu = hwmap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -57,6 +57,9 @@ public class Azure {
         WebcamName webcamName = hwmap.get(WebcamName.class, "Webcam 1");
 
         camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
+
+
+
     }
 
 }

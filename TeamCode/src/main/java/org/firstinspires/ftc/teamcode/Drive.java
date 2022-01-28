@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name ="Driver control period")
 public class Drive extends Drivetrain {
     @Override
     public void runOpMode() throws InterruptedException {
         initialization();
+        azure.arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         waitForStart();
         while (opModeIsActive()) {
             setDrivePower(-gamepad1.left_stick_y, -gamepad1.right_stick_y);

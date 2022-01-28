@@ -26,7 +26,7 @@ public abstract class Drivetrain extends LinearOpMode {
 
     public void driveDistance(double distance) {
         // 1.48 motor rotations per wheel rotation
-        int ticks = (int)(distance*1120*1.48*(4+(2/7)*Math.PI));
+        int ticks = (int)(distance*1120*1.48/((4+(2/7))*Math.PI));
 
         setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -42,7 +42,20 @@ public abstract class Drivetrain extends LinearOpMode {
 
         while(opModeIsActive() && (azure.leftA.isBusy() || azure.leftB.isBusy() || azure.rightA.isBusy() || azure.rightB.isBusy())) {
             sleep(10);
+
+            telemetry.addData("LeftA", azure.leftA.isBusy());
+            telemetry.addData("LeftB", azure.leftB.isBusy());
+            telemetry.addData("RightA", azure.rightA.isBusy());
+            telemetry.addData("RightB", azure.rightB.isBusy());
+
+
             telemetry.addData("Current position", azure.leftA.getCurrentPosition());
+            telemetry.addData("Target position", ticks);
+            telemetry.addData("Current position", azure.leftB.getCurrentPosition());
+            telemetry.addData("Target position", ticks);
+            telemetry.addData("Current position", azure.rightA.getCurrentPosition());
+            telemetry.addData("Target position", ticks);
+            telemetry.addData("Current position", azure.rightB.getCurrentPosition());
             telemetry.addData("Target position", ticks);
             telemetry.update();
             // wait until the motors stop moving
@@ -65,11 +78,10 @@ public abstract class Drivetrain extends LinearOpMode {
     }
 
     public void setLift(double power){
-        azure.arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         azure.arm.setPower(power);
     }
 
-    public void setIntake(double power){
+    public void setIntake(double power) {
         azure.intake.setPower(power);
     }
 
@@ -114,20 +126,22 @@ public abstract class Drivetrain extends LinearOpMode {
     }
     public void intakeArm(int armPosition){
         azure.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        azure.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         switch (armPosition) {
             case 1:
-                azure.arm.setTargetPosition(20);
+                azure.arm.setTargetPosition(100);
                 break;
             case 2:
-                azure.arm.setTargetPosition(125);
+                azure.arm.setTargetPosition(250);
                 break;
             case 3:
-                azure.arm.setTargetPosition(200); // changed from 960
+                azure.arm.setTargetPosition(300); // changed from 960
                 break;
             default:
                 azure.arm.setTargetPosition(0);
         }
         azure.arm.setPower(1);
+        azure.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     public void stopRecording(){
         azure.camera.stopRecordingPipeline();
