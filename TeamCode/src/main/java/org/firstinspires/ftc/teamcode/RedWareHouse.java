@@ -32,12 +32,12 @@ public class RedWareHouse extends Drivetrain {
         azure.leftA.setPower(0);
         azure.rightB.setPower(0);
         azure.rightA.setPower(0);
-        rotateNow(-33);
+        rotateNow(-35);
         azure.leftB.setPower(.5);
         azure.leftA.setPower(.5);
         azure.rightB.setPower(.5);
         azure.rightA.setPower(.5);
-        sleep(1200);
+        sleep(700);
         azure.leftB.setPower(0);
         azure.leftA.setPower(0);
         azure.rightB.setPower(0);
@@ -46,6 +46,26 @@ public class RedWareHouse extends Drivetrain {
         setIntake(1);
         sleep(500);
         setIntake(0);
+        rotateNow(-35);
+        azure.leftB.setPower(-.5);
+        azure.leftA.setPower(-.5);
+        azure.rightB.setPower(-.5);
+        azure.rightA.setPower(-.5);
+        sleep(500);
+        azure.leftB.setPower(0);
+        azure.leftA.setPower(0);
+        azure.rightB.setPower(0);
+        azure.rightA.setPower(0);
+        rotateNow(-25);
+        azure.leftB.setPower(-1);
+        azure.leftA.setPower(-1);
+        azure.rightB.setPower(-1);
+        azure.rightA.setPower(-1);
+        sleep(800);
+        azure.leftB.setPower(0);
+        azure.leftA.setPower(0);
+        azure.rightB.setPower(0);
+        azure.rightA.setPower(0);
 
         stopRecording(); // turn off the robots camera
         }

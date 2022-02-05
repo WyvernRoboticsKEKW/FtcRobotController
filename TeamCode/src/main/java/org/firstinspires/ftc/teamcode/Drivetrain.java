@@ -74,7 +74,7 @@ public abstract class Drivetrain extends LinearOpMode {
     }
 
     public void setCarousel(double power){
-        azure.carousel.setPower(power/2);
+        azure.carousel.setPower(power*0.8);
     }
 
     public void setLift(double power){
@@ -129,19 +129,20 @@ public abstract class Drivetrain extends LinearOpMode {
         azure.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         switch (armPosition) {
             case 1:
-                azure.arm.setTargetPosition(100);
+                azure.arm.setTargetPosition(12);
                 break;
             case 2:
-                azure.arm.setTargetPosition(250);
+                azure.arm.setTargetPosition(290);
                 break;
             case 3:
-                azure.arm.setTargetPosition(300); // changed from 960
+                azure.arm.setTargetPosition(291); // changed from 960
                 break;
             default:
                 azure.arm.setTargetPosition(0);
         }
-        azure.arm.setPower(1);
         azure.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        azure.arm.setPower(1);
+
     }
     public void stopRecording(){
         azure.camera.stopRecordingPipeline();

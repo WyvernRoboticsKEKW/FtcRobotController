@@ -58,6 +58,10 @@ public class Azure {
 
         camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
 
+        leftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
     }
