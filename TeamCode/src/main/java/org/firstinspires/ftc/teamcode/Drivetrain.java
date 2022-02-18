@@ -129,13 +129,13 @@ public abstract class Drivetrain extends LinearOpMode {
         azure.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         switch (armPosition) {
             case 1:
-                azure.arm.setTargetPosition(12);
+                azure.arm.setTargetPosition(30);
                 break;
             case 2:
-                azure.arm.setTargetPosition(290);
+                azure.arm.setTargetPosition(320);
                 break;
             case 3:
-                azure.arm.setTargetPosition(291); // changed from 960
+                azure.arm.setTargetPosition(330); // changed from 960
                 break;
             default:
                 azure.arm.setTargetPosition(0);
