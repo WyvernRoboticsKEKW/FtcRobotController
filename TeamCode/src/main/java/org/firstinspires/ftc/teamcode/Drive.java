@@ -31,11 +31,11 @@ public class Drive extends Control {
         //double rightX = gamepad1.right_stick_x;
         double rightX = 0;
         double verticalPower = gamepad2.right_stick_y / 2;
-        double horizontalPower = gamepad2.left_stick_y;
+        //double horizontalPower = gamepad2.left_stick_y;
         Level zHeight = Level.GROUND;
 
-        double R1 = gamepad1.right_trigger;
-        double L1 = gamepad1.left_trigger;
+        double R1 = gamepad1.right_trigger / 2;
+        double L1 = gamepad1.left_trigger / 2;
 
         boolean start = gamepad1.start;
         boolean DpadUp = gamepad2.dpad_up;
@@ -44,6 +44,8 @@ public class Drive extends Control {
         boolean dpadRight = gamepad2.dpad_right;
         boolean buttonA = gamepad2.a;
         boolean buttonB = gamepad2.b;
+
+
         double IMUangle = hraezlyr.getHeading();
 
         double rightTurn = 0;
@@ -64,7 +66,7 @@ public class Drive extends Control {
             rightX = R1;
         }
         double angle = Math.toDegrees(Math.atan2(leftY, leftX));
-        angle = angle - IMUangle + resetIMU;
+        //angle = angle - IMUangle + resetIMU;
 
         angle = constrainAngle(angle);
         rightX = constrainTuring(rightX);
@@ -128,7 +130,7 @@ public class Drive extends Control {
         }
         */
             cascadeLiftManual(verticalPower);
-            hraezlyr.horizontalMotor.setPower(-horizontalPower);
+           // hraezlyr.horizontalMotor.setPower(-horizontalPower);
 
 
 
