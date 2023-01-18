@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 public abstract class Control extends OpMode {
     public static final int TICKS_PER_INCH = (int)(537.6 * (2*Math.PI * 2));
@@ -43,6 +44,9 @@ public abstract class Control extends OpMode {
         }
     }
     public void cascadeLiftManual(double power){
+
+        hraezlyr.setCascadeMotorsMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         hraezlyr.cascadeMotor1.setPower(power);
         hraezlyr.cascadeMotor2.setPower(power);
 

@@ -30,7 +30,7 @@ public class Drive extends Control {
         double leftY = gamepad1.left_stick_y;
         //double rightX = gamepad1.right_stick_x;
         double rightX = 0;
-        double verticalPower = gamepad2.right_stick_y / 2;
+        double verticalPower = gamepad2.right_stick_y / 1.5;
         //double horizontalPower = gamepad2.left_stick_y;
         Level zHeight = Level.GROUND;
 
@@ -42,8 +42,7 @@ public class Drive extends Control {
         boolean DpadDown = gamepad2.dpad_down;
         boolean dpadLeft = gamepad2.dpad_left;
         boolean dpadRight = gamepad2.dpad_right;
-        boolean buttonA = gamepad2.a;
-        boolean buttonB = gamepad2.b;
+
 
 
         double IMUangle = hraezlyr.getHeading();
@@ -54,9 +53,9 @@ public class Drive extends Control {
 
         // changes power based on direction of turn to turn robot instead of strafe
 
-       // if (start) {
-         //   resetIMU = hraezlyr.resetIMU();
-        //}
+        if (start) {
+            resetIMU = hraezlyr.resetIMU();
+        }
 
         // angle of controller stick
         if(L1 > 0){
@@ -66,9 +65,9 @@ public class Drive extends Control {
             rightX = R1;
         }
         double angle = Math.toDegrees(Math.atan2(leftY, leftX));
-        //angle = angle - IMUangle + resetIMU;
+        angle = angle - IMUangle + resetIMU;
 
-        angle = constrainAngle(angle);
+
         rightX = constrainTuring(rightX);
         // scope orientation
 
@@ -88,13 +87,16 @@ public class Drive extends Control {
         hraezlyr.bottomLeft.setPower(powerGroup2 - rightX);
         hraezlyr.bottomRight.setPower(powerGroup1 + rightX);
 
-
-        telemetry.addData("rightTurn", rightTurn);
+        telemetry.addData("B", gamepad2.b);
+        telemetry.addData("A", gamepad2.a);
         telemetry.addData("servoPos", hraezlyr.servoClaw.getPosition());
-        telemetry.addData("turning", rightX);
-        telemetry.addData("gyro", hraezlyr.getHeading());
+        telemetry.addData("gyroZ", hraezlyr.getHeading());
+        telemetry.addData("gyroX",hraezlyr.getAllAngles().firstAngle);
+        telemetry.addData("gyroY",hraezlyr.getAllAngles().secondAngle);
         telemetry.addData("triggerRight", R1);
         telemetry.addData("triggerLeft", L1);
+
+
 
 
         telemetry.update();
@@ -134,13 +136,13 @@ public class Drive extends Control {
 
 
 
-        if(buttonA){
+        if(gamepad2.a){
 
             hraezlyr.servoClaw.setPosition(0);
 
         }
 
-        if(buttonB) {
+        if(gamepad2.b) {
 
             hraezlyr.servoClaw.setPosition(1);
         }

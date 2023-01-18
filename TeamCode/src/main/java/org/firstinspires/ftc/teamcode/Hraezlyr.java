@@ -39,7 +39,7 @@ public class Hraezlyr {
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
-        parameters.loggingEnabled = true;
+        parameters.loggingEnabled = false;
         parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
@@ -81,7 +81,11 @@ public class Hraezlyr {
 
     public double getHeading() {
         Orientation angles = IMU.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
-        return (angles.thirdAngle);
+        return (angles.secondAngle);
+    }
+    public Orientation getAllAngles(){
+        Orientation angles = IMU.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+        return (angles);
     }
 
     public double resetIMU() {
