@@ -14,10 +14,7 @@ public class AutoBlue extends AutoGuts {
 
     @Override
     public void start() {
-        double midPointX = pipeline.getRectMidpointX();
-        double width = pipeline.getRectWidth();
-        int height = pipeline.getRectHeight();
-        double area = pipeline.getRectArea();
+
         boolean greenPixelsBool = false;
         boolean magentaPixelsBool = false;
         boolean cyanPixelsBool= false;

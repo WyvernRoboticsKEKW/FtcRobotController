@@ -60,8 +60,8 @@ public class Hraezlyr {
 
         IMU = hwmap.get(BNO055IMU.class, "imu");
 
-        //WebcamName webcamName = hwmap.get(WebcamName.class,"Webcam 1");
-        //camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
+        WebcamName webcamName = hwmap.get(WebcamName.class,"Webcam 1");
+        camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
 
         topLeft.setZeroPowerBehavior(BRAKE);
         topRight.setZeroPowerBehavior(BRAKE);

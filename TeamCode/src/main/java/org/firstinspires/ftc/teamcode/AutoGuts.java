@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public abstract class AutoGuts extends Control {
 
     ColorDetection colorDetection;
-    Pipeline pipeline;
 
     @Override
     public void loop() {
@@ -19,7 +18,6 @@ public abstract class AutoGuts extends Control {
     public void init() {
         super.init();
         colorDetection = new ColorDetection();
-        pipeline = new Pipeline();
     }
 
     public void driveEncoder(double x, double y, double power) {

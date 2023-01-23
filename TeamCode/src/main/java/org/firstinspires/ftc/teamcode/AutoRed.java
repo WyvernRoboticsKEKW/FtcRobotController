@@ -4,8 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "AutoRed", preselectTeleOp = "Drive")
 
-public class AutoRed extends AutoGuts {
-    Pipeline pipeline;
+public class AutoRed extends Camera {
     // diagonal fov of camera 55 degrees
     // horizontal fov of camera is 49 degrees
     // vertical fov 28 fov
@@ -14,10 +13,7 @@ public class AutoRed extends AutoGuts {
 
     @Override
     public void start() {
-        double midPointX = pipeline.getRectMidpointX();
-        double width = pipeline.getRectWidth();
-        int height = pipeline.getRectHeight();
-        double area = pipeline.getRectArea();
+
         double greenPixels = pipeline.returnGreen();
         double cyanPixels = pipeline.returnCyan();
         double magentaPixels = pipeline.returnMagenta();
@@ -29,7 +25,9 @@ public class AutoRed extends AutoGuts {
 
         //TODO: START SIDEWAYS
         //start
-        if(greenPixels > cyanPixels && greenPixels > magentaPixels) {
+        driveEncoder(1 * TICKS_PER_INCH, 0, 0.5);
+
+        /*if(greenPixels > cyanPixels && greenPixels > magentaPixels) {
             greenPixelsBool = true;
         }
         if(magentaPixels > cyanPixels && magentaPixels > greenPixels){
@@ -40,6 +38,7 @@ public class AutoRed extends AutoGuts {
         }
 
         //first movement
+        closeClaw(true);
         driveEncoder(-60 * TICKS_PER_INCH , 0, 1);
         turn(.5,45);
         cascadeLift(Level.HIGH);
@@ -59,8 +58,13 @@ public class AutoRed extends AutoGuts {
             driveEncoder(0,-12,1);
             //park place 1
         }
-
+        */
     }
 
-
+    @Override
+    public void loop(){
+        telemetry.addData("cyanPixels", pipeline.returnCyan());
+        telemetry.addData("magentaPixels", pipeline.returnMagenta());
+        telemetry.addData("greenPixels", pipeline.returnGreen());
+    }
 }

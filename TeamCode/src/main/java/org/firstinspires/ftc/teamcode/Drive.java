@@ -90,11 +90,11 @@ public class Drive extends Control {
         telemetry.addData("B", gamepad2.b);
         telemetry.addData("A", gamepad2.a);
         telemetry.addData("servoPos", hraezlyr.servoClaw.getPosition());
-        telemetry.addData("gyroZ", hraezlyr.getHeading());
-        telemetry.addData("gyroX",hraezlyr.getAllAngles().firstAngle);
-        telemetry.addData("gyroY",hraezlyr.getAllAngles().secondAngle);
         telemetry.addData("triggerRight", R1);
         telemetry.addData("triggerLeft", L1);
+        telemetry.addData("levelHeight", zHeight);
+        telemetry.addData("resetIMU", resetIMU);
+        telemetry.addData("dPadright", dpadRight);
 
 
 
@@ -103,18 +103,10 @@ public class Drive extends Control {
 
         //System for cascade level system
 
-      /*  if(dpadRight){
-            switch(zHeight){// it go up if it already low
-                case GROUND:
-                    zHeight = Level.LOW;
-                    break;
-                case LOW:
-                    zHeight = Level.MEDIUM;
-                    break;
-                case MEDIUM:
-                    zHeight = Level.HIGH;
-                    break;
-            }
+        if(dpadRight){
+            if(zHeight == Level.GROUND) zHeight = Level.LOW;
+            if(zHeight == Level.LOW) zHeight = Level.MEDIUM;
+            zHeight = Level.HIGH;
             cascadeLift(zHeight);
         }
         if(dpadLeft){
@@ -130,7 +122,7 @@ public class Drive extends Control {
                     break;
             }
         }
-        */
+
             cascadeLiftManual(verticalPower);
            // hraezlyr.horizontalMotor.setPower(-horizontalPower);
 
