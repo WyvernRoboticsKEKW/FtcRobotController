@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name = "AutoRed", preselectTeleOp = "Drive")
 
@@ -25,9 +26,10 @@ public class AutoRed extends Camera {
 
         //TODO: START SIDEWAYS
         //start
-        driveEncoder(1 * TICKS_PER_INCH, 0, 0.5);
 
-        /*if(greenPixels > cyanPixels && greenPixels > magentaPixels) {
+
+
+        if(greenPixels > cyanPixels && greenPixels > magentaPixels) {
             greenPixelsBool = true;
         }
         if(magentaPixels > cyanPixels && magentaPixels > greenPixels){
@@ -36,7 +38,7 @@ public class AutoRed extends Camera {
         if(cyanPixels > greenPixels && cyanPixels > magentaPixels){
             cyanPixelsBool = true;
         }
-
+/*
         //first movement
         closeClaw(true);
         driveEncoder(-60 * TICKS_PER_INCH , 0, 1);
@@ -66,5 +68,7 @@ public class AutoRed extends Camera {
         telemetry.addData("cyanPixels", pipeline.returnCyan());
         telemetry.addData("magentaPixels", pipeline.returnMagenta());
         telemetry.addData("greenPixels", pipeline.returnGreen());
+        telemetry.addData("colorsDetected", pipeline.colorsDetected);
+        telemetry.update();
     }
 }

@@ -12,7 +12,7 @@ public abstract class AutoGuts extends Control {
     }
 
     // TODO: fix ticks per inch to be accurate
-    public static final double TICKS_PER_INCH = 4096;
+    public static final double TICKS_PER_INCH = 40;
 
     @Override
     public void init() {
@@ -22,34 +22,44 @@ public abstract class AutoGuts extends Control {
 
     public void driveEncoder(double x, double y, double power) {
 
-        int topLeft = hraezlyr.topLeft.getCurrentPosition();
-        int topRight = hraezlyr.topRight.getCurrentPosition();
-        int bottomLeft = hraezlyr.bottomLeft.getCurrentPosition();
-        int bottomRight = hraezlyr.bottomRight.getCurrentPosition();
+
+        int topLeftPos = hraezlyr.topLeft.getCurrentPosition();
+        int topRightPos = hraezlyr.topRight.getCurrentPosition();
+        int bottomLeftPos = hraezlyr.bottomLeft.getCurrentPosition();
+        int bottomRightPos = hraezlyr.bottomRight.getCurrentPosition();
+
+
 
         // rotates by 45 to line up with mecanum wheels
-        double imuAngle = hraezlyr.getHeading() - 90;
+
 
         // calculates given x and y into robots perspective of x and y also converts to ticks
-        int x_output = (int) (((x * Math.cos(imuAngle)) + (y * Math.sin(imuAngle))) * TICKS_PER_INCH);
+        int x_output = (int) (((x * (Math.cos(imuAngle))) + (y * Math.sin(imuAngle))) * TICKS_PER_INCH);
         int y_output = (int) (((x * (-Math.sin(imuAngle))) + (y * Math.cos(imuAngle))) * TICKS_PER_INCH);
 
-        topLeft += x_output;
-        bottomRight += x_output;
-        topRight += y_output;
-        bottomLeft += y_output;
+        double powerGroup1 = ((Math.sin(Math.toRadians(angle))) - (Math.cos(Math.toRadians(angle)))) * power;
+        // topRightPower and bottomLeftPower
+        double powerGroup2 = ((Math.sin(Math.toRadians(angle))) + (Math.cos(Math.toRadians(angle)))) * power;
+
+        topLeftPos += x_output;
+        bottomRightPos += x_output;
+        topRightPos += y_output;
+        bottomLeftPos += y_output;
+
+        hraezlyr.topLeft.setTargetPosition(topLeftPos);
+        hraezlyr.topRight.setTargetPosition(topRightPos);
+        hraezlyr.bottomLeft.setTargetPosition(bottomLeftPos);
+        hraezlyr.bottomRight.setTargetPosition(bottomRightPos);
 
         hraezlyr.setMotorsMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        hraezlyr.topLeft.setTargetPosition(topLeft);
-        hraezlyr.topRight.setTargetPosition(topRight);
-        hraezlyr.bottomLeft.setTargetPosition(bottomLeft);
-        hraezlyr.bottomRight.setTargetPosition(bottomRight);
+        hraezlyr.topLeft.setPower(power);
+        hraezlyr.topRight.setPower(power);
+        hraezlyr.bottomLeft.setPower(power);
+        hraezlyr.bottomRight.setPower(power);
 
-        hraezlyr.topLeft.setPower(x_output);
-        hraezlyr.topRight.setPower(y_output);
-        hraezlyr.bottomLeft.setPower(x_output);
-        hraezlyr.bottomRight.setPower(y_output);
+
+
 
         while (hraezlyr.topLeft.isBusy() || hraezlyr.topRight.isBusy() || hraezlyr.bottomLeft.isBusy() || hraezlyr.bottomRight.isBusy()) {
             sleep(10);

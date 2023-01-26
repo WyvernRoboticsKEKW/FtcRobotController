@@ -9,12 +9,15 @@ public abstract class Camera extends AutoGuts{
     @Override
     public void init(){
         super.init();
+
+        pipeline = new Pipeline();
+
         hraezlyr.camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
-
-                hraezlyr.camera.startStreaming(Pipeline.CAMERA_WIDTH, Pipeline.CAMERA_HEIGHT, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                hraezlyr.camera.startStreaming(Pipeline.CAMERA_WIDTH, Pipeline.CAMERA_HEIGHT, OpenCvCameraRotation.SIDEWAYS_RIGHT);
             }
+
             @Override
             public void onError(int errorCode) {
                 telemetry.addData("error", errorCode);
