@@ -12,7 +12,7 @@ public abstract class AutoGuts extends Control {
     }
 
     // TODO: fix ticks per inch to be accurate
-    public static final double TICKS_PER_INCH = 40;
+    public static final double TICKS_PER_INCH = 200;
 
     @Override
     public void init() {
@@ -28,18 +28,15 @@ public abstract class AutoGuts extends Control {
         int bottomLeftPos = hraezlyr.bottomLeft.getCurrentPosition();
         int bottomRightPos = hraezlyr.bottomRight.getCurrentPosition();
 
-
+        double imuAngle = hraezlyr.getHeading();
 
         // rotates by 45 to line up with mecanum wheels
 
 
         // calculates given x and y into robots perspective of x and y also converts to ticks
-        int x_output = (int) (((x * (Math.cos(imuAngle))) + (y * Math.sin(imuAngle))) * TICKS_PER_INCH);
-        int y_output = (int) (((x * (-Math.sin(imuAngle))) + (y * Math.cos(imuAngle))) * TICKS_PER_INCH);
+        int x_output = (int) (((x * (Math.cos(Math.toRadians(imuAngle)))) + (y * Math.sin(Math.toRadians(imuAngle)))) * TICKS_PER_INCH);
+        int y_output = (int) (((x * (-Math.sin(Math.toRadians(imuAngle)))) + (y * Math.cos(Math.toRadians(imuAngle)))) * TICKS_PER_INCH);
 
-        double powerGroup1 = ((Math.sin(Math.toRadians(angle))) - (Math.cos(Math.toRadians(angle)))) * power;
-        // topRightPower and bottomLeftPower
-        double powerGroup2 = ((Math.sin(Math.toRadians(angle))) + (Math.cos(Math.toRadians(angle)))) * power;
 
         topLeftPos += x_output;
         bottomRightPos += x_output;
@@ -114,7 +111,6 @@ public abstract class AutoGuts extends Control {
         if (!clawClose) close = 0;
 
         hraezlyr.servoClaw.setPosition(close);
-
     }
 
 }

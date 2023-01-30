@@ -4,8 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "AutoBlue", preselectTeleOp = "Drive")
 
-public class AutoBlue extends AutoGuts {
-    Pipeline pipeline;
+public class AutoBlue extends Camera {
     // diagonal fov of camera 55 degrees
     // horizontal fov of camera is 49 degrees
     // vertical fov 28 fov
@@ -43,7 +42,7 @@ public class AutoBlue extends AutoGuts {
         closeClaw(false);
         turn(.5, 45);
         driveEncoder(-48 * TICKS_PER_INCH, 0, 1);
-    */
+
         if (greenPixelsBool) {
             driveEncoder(0, 12, 1);
             //park place 3
@@ -55,6 +54,13 @@ public class AutoBlue extends AutoGuts {
             driveEncoder(0, -12, 1);
             //park place 1
         }
-
+        */
+    }
+    @Override
+    public void loop(){
+        telemetry.addData("cyanPixels", pipeline.returnCyan());
+        telemetry.addData("magentaPixels", pipeline.returnMagenta());
+        telemetry.addData("greenPixels", pipeline.returnGreen());
+        telemetry.update();
     }
 }

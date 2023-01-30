@@ -91,7 +91,7 @@ public class Hraezlyr {
     public double resetIMU() {
         Orientation reset = IMU.getAngularOrientation();
 
-        return (reset.thirdAngle);
+        return (reset.secondAngle);
     }
 
     public void setMotorsMode(DcMotor.RunMode runMode) {

@@ -17,12 +17,12 @@ import java.util.List;
 
 
 public class Pipeline extends OpenCvPipeline {
-    public Scalar CyanUpper  = new Scalar(255, 175, 80);
-    public Scalar CyanLower = new Scalar(40, 130, 0);
-    public Scalar MagentaUpper  = new Scalar(255, 140, 102);
-    public Scalar MagentaLower = new Scalar(40, 100, 60);
-    public Scalar greenUpper  = new Scalar(255, 127, 60);
-    public Scalar greenLower = new Scalar(40, 30, 50);
+    public Scalar CyanUpper  = new Scalar(250, 180, 75);
+    public Scalar CyanLower = new Scalar(40, 127, 0);
+    public Scalar MagentaUpper  = new Scalar(250, 255, 195);
+    public Scalar MagentaLower = new Scalar(35, 110, 155);
+    public Scalar greenUpper  = new Scalar(250, 127, 112);
+    public Scalar greenLower = new Scalar(40, 100, 60);
 
     private double[] colorCenter;
 
@@ -52,23 +52,44 @@ public class Pipeline extends OpenCvPipeline {
         Mat green = new Mat();
         Core.inRange(yCrCb, CyanLower, CyanUpper, cyan);
         Core.inRange(yCrCb, MagentaLower, MagentaUpper, magenta);
-        Core.inRange(yCrCb, greenUpper, greenLower, green);
+        Core.inRange(yCrCb, greenLower, greenUpper, green);
         yCrCb.release();
 
-        magentaPixels = Core.countNonZero(magenta);
-        cyanPixels = Core.countNonZero(cyan);
-        greenPixels = Core.countNonZero(green);
+        Mat cyanDenoised = denoise(cyan);
+        Mat magentaDenoised = denoise(magenta);
+        Mat greenDenoised = denoise(green);
+
+        cyan.release();
+        magenta.release();
+        green.release();
+
+        magentaPixels = Core.countNonZero(magentaDenoised);
+        cyanPixels = Core.countNonZero(cyanDenoised);
+        greenPixels = Core.countNonZero(greenDenoised);
         colorsDetected = true;
         // Release matricies that are no longer being used. OpenCV will report a memory leak if you don't
-        magenta.release();
-        cyan.release();
+
+        greenDenoised.release();
+        magentaDenoised.release();
 
         // Don't release the one being returned or else it will error
 
 
-        return green;
+        return cyanDenoised;
     }
 
+    public Mat denoise(Mat src) {
+
+        Mat denoised = new Mat();
+
+        Imgproc.morphologyEx(src, denoised,
+                Imgproc.MORPH_OPEN,
+                Imgproc.getStructuringElement(
+                        Imgproc.MORPH_ELLIPSE,
+                        new Size(3, 3)));
+
+        return denoised;
+    }
 
     public double returnCyan() {return cyanPixels;}
 
