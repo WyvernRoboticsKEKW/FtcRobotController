@@ -28,7 +28,7 @@ public class AutoRed extends Camera {
         //start
 
 
-
+        /*
         if(greenPixels > cyanPixels && greenPixels > magentaPixels) {
             greenPixelsBool = true;
         }
@@ -38,6 +38,10 @@ public class AutoRed extends Camera {
         if(cyanPixels > greenPixels && cyanPixels > magentaPixels){
             cyanPixelsBool = true;
         }
+
+         */
+        turn(2,90);
+        //returnTo0(.2);
 /*
         //first movement
         closeClaw(true);

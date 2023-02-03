@@ -26,5 +26,6 @@ public abstract class Camera extends AutoGuts{
 
         });
         hraezlyr.camera.setPipeline(pipeline);
+        while(!pipeline.colorsDetected) sleep(10);
     }
 }

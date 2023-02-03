@@ -19,8 +19,8 @@ import java.util.List;
 public class Pipeline extends OpenCvPipeline {
     public Scalar CyanUpper  = new Scalar(250, 180, 75);
     public Scalar CyanLower = new Scalar(40, 127, 0);
-    public Scalar MagentaUpper  = new Scalar(250, 255, 195);
-    public Scalar MagentaLower = new Scalar(35, 110, 155);
+    public Scalar MagentaUpper  = new Scalar(250, 235, 240);
+    public Scalar MagentaLower = new Scalar(40, 115, 160);
     public Scalar greenUpper  = new Scalar(250, 127, 112);
     public Scalar greenLower = new Scalar(40, 100, 60);
 
@@ -70,12 +70,12 @@ public class Pipeline extends OpenCvPipeline {
         // Release matricies that are no longer being used. OpenCV will report a memory leak if you don't
 
         greenDenoised.release();
-        magentaDenoised.release();
+        cyanDenoised.release();
 
         // Don't release the one being returned or else it will error
 
 
-        return cyanDenoised;
+        return magentaDenoised;
     }
 
     public Mat denoise(Mat src) {
@@ -87,6 +87,8 @@ public class Pipeline extends OpenCvPipeline {
                 Imgproc.getStructuringElement(
                         Imgproc.MORPH_ELLIPSE,
                         new Size(3, 3)));
+
+        src.release();
 
         return denoised;
     }

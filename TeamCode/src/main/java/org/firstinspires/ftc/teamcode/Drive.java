@@ -34,8 +34,8 @@ public class Drive extends Control {
         //double horizontalPower = gamepad2.left_stick_y;
         Level zHeight = Level.GROUND;
 
-        double R1 = gamepad1.right_trigger / 2;
-        double L1 = gamepad1.left_trigger / 2;
+        double R1 = gamepad1.right_trigger / 1.5;
+        double L1 = gamepad1.left_trigger / 1.5;
 
         boolean start = gamepad1.start;
         boolean DpadUp = gamepad2.dpad_up;
@@ -87,14 +87,13 @@ public class Drive extends Control {
         hraezlyr.bottomLeft.setPower(powerGroup2 - rightX);
         hraezlyr.bottomRight.setPower(powerGroup1 + rightX);
 
-        telemetry.addData("B", gamepad2.b);
-        telemetry.addData("A", gamepad2.a);
+        telemetry.addData("cascadeLevelHeight", zHeight);
         telemetry.addData("servoPos", hraezlyr.servoClaw.getPosition());
         telemetry.addData("triggerRight", R1);
         telemetry.addData("triggerLeft", L1);
         telemetry.addData("levelHeight", zHeight);
         telemetry.addData("resetIMU", resetIMU);
-        telemetry.addData("dPadright", dpadRight);
+        telemetry.addData("dpadRight", dpadRight);
 
 
 
@@ -104,10 +103,17 @@ public class Drive extends Control {
         //System for cascade level system
 
         if(dpadRight){
-            if(zHeight == Level.GROUND) zHeight = Level.LOW;
-            if(zHeight == Level.LOW) zHeight = Level.MEDIUM;
-            zHeight = Level.HIGH;
-            cascadeLift(zHeight);
+            switch(zHeight) {//it go down if already up
+                case GROUND:
+                    zHeight = Level.LOW;
+                    break;
+                case LOW:
+                    zHeight = Level.MEDIUM;
+                    break;
+                case MEDIUM:
+                    zHeight = Level.HIGH;
+                    break;
+            }
         }
         if(dpadLeft){
             switch(zHeight) {//it go down if already up
@@ -136,7 +142,7 @@ public class Drive extends Control {
 
         if(gamepad2.b) {
 
-            hraezlyr.servoClaw.setPosition(1);
+            hraezlyr.servoClaw.setPosition(.75);
         }
     }
 

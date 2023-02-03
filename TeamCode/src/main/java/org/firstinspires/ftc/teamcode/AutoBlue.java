@@ -14,13 +14,19 @@ public class AutoBlue extends Camera {
     @Override
     public void start() {
 
+
         boolean greenPixelsBool = false;
         boolean magentaPixelsBool = false;
         boolean cyanPixelsBool= false;
+
+        sleep(1000);
         double greenPixels = pipeline.returnGreen();
         double cyanPixels = pipeline.returnCyan();
         double magentaPixels = pipeline.returnMagenta();
-
+        telemetry.addData("cyanPixels", pipeline.returnCyan());
+        telemetry.addData("magentaPixels", pipeline.returnMagenta());
+        telemetry.addData("greenPixels", pipeline.returnGreen());
+        telemetry.update();
         if(greenPixels > cyanPixels && greenPixels > magentaPixels) {
             greenPixelsBool = true;
         }
@@ -30,37 +36,37 @@ public class AutoBlue extends Camera {
         if(cyanPixels > greenPixels && cyanPixels > magentaPixels){
             cyanPixelsBool = true;
         }
-        driveEncoder(1, 0, 0.5);
+        driveEncoder(0, -41, .5);
 
-        //start
 
-        //first movement
-        /*driveEncoder(60 * TICKS_PER_INCH, 0, 1);
-        turn(.5, -45);
-        cascadeLift(Level.HIGH);
-        driveEncoder(0, 3 * TICKS_PER_INCH, 1);
-        closeClaw(false);
-        turn(.5, 45);
-        driveEncoder(-48 * TICKS_PER_INCH, 0, 1);
 
         if (greenPixelsBool) {
-            driveEncoder(0, 12, 1);
+            driveEncoder(-46, 0, .5);
             //park place 3
         }
-        if (magentaPixelsBool) {
+        //if (magentaPixelsBool) {
             //park place 2
-        }
+       // }
         if (cyanPixelsBool) {
-            driveEncoder(0, -12, 1);
+            driveEncoder(46, 0, .5);
             //park place 1
         }
-        */
+
+
+        sleep(1000);
     }
     @Override
     public void loop(){
         telemetry.addData("cyanPixels", pipeline.returnCyan());
         telemetry.addData("magentaPixels", pipeline.returnMagenta());
         telemetry.addData("greenPixels", pipeline.returnGreen());
+        telemetry.addData("topLeftTargetPos", hraezlyr.topLeft.getTargetPosition());
+        telemetry.addData("topRightTargetPos", hraezlyr.topRight.getTargetPosition());
+        telemetry.addData("bottomLeftTargetPos", hraezlyr.bottomLeft.getTargetPosition());
+        telemetry.addData("bottomRightTargetPos", hraezlyr.bottomRight.getTargetPosition());
+
+
+
         telemetry.update();
     }
 }
