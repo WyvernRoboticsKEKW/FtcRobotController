@@ -32,16 +32,21 @@ public abstract class Control extends OpMode {
                 hraezlyr.cascadeMotor1.setTargetPosition(0);
                 hraezlyr.cascadeMotor2.setTargetPosition(0);
                 // all target positions are not accurate to the motor
+                break;
             case LOW:
                 hraezlyr.cascadeMotor1.setTargetPosition(100);
                 hraezlyr.cascadeMotor2.setTargetPosition(100);
+                break;
             case MEDIUM:
                 hraezlyr.cascadeMotor1.setTargetPosition(200);
                 hraezlyr.cascadeMotor2.setTargetPosition(200);
+                break;
             case HIGH:
                 hraezlyr.cascadeMotor1.setTargetPosition(300);
                 hraezlyr.cascadeMotor2.setTargetPosition(300);
+                break;
         }
+        hraezlyr.setCascadeMotorsMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
     public void cascadeLiftManual(double power){
 

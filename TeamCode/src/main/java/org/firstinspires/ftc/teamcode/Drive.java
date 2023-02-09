@@ -6,16 +6,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Drive")
 public class Drive extends Control {
-
+    public Level zHeight = Level.GROUND;
     @Override
     public void init() {
         super.init();
-        // Commented this out for testing, but you don't need this if you are doing this in Hraezlyr anyways
-/*
-        hraezlyr.cascadeMotor1.setPower(0);
-        hraezlyr.cascadeMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        hraezlyr.cascadeMotor2.setPower(0);
-        hraezlyr.cascadeMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);*/
+       hraezlyr.cascadeMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+       hraezlyr.cascadeMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
     }
 
     @Override
@@ -30,12 +28,13 @@ public class Drive extends Control {
         double leftY = gamepad1.left_stick_y;
         //double rightX = gamepad1.right_stick_x;
         double rightX = 0;
-        double verticalPower = gamepad2.right_stick_y / 1.5;
+        double verticalPower = gamepad2.right_stick_y;
+        double noUnwind = hraezlyr.cascadeMotor1.getCurrentPosition();
         //double horizontalPower = gamepad2.left_stick_y;
-        Level zHeight = Level.GROUND;
 
-        double R1 = gamepad1.right_trigger / 1.5;
-        double L1 = gamepad1.left_trigger / 1.5;
+
+        double R1 = gamepad1.right_trigger;
+        double L1 = gamepad1.left_trigger;
 
         boolean start = gamepad1.start;
         boolean DpadUp = gamepad2.dpad_up;
@@ -94,6 +93,7 @@ public class Drive extends Control {
         telemetry.addData("levelHeight", zHeight);
         telemetry.addData("resetIMU", resetIMU);
         telemetry.addData("dpadRight", dpadRight);
+        telemetry.addData("noUnwind", noUnwind);
 
 
 
@@ -114,6 +114,7 @@ public class Drive extends Control {
                     zHeight = Level.HIGH;
                     break;
             }
+            cascadeLift(zHeight);
         }
         if(dpadLeft){
             switch(zHeight) {//it go down if already up
@@ -127,9 +128,24 @@ public class Drive extends Control {
                     zHeight = Level.GROUND;
                     break;
             }
+            cascadeLift(zHeight);
         }
+            if(noUnwind < 0){
+                if(!dpadLeft) {
+                    cascadeLiftManual(Math.max(verticalPower, 0));
+                }
+                else {
+                    cascadeLiftManual(-.5);
+                    hraezlyr.cascadeMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    hraezlyr.cascadeMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    hraezlyr.cascadeMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    hraezlyr.cascadeMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                }
 
-            cascadeLiftManual(verticalPower);
+            }
+            else {
+                cascadeLiftManual(verticalPower);
+            }
            // hraezlyr.horizontalMotor.setPower(-horizontalPower);
 
 

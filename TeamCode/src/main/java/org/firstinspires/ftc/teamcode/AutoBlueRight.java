@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "AutoBlue", preselectTeleOp = "Drive")
+@Autonomous(name = "AutoBlueRight", preselectTeleOp = "Drive")
 
-public class AutoBlue extends Camera {
+public class AutoBlueRight extends Camera {
     // diagonal fov of camera 55 degrees
     // horizontal fov of camera is 49 degrees
     // vertical fov 28 fov
@@ -27,34 +27,39 @@ public class AutoBlue extends Camera {
         telemetry.addData("magentaPixels", pipeline.returnMagenta());
         telemetry.addData("greenPixels", pipeline.returnGreen());
         telemetry.update();
-        if(greenPixels > cyanPixels && greenPixels > magentaPixels) {
+        if (greenPixels > cyanPixels && greenPixels > magentaPixels) {
             greenPixelsBool = true;
         }
-        if(magentaPixels > cyanPixels && magentaPixels > greenPixels){
+        if (magentaPixels > cyanPixels && magentaPixels > greenPixels) {
             magentaPixelsBool = true;
         }
-        if(cyanPixels > greenPixels && cyanPixels > magentaPixels){
+        if (cyanPixels > greenPixels && cyanPixels > magentaPixels) {
             cyanPixelsBool = true;
         }
-        driveEncoder(0, -41, .5);
-
-
-
-        if (greenPixelsBool) {
-            driveEncoder(-46, 0, .5);
-            //park place 3
+        closeClaw(true);
+        driveEncoder(0,40,.5);
+        driveEncoder(46,0,.5);
+        turn(4,45);
+        cascadeLift(Level.HIGH);
+        driveEncoder(2,2, .5);
+        closeClaw(false);
+        driveEncoder(2,2, -.5);
+        cascadeLift(Level.GROUND);
+        returnTo0(.5);
+        if(magentaPixelsBool){
+            driveEncoder(46,0,.5);
+            returnTo0(.5);
         }
-        //if (magentaPixelsBool) {
-            //park place 2
-       // }
-        if (cyanPixelsBool) {
-            driveEncoder(46, 0, .5);
-            //park place 1
+        if(cyanPixelsBool){
+            driveEncoder(46,0,.5);
+            returnTo0(.5);
+            driveEncoder(46,0,.5);
+            returnTo0(.5);
         }
 
 
-        sleep(1000);
     }
+
     @Override
     public void loop(){
         telemetry.addData("cyanPixels", pipeline.returnCyan());

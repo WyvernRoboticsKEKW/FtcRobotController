@@ -90,7 +90,7 @@ public abstract class AutoGuts extends Control {
             telemetry.addData("angularDistance", angularDistance);
             telemetry.update();
         }
-        while (isStopRequested || angularDistance > 10);
+        while (!isStopRequested || angularDistance > 3);
     }
     public void returnTo0(double power){
         double currentAngle =  hraezlyr.getHeading();
@@ -109,7 +109,7 @@ public abstract class AutoGuts extends Control {
 
 
         }
-        while(isStopRequested || angularDistance >= 15);
+        while(!isStopRequested || angularDistance >= 3);
     }
     public void simpleMove(double FL, double FR, double BR, double BL){
         hraezlyr.topLeft.setPower(FL);
