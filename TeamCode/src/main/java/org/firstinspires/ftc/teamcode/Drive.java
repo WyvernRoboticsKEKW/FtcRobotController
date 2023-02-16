@@ -114,7 +114,7 @@ public class Drive extends Control {
                     zHeight = Level.HIGH;
                     break;
             }
-            cascadeLift(zHeight);
+            cascadeLift(zHeight, .5);
         }
         if(dpadLeft){
             switch(zHeight) {//it go down if already up
@@ -128,7 +128,7 @@ public class Drive extends Control {
                     zHeight = Level.GROUND;
                     break;
             }
-            cascadeLift(zHeight);
+            cascadeLift(zHeight, .5);
         }
             if(noUnwind < 0){
                 if(!dpadLeft) {

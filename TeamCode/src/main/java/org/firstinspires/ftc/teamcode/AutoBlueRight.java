@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name = "AutoBlueRight", preselectTeleOp = "Drive")
 
@@ -18,8 +19,12 @@ public class AutoBlueRight extends Camera {
         boolean greenPixelsBool = false;
         boolean magentaPixelsBool = false;
         boolean cyanPixelsBool= false;
-
-        sleep(1000);
+        hraezlyr.cascadeMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hraezlyr.cascadeMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        cascadeLift(Level.LOW, .4);
+        sleep(10000);
+        cascadeLift(Level.GROUND,0.3);
+       /* sleep(1000);
         double greenPixels = pipeline.returnGreen();
         double cyanPixels = pipeline.returnCyan();
         double magentaPixels = pipeline.returnMagenta();
@@ -56,7 +61,7 @@ public class AutoBlueRight extends Camera {
             driveEncoder(46,0,.5);
             returnTo0(.5);
         }
-
+    */
 
     }
 

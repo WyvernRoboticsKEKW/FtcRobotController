@@ -35,11 +35,11 @@ public class AutoRedLeft extends Camera {
         driveEncoder(0,40,.5);
         driveEncoder(46,0,.5);
         turn(4,45);
-        cascadeLift(Level.HIGH);
+        cascadeLift(Level.HIGH, .5);
         driveEncoder(2,2, .5);
         closeClaw(false);
         driveEncoder(2,2, -.5);
-        cascadeLift(Level.GROUND);
+        cascadeLift(Level.GROUND, 0.5);
         returnTo0(.5);
         if(magentaPixelsBool){
             driveEncoder(46,0,.5);

@@ -26,16 +26,16 @@ public abstract class Control extends OpMode {
 
     }
     //538 ticks per rotation
-    public void cascadeLift(Level zHeight){
+    public void cascadeLift(Level zHeight, double power){
         switch(zHeight){
             case GROUND:
-                hraezlyr.cascadeMotor1.setTargetPosition(0);
-                hraezlyr.cascadeMotor2.setTargetPosition(0);
+                hraezlyr.cascadeMotor1.setTargetPosition(100);
+                hraezlyr.cascadeMotor2.setTargetPosition(100);
                 // all target positions are not accurate to the motor
                 break;
             case LOW:
-                hraezlyr.cascadeMotor1.setTargetPosition(100);
-                hraezlyr.cascadeMotor2.setTargetPosition(100);
+                hraezlyr.cascadeMotor1.setTargetPosition(3500);
+                hraezlyr.cascadeMotor2.setTargetPosition(3500);
                 break;
             case MEDIUM:
                 hraezlyr.cascadeMotor1.setTargetPosition(200);
@@ -47,6 +47,8 @@ public abstract class Control extends OpMode {
                 break;
         }
         hraezlyr.setCascadeMotorsMode(DcMotor.RunMode.RUN_TO_POSITION);
+        hraezlyr.cascadeMotor1.setPower(power);
+        hraezlyr.cascadeMotor2.setPower(power);
     }
     public void cascadeLiftManual(double power){
 
