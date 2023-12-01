@@ -34,6 +34,7 @@ public class Pipeline extends OpenCvPipeline {
 
     @Override
     public Mat processFrame(Mat input) {
+
         return null;
     }
 }

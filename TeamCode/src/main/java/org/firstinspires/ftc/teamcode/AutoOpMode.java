@@ -15,13 +15,13 @@ public class AutoOpMode extends CommandOpMode {
         stormFly = StormFly.getInstance(this);
 
 
-        frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        //stormFly.frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        //backRight.setDirection(DcMotorSimple.Direction.FORWARD);
             //wait for start button to be pressed
                 waitForStart();
 
-                moveMecanum(0.5), 0, 0);
+                //moveMecanum(0.5), 0, 0);
 
 
 

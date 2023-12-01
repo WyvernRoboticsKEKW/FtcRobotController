@@ -5,12 +5,15 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class RollerIntake extends SubsystemBase {
     StormFly stormFly;
+    private boolean isIntakeOn;
 
     public RollerIntake(StormFly stormfly) {
         this.stormFly = stormfly;
-        stormFly.rollerIntake.set(1);
+
 
     }
-
-}    private boolean isIntakeOn;
+    public void roll(double power){
+        stormFly.rollerIntake.set(power);
+    }
+}
 
