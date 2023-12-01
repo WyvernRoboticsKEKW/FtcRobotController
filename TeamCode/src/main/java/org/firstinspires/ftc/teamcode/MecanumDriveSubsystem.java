@@ -5,6 +5,10 @@ import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.motors.MotorGroup;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+
 public class MecanumDriveSubsystem extends SubsystemBase {
     StormFly stormFly;
     public MecanumDrive m_mecanum;
@@ -17,16 +21,10 @@ public class MecanumDriveSubsystem extends SubsystemBase {
         gamepadDrivetrain = gamepadEx;
 
     }
-    public double getEncoders() {
-
-        stormFly.frontLeft = stormFly.frontLeft;
-        stormFly.frontRight = stormFly.frontRight;
-        stormFly.backLeft = stormFly.backLeft;
-        stormFly.backRight = stormFly.backRight;
-
-        return 0;
-
-    }
+   public void mecanumDrive(){
+        m_mecanum.driveFieldCentric(gamepadDrivetrain.getLeftX(), gamepadDrivetrain.getLeftY(), gamepadDrivetrain.getRightX(),
+                stormFly.getHeading(), false);
+   }
 
 
 
