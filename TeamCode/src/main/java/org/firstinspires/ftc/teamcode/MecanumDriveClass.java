@@ -2,23 +2,35 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class MecanumDriveClass extends CommandBase {
     MecanumDriveSubsystem m_subsystemDrive;
     StormFly stormFly;
-    MecanumDrive mecanum;
+    double forward;
+    GamepadEx driverGamepad;
+    double strafe;
+    double turn;
+    double heading = 0;
 
 
-    public MecanumDriveClass(MecanumDrive mecanum, MecanumDriveSubsystem subsystem) {
-        this.mecanum = mecanum;
+    public MecanumDriveClass(MecanumDriveSubsystem subsystem, GamepadEx driverGamepad) {
+
         m_subsystemDrive = subsystem;
+        this.driverGamepad = driverGamepad;
     }
 
-    public void initialize() {
+    public void execute() {
 
-        m_subsystemDrive.mecanumDrive();
+
+        m_subsystemDrive.driveFieldCentric(forward, 0, turn, heading);
+        forward = driverGamepad.getLeftY();
+        strafe = -driverGamepad.getLeftX();
+        turn =  driverGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) - driverGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
+
     }
 
 

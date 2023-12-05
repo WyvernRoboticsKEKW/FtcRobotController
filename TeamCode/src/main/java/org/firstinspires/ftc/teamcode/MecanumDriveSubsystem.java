@@ -11,20 +11,19 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 public class MecanumDriveSubsystem extends SubsystemBase {
     StormFly stormFly;
-    public MecanumDrive m_mecanum;
+
     public GamepadEx gamepadDrivetrain;
 
 
-    public MecanumDriveSubsystem(MecanumDrive drive, GamepadEx gamepadEx){
+    public MecanumDriveSubsystem(StormFly stormFly){
 
-        m_mecanum = drive;
-        gamepadDrivetrain = gamepadEx;
+        this.stormFly = stormFly;
+        gamepadDrivetrain = stormFly.gamepadDrivetrain;
 
     }
-   public void mecanumDrive(){
-        m_mecanum.driveFieldCentric(gamepadDrivetrain.getLeftX(), gamepadDrivetrain.getLeftY(), gamepadDrivetrain.getRightX(),
-                stormFly.getHeading(), false);
-   }
+    public void driveFieldCentric(double forward, double strafe, double turn, double heading) {
+        stormFly.mecanumDrive.driveFieldCentric(strafe, forward, turn, heading, false);
+    }
 
 
 

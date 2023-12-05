@@ -15,14 +15,14 @@ public class Drive extends CommandOpMode {
 
     @Override
     public void initialize() {
-        super.init();
         stormFly = StormFly.getInstance(this);
-        m_drive = new MecanumDriveSubsystem(stormFly.mecanum, stormFly.gamepadDrivetrain);
-        rollerIntake = new RollerIntake(stormFly);
 
 
-        schedule(new MecanumDriveClass(stormFly.mecanum, m_drive));
-        schedule(new Tool(stormFly.gamepadTool, rollerIntake));
+        //rollerIntake = new RollerIntake(stormFly);
+        m_drive = new MecanumDriveSubsystem(stormFly);
+
+        schedule(new MecanumDriveClass(m_drive,stormFly.gamepadDrivetrain));
+        //schedule(new Tool(stormFly.gamepadTool, rollerIntake));
 
     }
 

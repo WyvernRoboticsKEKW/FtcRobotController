@@ -16,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class StormFly extends Robot {
-    public MecanumDrive mecanum;
+
     private static StormFly instance;
 
     Motor frontLeft;
@@ -25,12 +25,14 @@ public class StormFly extends Robot {
     Motor backRight;
     Motor rollerIntake;
     IMU imu;
+    public MecanumDrive mecanumDrive;
+
 
     public GamepadEx gamepadDrivetrain;
     public GamepadEx gamepadTool;
 
     public static StormFly getInstance(CommandOpMode opMode) {
-        if (instance != null) {
+        if (instance == null) {
             instance = new StormFly(opMode);
         }
         return (instance);
@@ -40,34 +42,39 @@ public class StormFly extends Robot {
         HardwareMap hardwareMap = opMode.hardwareMap;
 
 
-        rollerIntake = new Motor(hardwareMap, "rollerIntake");
+      //  rollerIntake = new Motor(hardwareMap, "rollerIntake");
         frontLeft = new Motor(hardwareMap, "frontLeft");
         frontRight = new Motor(hardwareMap, "frontRight");
         backLeft = new Motor(hardwareMap, "backLeft");
         backRight = new Motor(hardwareMap, "backRight");
 
 
-        imu = hardwareMap.get(IMU.class, "imu");
+        //imu = hardwareMap.get(IMU.class, "imu");
 
 
+        mecanumDrive = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
+        gamepadDrivetrain = new GamepadEx(opMode.gamepad1);
+        gamepadTool = new GamepadEx(opMode.gamepad2);
 
-        mecanum = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
-        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+        //RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
+          //      RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
 
-        );
-        imu.initialize(new IMU.Parameters(orientationOnRobot));
+     //   );
+
+        //imu.initialize(new IMU.Parameters(orientationOnRobot));
+
     }
 
-    public double getHeading(){
+   // public double getHeading(){
 
-        Orientation Theta = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+     //   Orientation Theta = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
-        return(Theta.firstAngle);
+       // return(Theta.firstAngle);
          //i'm writing this on thursday before i have to be gone for the tempe tournament,
-        grant and will just download the code. -Danaila
+       // grant and will just download the code. -Danaila
+    //I coummented out a bunch of stuff to make the bot work -Isaac
 
-    }
+  //  }
 
 }
 

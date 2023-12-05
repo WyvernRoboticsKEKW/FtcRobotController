@@ -17,7 +17,7 @@ public class Tool extends CommandBase {
 
     public void initialize(){
 
-        toolsubsystem.roll(toolGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER));
+       // toolsubsystem.roll(toolGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER));
 
 
     }
