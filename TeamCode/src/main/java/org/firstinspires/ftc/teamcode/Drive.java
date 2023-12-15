@@ -10,31 +10,23 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class Drive extends CommandOpMode {
     StormFly stormFly;
     MecanumDriveSubsystem m_drive;
+    ToolSubsystem m_tool;
     RollerIntake rollerIntake;
 
-
-    @Override
     public void initialize() {
         stormFly = StormFly.getInstance(this);
 
+        rollerIntake = new RollerIntake(stormFly);
 
-        //rollerIntake = new RollerIntake(stormFly);
         m_drive = new MecanumDriveSubsystem(stormFly);
+        m_tool = new ToolSubsystem(stormFly);
 
+        schedule(new Tool(stormFly.gamepadTool, m_tool));
         schedule(new MecanumDriveClass(m_drive,stormFly.gamepadDrivetrain));
-        //schedule(new Tool(stormFly.gamepadTool, rollerIntake));
 
     }
 
-    /*public class MyOpMode extends
-            LinearOpMode {
 
-        @Override
-        public void runOpMode() throws InterruptedException {
-
-        }
     }
-       */
 
 
-}

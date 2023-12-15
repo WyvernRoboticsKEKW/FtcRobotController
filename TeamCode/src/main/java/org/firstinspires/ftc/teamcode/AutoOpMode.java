@@ -15,14 +15,9 @@ public class AutoOpMode extends CommandOpMode {
         stormFly = StormFly.getInstance(this);
 
 
-        //stormFly.frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        //backRight.setDirection(DcMotorSimple.Direction.FORWARD);
-            //wait for start button to be pressed
-                waitForStart();
-
-                //moveMecanum(0.5), 0, 0);
-
+        //For the Tuscon program, we will strafe 2 inches away from the wall, then drive forward into the backstage (if we start from A2 or F2, 24 rotations should be
+        // enough. If we start from A4 or F4, 12 rotations should be enough.)(If you're wondering, our wheel diameter is 4 inches) - Finch (Will)
 
 
     }

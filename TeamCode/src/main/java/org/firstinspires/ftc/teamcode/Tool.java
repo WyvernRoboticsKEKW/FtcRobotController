@@ -7,9 +7,10 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 public class Tool extends CommandBase {
 
     GamepadEx toolGamepad;
-    RollerIntake toolsubsystem;
-
-    public Tool(GamepadEx toolGamepad, RollerIntake subsystem){
+    ToolSubsystem toolsubsystem;
+    double left;
+    double right;
+    public Tool(GamepadEx toolGamepad, ToolSubsystem subsystem){
         toolsubsystem = subsystem;
         this.toolGamepad = toolGamepad;
 
@@ -17,8 +18,12 @@ public class Tool extends CommandBase {
 
     public void initialize(){
 
-       // toolsubsystem.roll(toolGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER));
 
+    }
+    public void execute() {
+        right = toolGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
+        left = toolGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
+        toolsubsystem.spinmotorwithMaximumHeightLimit(left - right);
 
     }
 }

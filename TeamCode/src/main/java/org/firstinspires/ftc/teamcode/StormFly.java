@@ -26,6 +26,7 @@ public class StormFly extends Robot {
     Motor rollerIntake;
     IMU imu;
     public MecanumDrive mecanumDrive;
+    Motor lift;
 
 
     public GamepadEx gamepadDrivetrain;
@@ -42,39 +43,36 @@ public class StormFly extends Robot {
         HardwareMap hardwareMap = opMode.hardwareMap;
 
 
-      //  rollerIntake = new Motor(hardwareMap, "rollerIntake");
+        rollerIntake = new Motor(hardwareMap, "rollerIntake");
         frontLeft = new Motor(hardwareMap, "frontLeft");
         frontRight = new Motor(hardwareMap, "frontRight");
         backLeft = new Motor(hardwareMap, "backLeft");
         backRight = new Motor(hardwareMap, "backRight");
+        lift = new Motor(hardwareMap, "lift");
 
 
-        //imu = hardwareMap.get(IMU.class, "imu");
+        imu = hardwareMap.get(IMU.class, "imu");
 
 
         mecanumDrive = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
         gamepadDrivetrain = new GamepadEx(opMode.gamepad1);
         gamepadTool = new GamepadEx(opMode.gamepad2);
 
-        //RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
-          //      RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
 
-     //   );
+        );
 
-        //imu.initialize(new IMU.Parameters(orientationOnRobot));
+        imu.initialize(new IMU.Parameters(orientationOnRobot));
 
     }
 
-   // public double getHeading(){
+      public double getHeading() {
+          Orientation Theta = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
-     //   Orientation Theta = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+          return (Theta.thirdAngle);
 
-       // return(Theta.firstAngle);
-         //i'm writing this on thursday before i have to be gone for the tempe tournament,
-       // grant and will just download the code. -Danaila
-    //I coummented out a bunch of stuff to make the bot work -Isaac
+      }
 
-  //  }
-
-}
+      }
 
