@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 
 public class ToolSubsystem extends SubsystemBase {
     StormFly stormFly;
@@ -21,6 +23,15 @@ public class ToolSubsystem extends SubsystemBase {
 
         }
     }
+    public void Intakeroller(double power) {
+        if (stormFly.gamepadTool.getButton(GamepadKeys.Button.A)) {
+            stormFly.rollerIntake.set(power);
+        }
+        if (stormFly.gamepadTool.getButton(GamepadKeys.Button.B)) {
+            stormFly.rollerIntake.set(power - power);
+        }
+    }
+
 
 }
 

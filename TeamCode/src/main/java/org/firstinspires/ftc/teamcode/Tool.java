@@ -10,6 +10,8 @@ public class Tool extends CommandBase {
     ToolSubsystem toolsubsystem;
     double left;
     double right;
+    double A;
+    double B;
     public Tool(GamepadEx toolGamepad, ToolSubsystem subsystem){
         toolsubsystem = subsystem;
         this.toolGamepad = toolGamepad;
@@ -24,7 +26,7 @@ public class Tool extends CommandBase {
         right = toolGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
         left = toolGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
         toolsubsystem.spinmotorwithMaximumHeightLimit(left - right);
-
+        toolsubsystem.Intakeroller(A - B);
     }
 }
 
