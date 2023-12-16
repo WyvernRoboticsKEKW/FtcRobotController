@@ -12,25 +12,11 @@ public class ToolSubsystem extends SubsystemBase {
     int maxHeight = 1000; //to be replaced once tested
 
     public void spinmotorwithMaximumHeightLimit(double power) {
+        stormFly.lift.set(power);
 
 
-        if(stormFly.lift.getCurrentPosition()>maxHeight) {
-            stormFly.lift.set(0);
-
-        }
-        else {
-           stormFly.lift.set(power);
-
-        }
     }
-    public void Intakeroller(double power) {
-        if (stormFly.gamepadTool.getButton(GamepadKeys.Button.A)) {
-            stormFly.rollerIntake.set(power);
-        }
-        if (stormFly.gamepadTool.getButton(GamepadKeys.Button.B)) {
-            stormFly.rollerIntake.set(power - power);
-        }
-    }
+
 
 
 }

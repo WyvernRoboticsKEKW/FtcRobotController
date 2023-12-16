@@ -26,7 +26,7 @@ public class Tool extends CommandBase {
         right = toolGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
         left = toolGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
         toolsubsystem.spinmotorwithMaximumHeightLimit(left - right);
-        toolsubsystem.Intakeroller(A - B);
+
     }
 }
 

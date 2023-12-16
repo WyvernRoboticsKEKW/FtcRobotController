@@ -11,10 +11,9 @@ public class RollerIntake extends SubsystemBase {
     public RollerIntake(StormFly stormfly) {
         this.stormFly = stormfly;
         stormFly.gamepadTool.getButton(GamepadKeys.Button.A);
-
-        if(button.A)
     }
     public void roll(double power){stormFly.rollerIntake.set(power);
+
     }
 
 
