@@ -21,7 +21,7 @@ public class Drive extends CommandOpMode {
         m_drive = new MecanumDriveSubsystem(stormFly);
         m_tool = new ToolSubsystem(stormFly);
 
-        schedule(new Tool(stormFly.gamepadTool, m_tool));
+        schedule(new Tool(stormFly.gamepadTool, m_tool, stormFly));
         schedule(new MecanumDriveClass(m_drive,stormFly.gamepadDrivetrain));
 
     }
