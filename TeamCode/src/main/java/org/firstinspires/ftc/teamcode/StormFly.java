@@ -67,11 +67,12 @@ public class StormFly extends Robot {
 
     }
 
-      //public double getHeading() {
-        //  Orientation Theta = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+    public double getHeading() {
+        Orientation Theta = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
-        //  return (Theta.thirdAngle);
+        return (Theta.thirdAngle);
 
-      }
+    }
+}
 
 

@@ -12,7 +12,7 @@ public class Tool extends CommandBase {
     ToolSubsystem toolsubsystem;
     double left;
     double right;
-    double B;
+    Button B;
     Button A;
     StormFly stormFly;
     public Tool(GamepadEx toolGamepad, ToolSubsystem subsystem, StormFly stormFly){
@@ -23,16 +23,15 @@ public class Tool extends CommandBase {
     }
 
     public void initialize(){
-        A = new GamepadButton(
-                toolGamepad, GamepadKeys.Button.A
-        );
-
+        A = new GamepadButton(toolGamepad, GamepadKeys.Button.A);
+        B = new GamepadButton(toolGamepad, GamepadKeys.Button.B);
     }
     public void execute() {
         right = toolGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
         left = toolGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
         toolsubsystem.spinmotorwithMaximumHeightLimit(left - right);
         A.whenPressed(toolsubsystem::roll).whenReleased(toolsubsystem::stopRolling);
+        B.whenPressed(toolsubsystem::REVERSE).whenReleased(toolsubsystem::stopRolling);
 
     }
 }
