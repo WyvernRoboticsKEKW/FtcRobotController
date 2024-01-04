@@ -27,6 +27,7 @@ public class StormFly extends Robot {
     IMU imu;
     public MecanumDrive mecanumDrive;
     Motor lift;
+    Motor rollerExtake;
 
 
     public GamepadEx gamepadDrivetrain;
@@ -49,6 +50,7 @@ public class StormFly extends Robot {
         backLeft = new Motor(hardwareMap, "backLeft");
         backRight = new Motor(hardwareMap, "backRight");
         lift = new Motor(hardwareMap, "lift");
+        rollerExtake = new Motor(hardwareMap, "rollerExtake");
 
 
         imu = hardwareMap.get(IMU.class, "imu");
@@ -71,6 +73,8 @@ public class StormFly extends Robot {
         Orientation Theta = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
         return (Theta.thirdAngle);
+
+
 
     }
 }
