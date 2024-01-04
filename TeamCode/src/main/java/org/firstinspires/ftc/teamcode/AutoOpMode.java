@@ -20,19 +20,6 @@ public class AutoOpMode extends CommandOpMode {
 
     }
     private void driveForward(double v) {
-
-        Servo extakeServo;
-        @Override
-        public void init()
-            extakeServo = hardwareMap.servo.get("extakeServo");
-
-            public void loop()
-
-            extakeServo.setPosition(0.5);
-
-        }
-
-
     }
 
 

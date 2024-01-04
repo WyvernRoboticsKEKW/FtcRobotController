@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 
 public class ToolSubsystem extends SubsystemBase {
     StormFly stormFly;
@@ -20,11 +18,14 @@ public class ToolSubsystem extends SubsystemBase {
     public void stopRolling(){
         stormFly.rollerIntake.set(0);
     }
+    public void voidExtake() {stormFly.rollerExtake.set(1);}
+    public void Extake() {stormFly.rollerExtake.set(0); }
 
 
-    public void REVERSE() {
+            public void REVERSE() {
     }
 }
+
 
 
 
