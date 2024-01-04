@@ -33,9 +33,9 @@ public class Tool extends CommandBase {
         right = toolGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
         left = toolGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
         toolsubsystem.spinmotorwithMaximumHeightLimit(left - right);
-        A.whenPressed(toolsubsystem::roll).whenReleased(toolsubsystem::stopRolling);
-        B.whenPressed(toolsubsystem::REVERSE).whenReleased(toolsubsystem::stopRolling);
-        RIGHTBUMPER.whenPressed(toolsubsystem::roll).whenReleased(toolsubsystem::stopRolling);
+        A.whenPressed(toolsubsystem::rollIntake).whenReleased(toolsubsystem::stopRollingIntake);
+        B.whenPressed(toolsubsystem::REVERSE).whenReleased(toolsubsystem::stopRollingIntake);
+        RIGHTBUMPER.whenPressed(toolsubsystem::rollExtake).whenReleased(toolsubsystem::stopRollingExtake);
 
     }
 }

@@ -12,14 +12,14 @@ public class ToolSubsystem extends SubsystemBase {
     public void spinmotorwithMaximumHeightLimit(double power) {
         stormFly.lift.set(power);
     }
-    public void roll(){
+    public void rollIntake(){
         stormFly.rollerIntake.set(1);
     }
-    public void stopRolling(){
+    public void stopRollingIntake(){
         stormFly.rollerIntake.set(0);
     }
-    public void voidExtake() {stormFly.rollerExtake.set(1);}
-    public void Extake() {stormFly.rollerExtake.set(0); }
+    public void rollExtake() {stormFly.rollerExtake.set(1); }
+    public void stopRollingExtake() {stormFly.rollerExtake.set(0); }
 
 
             public void REVERSE() {
