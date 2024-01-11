@@ -11,17 +11,17 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Autonomous
 public class AutoOpMode extends CommandOpMode {
     StormFly stormFly;
+    MecanumDriveSubsystem MecanumDrivesub;
 
     @Override
     public void initialize() {
         stormFly = StormFly.getInstance(this);
 
+        MecanumDrivesub = new MecanumDriveSubsystem(stormFly);
 
-
+        schedule(new AutoStrafe(1, stormFly, MecanumDrivesub));
+        schedule(new AutoForward(1, stormFly, MecanumDrivesub));
     }
-    private void driveForward(double v) {
-    }
-
 
 
 }

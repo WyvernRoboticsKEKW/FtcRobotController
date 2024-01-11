@@ -4,11 +4,13 @@ import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.Robot;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.ImuOrientationOnRobot;
+
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -27,7 +29,7 @@ public class StormFly extends Robot {
     IMU imu;
     public MecanumDrive mecanumDrive;
     Motor lift;
-    Motor rollerExtake;
+    CRServo rollerExtake;
 
 
     public GamepadEx gamepadDrivetrain;
@@ -50,8 +52,8 @@ public class StormFly extends Robot {
         backLeft = new Motor(hardwareMap, "backLeft");
         backRight = new Motor(hardwareMap, "backRight");
         lift = new Motor(hardwareMap, "lift");
-        rollerExtake = new Motor(hardwareMap, "rollerExtake");
 
+        rollerExtake = new CRServo(hardwareMap, "rollerExtake");
 
         imu = hardwareMap.get(IMU.class, "imu");
 

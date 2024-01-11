@@ -28,9 +28,9 @@ public class MecanumDriveClass extends CommandBase {
 
         m_subsystemDrive.driveFieldCentric(forward, strafe, turn, heading);
         forward = driverGamepad.getLeftY();
-        strafe = -driverGamepad.getRightX();
-        turn =  driverGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) - driverGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
-        heading = stormFly.getHeading();
+        strafe = -driverGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) - driverGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
+        turn =  driverGamepad.getRightX();
+        //heading = stormFly.getHeading();
 
 
     }

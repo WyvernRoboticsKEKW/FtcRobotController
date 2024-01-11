@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
+import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.arcrobotics.ftclib.gamepad.TriggerReader;
 
 public class Tool extends CommandBase {
 
@@ -14,7 +16,8 @@ public class Tool extends CommandBase {
     double right;
     Button B;
     Button A;
-    Button RIGHTBUMPER;
+    Button RIGHT_BUMPER;
+    double LiftVelocity;
     StormFly stormFly;
     public Tool(GamepadEx toolGamepad, ToolSubsystem subsystem, StormFly stormFly){
         toolsubsystem = subsystem;
@@ -26,17 +29,16 @@ public class Tool extends CommandBase {
     public void initialize(){
         A = new GamepadButton(toolGamepad, GamepadKeys.Button.A);
         B = new GamepadButton(toolGamepad, GamepadKeys.Button.B);
-        RIGHTBUMPER = new GamepadButton(toolGamepad, GamepadKeys.Button.RIGHT_BUMPER);
+        RIGHT_BUMPER = new GamepadButton(toolGamepad, GamepadKeys.Button.RIGHT_BUMPER);
+
 
     }
     public void execute() {
-        right = toolGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
-        left = toolGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
-        toolsubsystem.spinmotorwithMaximumHeightLimit(left - right);
-        A.whenPressed(toolsubsystem::rollIntake).whenReleased(toolsubsystem::stopRollingIntake);
-        B.whenPressed(toolsubsystem::REVERSE).whenReleased(toolsubsystem::stopRollingIntake);
-        RIGHTBUMPER.whenPressed(toolsubsystem::rollExtake).whenReleased(toolsubsystem::stopRollingExtake);
-
+        LiftVelocity =  toolGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - toolGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
+        toolsubsystem.spinmotorwithMaximumHeightLimit(LiftVelocity);
+        A.whenPressed(toolsubsystem::rollIntakeIn).whenReleased(toolsubsystem::stopRollingIntake);
+        B.whenPressed(toolsubsystem::rollIntakeOut).whenReleased(toolsubsystem::stopRollingIntake);
+        RIGHT_BUMPER.whenPressed(toolsubsystem::rollExtake).whenReleased(toolsubsystem::stopRollingExtake);
     }
 }
 
