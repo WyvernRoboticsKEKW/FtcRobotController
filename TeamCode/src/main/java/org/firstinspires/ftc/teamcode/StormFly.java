@@ -26,11 +26,11 @@ public class StormFly extends Robot {
     Motor backLeft;
     Motor backRight;
     Motor rollerIntake;
+    Motor hangArm;
     IMU imu;
     public MecanumDrive mecanumDrive;
     Motor lift;
     CRServo rollerExtake;
-
 
     public GamepadEx gamepadDrivetrain;
     public GamepadEx gamepadTool;
@@ -45,13 +45,13 @@ public class StormFly extends Robot {
     public StormFly(CommandOpMode opMode) {
         HardwareMap hardwareMap = opMode.hardwareMap;
 
-
         rollerIntake = new Motor(hardwareMap, "rollerIntake");
         frontLeft = new Motor(hardwareMap, "frontLeft");
         frontRight = new Motor(hardwareMap, "frontRight");
         backLeft = new Motor(hardwareMap, "backLeft");
         backRight = new Motor(hardwareMap, "backRight");
         lift = new Motor(hardwareMap, "lift");
+        hangArm = new Motor(hardwareMap, "hangArm");
 
         rollerExtake = new CRServo(hardwareMap, "rollerExtake");
 
@@ -70,15 +70,9 @@ public class StormFly extends Robot {
         imu.initialize(new IMU.Parameters(orientationOnRobot));
 
     }
-
     public double getHeading() {
         Orientation Theta = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
         return (Theta.thirdAngle);
-
-
-
     }
 }
-
-

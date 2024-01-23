@@ -35,6 +35,9 @@ public class Pipeline extends OpenCvPipeline {
     @Override
     public Mat processFrame(Mat input) {
 
-        return null;
+        Mat contours = new Mat();
+        //Imgproc.findContours(input, contours, 0,2 ); To do later... maybe...
+
+        return input;
     }
 }

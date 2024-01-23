@@ -18,7 +18,7 @@ public class AutoForward extends CommandBase {
     public boolean isFinished(){
         return true;
     }
-    public void end(boolean Interupted) {
+    public void end(boolean Interrupted) {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

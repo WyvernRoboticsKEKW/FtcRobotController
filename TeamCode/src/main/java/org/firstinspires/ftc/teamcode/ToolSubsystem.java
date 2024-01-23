@@ -17,8 +17,17 @@ public class ToolSubsystem extends SubsystemBase {
             stormFly.rollerIntake.set(1);
     }public void stopRollingIntake(){
         stormFly.rollerIntake.set(0);
-    }public void rollExtake() {stormFly.rollerExtake.set(.75); }
-    public void stopRollingExtake() {stormFly.rollerExtake.set(0); }
+    }
+    public void rollExtake() {
+        stormFly.rollerExtake.set(.75);
+    }public void stopRollingExtake() {stormFly.rollerExtake.set(0);
+    }public void armUp() {
+        stormFly.hangArm.set(1);
+    }public void armDown() {
+        stormFly.hangArm.set(-1);
+    }public void armStop() {
+        stormFly.hangArm.set(0);
+    }
 }
 
 
