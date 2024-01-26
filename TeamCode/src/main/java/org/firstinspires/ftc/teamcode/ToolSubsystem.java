@@ -4,28 +4,50 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 
 public class ToolSubsystem extends SubsystemBase {
     StormFly stormFly;
+    public final double startingPos = 0 ;
+
     public ToolSubsystem(StormFly motors) {
+
         stormFly = motors;
     }
+
     int maxHeight = 1000; //to be replaced once tested
 
-    public void spinmotorwithMaximumHeightLimit(double power) {stormFly.lift.set(power);
+    public void spinmotorwithMaximumHeightLimit(double power) {
+
+        double currentLiftPos = stormFly.lift.get();
+
+
+        if(currentLiftPos <= startingPos){
+            power = Math.max(0, power);
+        }
+        else{
+            stormFly.lift.set(power);
+        }
+
     }
     public void rollIntakeIn() {
         stormFly.rollerIntake.set(-1);
-    }public void rollIntakeOut(){
+    }
+    public void rollIntakeOut(){
             stormFly.rollerIntake.set(1);
-    }public void stopRollingIntake(){
+    }
+    public void stopRollingIntake(){
         stormFly.rollerIntake.set(0);
     }
     public void rollExtake() {
         stormFly.rollerExtake.set(.75);
-    }public void stopRollingExtake() {stormFly.rollerExtake.set(0);
-    }public void armUp() {
+    }
+    public void stopRollingExtake() {
+        stormFly.rollerExtake.set(0);
+    }
+    public void armUp() {
         stormFly.hangArm.set(1);
-    }public void armDown() {
+    }
+    public void armDown() {
         stormFly.hangArm.set(-1);
-    }public void armStop() {
+    }
+    public void armStop() {
         stormFly.hangArm.set(0);
     }
 }

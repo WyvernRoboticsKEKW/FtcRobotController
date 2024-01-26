@@ -35,6 +35,8 @@ public class StormFly extends Robot {
     public GamepadEx gamepadDrivetrain;
     public GamepadEx gamepadTool;
 
+    Orientation Theta;
+
     public static StormFly getInstance(CommandOpMode opMode) {
         if (instance == null) {
             instance = new StormFly(opMode);
@@ -57,22 +59,19 @@ public class StormFly extends Robot {
 
         imu = hardwareMap.get(IMU.class, "imu");
 
-
         mecanumDrive = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
         gamepadDrivetrain = new GamepadEx(opMode.gamepad1);
         gamepadTool = new GamepadEx(opMode.gamepad2);
 
         RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
-
         );
 
         imu.initialize(new IMU.Parameters(orientationOnRobot));
 
     }
     public double getHeading() {
-        Orientation Theta = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
-
-        return (Theta.thirdAngle);
+        Theta = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+        return Theta.thirdAngle;
     }
 }

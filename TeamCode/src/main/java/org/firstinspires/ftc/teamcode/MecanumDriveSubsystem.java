@@ -26,7 +26,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
         stormFly.mecanumDrive.driveFieldCentric(strafe, forward, turn, heading, false);
     }
     public void strafe(double power){
-        stormFly.mecanumDrive.driveWithMotorPowers(power, power, -power, power);
+        stormFly.mecanumDrive.driveWithMotorPowers(power, -power, -power, power);
     }
     public void forward(double power){
         stormFly.mecanumDrive.driveWithMotorPowers(power, power, power, power);

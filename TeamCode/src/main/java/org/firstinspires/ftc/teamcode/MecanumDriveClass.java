@@ -22,20 +22,15 @@ public class MecanumDriveClass extends CommandBase {
         m_subsystemDrive = subsystem;
         this.driverGamepad = driverGamepad;
     }
+    public void initialize() {
+        //heading = stormFly.getHeading();
+    }
 
     public void execute() {
-
-
         m_subsystemDrive.driveFieldCentric(forward, strafe, turn, heading);
         forward = -driverGamepad.getLeftY();
         strafe = driverGamepad.getLeftX();
         turn =  -driverGamepad.getRightX();
-        heading = stormFly.getHeading();
-
-
     }
-
-
-
 }
 

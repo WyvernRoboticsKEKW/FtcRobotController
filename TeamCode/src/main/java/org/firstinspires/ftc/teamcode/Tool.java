@@ -16,8 +16,9 @@ public class Tool extends CommandBase {
     Button A;
     Button DpUp;
     Button DpDown;
-    Button RIGHT_BUMPER;
+    Button RightBumper;
     double LiftVelocity;
+
     StormFly stormFly;
     public Tool(GamepadEx toolGamepad, ToolSubsystem subsystem, StormFly stormFly){
         toolsubsystem = subsystem;
@@ -31,16 +32,19 @@ public class Tool extends CommandBase {
         B = new GamepadButton(toolGamepad, GamepadKeys.Button.B);
         DpUp = new GamepadButton(toolGamepad, GamepadKeys.Button.DPAD_UP);
         DpDown = new GamepadButton(toolGamepad, GamepadKeys.Button.DPAD_DOWN);
-        RIGHT_BUMPER = new GamepadButton(toolGamepad, GamepadKeys.Button.RIGHT_BUMPER);
+        RightBumper = new GamepadButton(toolGamepad, GamepadKeys.Button.RIGHT_BUMPER);
+        stormFly.lift.stopAndResetEncoder();
 
 
     }
     public void execute() {
+
+
         LiftVelocity =  toolGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) - toolGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
         toolsubsystem.spinmotorwithMaximumHeightLimit(LiftVelocity);
         A.whenPressed(toolsubsystem::rollIntakeIn).whenReleased(toolsubsystem::stopRollingIntake);
         B.whenPressed(toolsubsystem::rollIntakeOut).whenReleased(toolsubsystem::stopRollingIntake);
-        RIGHT_BUMPER.whenPressed(toolsubsystem::rollExtake).whenReleased(toolsubsystem::stopRollingExtake);
+        RightBumper.whenPressed(toolsubsystem::rollExtake).whenReleased(toolsubsystem::stopRollingExtake);
         DpUp.whenPressed(toolsubsystem::armUp).whenReleased(toolsubsystem::armStop);
         DpDown.whenPressed(toolsubsystem::armDown).whenReleased(toolsubsystem::armStop);
     }
