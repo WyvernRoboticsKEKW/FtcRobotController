@@ -29,7 +29,7 @@ public class MecanumDriveClass extends CommandBase {
     public void execute() {
         m_subsystemDrive.driveFieldCentric(forward, strafe, turn, heading);
         forward = -driverGamepad.getLeftY();
-        strafe = driverGamepad.getLeftX();
+        strafe = -driverGamepad.getLeftX();
         turn =  -driverGamepad.getRightX();
     }
 }

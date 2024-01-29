@@ -2,11 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-public class AutoForward extends CommandBase {
+public class AutoForwardShort extends CommandBase {
     double power;
     StormFly stormFly;
     MecanumDriveSubsystem sub;
-    public AutoForward(double power, StormFly stormFly, MecanumDriveSubsystem sub){
+    public AutoForwardShort(double power, StormFly stormFly, MecanumDriveSubsystem sub){
         this.power = power;
         this.stormFly = stormFly;
         this.sub = sub;
@@ -20,7 +20,7 @@ public class AutoForward extends CommandBase {
     }
     public void end(boolean Interrupted) {
         try {
-            Thread.sleep(4000);
+            Thread.sleep(8000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

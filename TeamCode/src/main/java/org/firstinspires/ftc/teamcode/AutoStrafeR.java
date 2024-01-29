@@ -2,17 +2,17 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-public class AutoStrafe extends CommandBase {
+public class AutoStrafeR extends CommandBase {
     double power;
     StormFly stormFly;
     MecanumDriveSubsystem sub;
-    public AutoStrafe(double power, StormFly stormFly, MecanumDriveSubsystem sub){
+    public AutoStrafeR(double power, StormFly stormFly, MecanumDriveSubsystem sub){
         this.power = power;
         this.stormFly = stormFly;
         this.sub = sub;
     }
     public void execute(){
-        sub.strafe(1);
+        sub.strafe(0.5);
 
     }
     public boolean isFinished(){
@@ -20,7 +20,7 @@ public class AutoStrafe extends CommandBase {
     }
     public void end(boolean Interupted){
         try {
-            Thread.sleep(200);
+            Thread.sleep(600);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
